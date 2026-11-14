@@ -498,7 +498,9 @@ export function openGame(id, keep) {
     <div class="btns">${[g.H, g.A].map(s => s.key ? `<button class="ghost" type="button" data-team="${s.key}">Profil ${esc(TEAMS[s.key].s)}</button>` : s.id ? `<button class="ghost" type="button" data-club="${g.l}|${esc(s.id)}">${esc(s.name)}</button>` : '').join('')}${g.teams.length ? `<button class="ghost" type="button" data-day="${k}" data-jump="1">Toate meciurile zilei</button>` : ''}${done ? '' : `<button class="ghost" type="button" data-ics-game="${g.id}">Adaugă în calendar</button>`}<button class="ghost" type="button" data-sharecard="${esc(g.id)}">Imagine de distribuit</button><button class="ghost" type="button" data-share>Copiază linkul</button></div>
     </div>`, keep);
   OV.place = null;
-  if (canFetch && (!s || isLive(g))) loadGame(g);
+  // Asked again while the game is live, and when the details kept from an earlier visit are of another state
+  // (opened before the start or during the game, now over).
+  if (canFetch && (!s || isLive(g) || (s.state && s.state !== g.state))) loadGame(g);
   // The stadium link and the weather card need data/places.json; draw again once it is here.
   if (PLACES.data) { if (canFetch) loadGameWeather(g); }
   else loadPlaces()?.then(d => { if (d && OV.game === g.id) { refreshGame(g); if (canFetch) loadGameWeather(g); } });
@@ -569,7 +571,9 @@ export const SUMMARY = new Map();
 export async function loadGame(g) {
   const key = g.l + g.id;
   try {
-    const s = await getJSON(`/api/game?l=${g.l}&id=${encodeURIComponent(g.id)}`, 10000);
+    // The game's state is part of the address: a summary cached while the game was ahead or live (CDN, browser)
+    // is never served once it is over.
+    const s = await getJSON(`/api/game?l=${g.l}&id=${encodeURIComponent(g.id)}&st=${g.state || ''}`, 10000);
     SUMMARY.set(key, s);
     refreshGame(g);
   } catch (e) {
