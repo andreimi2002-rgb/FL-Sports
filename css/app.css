@@ -215,21 +215,98 @@ details.res{border-top:1px solid var(--line);padding-top:12px}
 details.res summary{cursor:pointer;font-family:var(--display);font-size:19px;text-transform:uppercase;letter-spacing:.03em;font-weight:700}
 details.res summary span{font-family:var(--body);font-size:13px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:500;margin-left:6px}
 
-.mapwrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
-@media (max-width:680px){.mapwrap{grid-template-columns:1fr}}
-.mapwrap svg{width:100%;height:auto;display:block}
-.land{fill:var(--soft);stroke:var(--accent);stroke-width:1.5;stroke-linejoin:round}
-.city{cursor:pointer}
-.city circle{fill:var(--surface);stroke:var(--ink);stroke-width:2}
-.city.on circle{fill:var(--ink)}
-.city text{font-family:var(--body);font-size:12px;font-weight:700;fill:var(--ink)}
-.city .cnt{font-size:11px;fill:var(--ink);text-anchor:middle}
-.city.on .cnt{fill:var(--bg)}
-.mpanel h3{margin:0 0 2px;font-family:var(--display);font-size:20px;text-transform:uppercase}
-.mpanel p{margin:0 0 8px;color:var(--muted);font-size:13px}
-.mteams{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.mteams button{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px 3px 3px;cursor:pointer;font-size:13px;font-weight:600}
-.mteams .emb.sm{margin-right:6px;vertical-align:0}
+/* Florida sports atlas */
+.atlas-heading{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:14px}
+.atlas-kicker{display:block;font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.atlas-heading h2{font:italic 800 32px/1.1 var(--display);text-transform:uppercase;margin:5px 0 0;letter-spacing:.01em}
+.atlas-heading>p{max-width:270px;color:var(--muted);font-size:13px;margin:0 0 2px}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:0 8px 32px #030b1510}
+#map{background:#0b192c;color:#f4f7fc;min-width:0;padding-bottom:12px}
+.atlas-chart{position:relative;background:radial-gradient(ellipse at 85% 60%,#1c354b 0%,#10243a 40%,#0b192c 80%);overflow:hidden}
+.atlas-mast{display:flex;justify-content:space-between;gap:12px;padding:24px 24px 0;position:relative;z-index:1}
+.atlas-mast .atlas-kicker{color:#91a9bf}
+.atlas-mast b{display:block;font:italic 800 40px/.95 var(--display);letter-spacing:.015em;margin-top:8px}
+.atlas-mast b>span{display:block;font:700 10px var(--body);letter-spacing:.2em;margin-top:9px;color:#91a9bf}
+.atlas-total{font-size:10px;white-space:nowrap;text-align:right;color:#a3b6ca}
+.atlas-total strong{display:block;font:700 36px/1.15 var(--display);color:#fff}
+.atlas-chart svg{display:block;width:100%;height:auto;margin-top:4px;overflow:visible}
+.atlas-land{fill:url(#atlas-land);stroke:#7191a7;stroke-width:1.1;stroke-linejoin:round}
+.atlas-grid path{fill:none;stroke:#c5d9e7;stroke-width:.6;opacity:.09;stroke-dasharray:3 6}
+.atlas-grid text{fill:#849bb0;font:9px var(--body);opacity:.6}
+.atlas-water text{font:600 10px var(--body);letter-spacing:.22em;fill:#8ca7bb;opacity:.5}
+.atlas-compass{fill:#98adbf;stroke:#98adbf;stroke-width:1.2}
+.atlas-compass text{stroke:none;font:700 12px var(--body)}
+.atlas-city{cursor:pointer;outline:none}
+.atlas-city .city-halo{fill:#d6e6f60a;stroke:#9cb7ce30;stroke-width:1}
+.atlas-city .city-pin{fill:#152a43;stroke:#bed1e3;stroke-width:1.5;transition:fill .15s,stroke .15s}
+.atlas-city text{font-family:var(--body);fill:#f1f5fa;font-size:13px;font-weight:700}
+.atlas-city .city-count{text-anchor:middle;font-variant-numeric:tabular-nums;font-size:14px}
+.atlas-city .city-name{paint-order:stroke;stroke:#10243a;stroke-width:5;stroke-linejoin:round}
+.atlas-city.on .city-pin{fill:#ff5a6e;stroke:#ff9ba7}
+.atlas-city.on .city-count{fill:#0b192c}
+.atlas-city.on .city-halo{stroke:#ff5a6e70;fill:#ff5a6e12}
+.atlas-city:hover .city-pin,.atlas-city:focus-visible .city-pin{stroke:#fff;stroke-width:3}
+.atlas-city:focus-visible .city-halo{stroke:#fff;stroke-width:2}
+.atlas-map-note{display:flex;align-items:center;gap:7px;padding:0 24px 18px;color:#9bb0c4;font-size:10px;margin-top:-12px}
+.atlas-legend-dot{width:7px;height:7px;border-radius:50%;background:#ff5a6e}
+.atlas-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:0 16px}
+.atlas-picker button{background:#15283f;border:1px solid #29425c;border-radius:8px;text-align:left;padding:10px 12px;color:#fff;cursor:pointer;min-height:58px;display:flex;flex-direction:column;gap:2px;font:700 12px var(--body)}
+.atlas-picker small{color:#91a9bf;font-size:10px;font-weight:500;display:flex;justify-content:space-between;width:100%}
+.atlas-picker button[aria-pressed="true"]{border-color:#ff5a6e;background:#251e32;box-shadow:inset 3px 0 #ff5a6e}
+.atlas-picker button[aria-pressed="true"] small{color:#f2a1ad}
+.atlas-picker button:hover{border-color:#9bb0c4}
+.atlas-credit{font-size:9px;color:#91a9bf;padding:12px 20px 0}
+.atlas-credit a{color:inherit;text-underline-offset:2px}
+.mpanel{padding:24px;min-width:0}
+.atlas-region h3{font:italic 800 29px/1.05 var(--display);margin:6px 0 8px;text-transform:uppercase}
+.atlas-region p{font-size:12px;color:var(--muted);margin:0}
+.atlas-teams{display:flex;flex-wrap:wrap;gap:5px;margin:16px 0}
+.atlas-teams button{display:flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 10px 5px 5px;min-height:38px;color:var(--ink);font:600 11px var(--body);cursor:pointer}
+.atlas-teams .emb.sm{width:24px;height:24px;flex:none}
+.atlas-feature{margin:0 0 18px}
+.atlas-feature>button{display:block;position:relative;overflow:hidden;width:100%;min-height:165px;border:0;border-radius:10px;background:#142b43;color:#fff;text-align:left;padding:0;cursor:pointer}
+.atlas-feature img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0;transition:transform .25s}
+.atlas-feature>button:hover img{transform:scale(1.035)}
+.atlas-feature-title{position:relative;display:flex;flex-direction:column;justify-content:end;gap:3px;min-height:165px;padding:28px 16px 15px;background:linear-gradient(0deg,#071423f2,#07142388 65%,#07142315)}
+.atlas-feature-title small{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#ccdae7}
+.atlas-feature-title b{font:700 24px/1.1 var(--display);text-transform:uppercase}
+.atlas-feature-title>span{font:500 11px var(--body);margin-top:7px;color:#e4edf7;display:flex;justify-content:space-between}
+.atlas-photo-credit{font-size:9px;color:var(--muted);padding-top:5px;line-height:1.4}
+.atlas-photo-credit a{color:inherit}
+.atlas-next{padding-bottom:14px}
+.atlas-game{border:0;background:transparent;padding:9px 0 0;text-align:left;color:var(--ink);width:100%;cursor:pointer;font:inherit}
+.atlas-game>span{display:flex;align-items:center;gap:8px;line-height:1.4}
+.atlas-game b{font-size:14px;font-weight:700}
+.atlas-game b span{color:var(--muted);font-weight:400;margin:0 3px}
+.atlas-game small{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;margin:7px 0 0 35px}
+.atlas-game i,.atlas-venues i,.atlas-feature-title i{font-style:normal}
+.atlas-details{border-top:1px solid var(--line);padding:12px 0}
+.atlas-details summary{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:600;list-style:none}
+.atlas-details summary::-webkit-details-marker{display:none}
+.atlas-details summary>span{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px}
+.atlas-details summary>span:after{content:'+';font-size:17px;font-weight:400}
+.atlas-details[open] summary>span:after{content:'−'}
+.atlas-venues{display:grid;gap:4px;padding-top:8px}
+.atlas-venues button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;padding:9px 0;min-height:44px;color:var(--ink);border:0;background:transparent;cursor:pointer}
+.atlas-venues b,.atlas-venues small{display:block}
+.atlas-venues b{font-size:12px;font-weight:600}
+.atlas-venues small{font-size:10px;color:var(--muted);margin-top:2px}
+.atlas-details .rows{margin-top:10px}
+.atlas-details .row{font-size:11px}
+.atlas-city-links{display:flex;flex-wrap:wrap;gap:6px 12px;border-top:1px solid var(--line);padding-top:12px}
+.atlas-city-links>span{width:100%;font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.atlas-city-links .link{font-size:11px;min-height:32px}
+.atlas-no-games{font-size:13px;color:var(--muted);padding:0 0 16px}
+.mapwrap button:focus-visible,.atlas-details summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.atlas-picker button:focus-visible{outline-color:#fff}
+@media(max-width:700px){
+ .atlas-heading{display:block}.atlas-heading h2{font-size:29px}.atlas-heading>p{max-width:none;margin-top:8px;font-size:12px}
+ .mapwrap{grid-template-columns:1fr}.mpanel{padding:22px 18px}.atlas-mast{padding:22px 22px 0}.atlas-mast b{font-size:38px}
+ .atlas-chart svg{max-height:420px}.atlas-picker{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:0 12px}
+ .atlas-picker button{padding:9px 6px;font-size:10px;min-height:54px}.atlas-picker small{font-size:9px}.atlas-picker small span{display:none}
+ .atlas-region h3{font-size:28px}.atlas-credit{padding-left:16px}.atlas-feature>button,.atlas-feature-title{min-height:180px}
+}
+@media(prefers-reduced-motion:reduce){.atlas-feature img,.atlas-city .city-pin{transition:none}}
 
 .bracket{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .half{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}

@@ -184,7 +184,12 @@ function handle(e) {
   if ((el = q('[data-view]'))) { state.view = el.dataset.view; store.set('flgames-view', state.view); render(); return; }
   if ((el = q('[data-wk]'))) { state.week = addDays(state.week, +el.dataset.wk); render(); return; }
   if ((el = q('[data-mo]'))) { const [y, m] = parts(state.month + '-01'); const d = new Date(Date.UTC(y, m - 1 + (+el.dataset.mo), 1)); state.month = d.toISOString().slice(0, 7); render(); return; }
-  if ((el = q('[data-metro]'))) { state.metro = el.dataset.metro; renderMap(); return; }
+  if ((el = q('[data-metro]'))) {
+    const metro = el.dataset.metro, fromMap = el.tagName.toLowerCase() === 'g', focused = document.activeElement === el;
+    state.metro = metro; renderMap();
+    if (focused) document.querySelector(`${fromMap ? 'g' : 'button'}[data-metro="${CSS.escape(metro)}"]`)?.focus({ preventScroll: true });
+    return;
+  }
   if ((el = q('[data-day]'))) {
     const k = el.dataset.day, jump = !!el.dataset.jump;
     state.day = (state.day === k && !jump) ? null : k;

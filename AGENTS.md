@@ -59,6 +59,10 @@ istoricul git, pe `main` până la merge-ul etapei 1).
   (`tools/test.mjs` verifică față de `main`). Doar așa aplicația instalată vede versiunea nouă:
   la revenirea în aplicație caută una nouă și, când e gata, se reîncarcă singură (`js/phone.js`).
 
+## Redesign în preview (v33)
+
+`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Planul include și ideea Game Night, încă neimplementată.
+
 ## Plan pe etape
 
 Etapele 1–3 sunt în producție (PR #5, 11 noiembrie 2026): site cu date live, pagini de meci

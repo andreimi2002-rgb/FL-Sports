@@ -20,6 +20,11 @@ Ediția personală nu introduce autentificare și nu modifică vizibilitatea rep
 6. **Fotbal european** — Premier League, Champions League, Liga 1; probe reale de acoperire, în special Liga 1, înainte de promisiuni. Secțiunea existentă Europa/evenimente se păstrează.
 7. **Arhivă și finisaje** — meciuri favorite, note, jucători urmăriți, explicații și sincronizarea preferințelor. Alegem stocarea și modelul de sincronizare când ajungem aici.
 
+## Extinderi acceptate după etapa 1
+
+- **Game Night**, în etapele video / Dimineața mea: întregul spectacol NBA și NFL — studio, pregame, încălzire, prezentări, atmosferă, halftime, interviuri, vestiar și postgame. Bibliotecă pe ligă și materiale legate de meci atunci când asocierea este sigură. Surse oficiale și redare încorporată numai când este permisă; link spre sursă pentru conținutul integral din servicii cu abonament. Rămâne de implementat; nu garantăm fiecare segment pentru fiecare meci.
+- **Redesign mic, începând cu harta Floridei**: `stage-29-harta-florida`, v33. Atlas cu contur geografic static (U.S. Census via us-atlas 3.0.1), patru zone sportive, selecție prin hartă sau butoane, echipe, stadion în prim-plan și următorul meci. Păstrăm accesul la toate stadioanele, meciurile și orașele zonei. Fără SDK de hartă, cheie API sau cereri geografice la utilizare; geometria se regenerează cu `node tools/build-florida-map.mjs`. Verificăm selecția, tastatura, temele, ecranele mici și cache-ul offline. Preview înainte de merge.
+
 ## Flux de livrare
 
 Un branch și PR pe etapă, cu baza `main`. Pentru etape dependente încă neintegrate păstrăm explicit baza și diferențele cumulative în PR; nu aruncăm funcții pentru a micșora diff-ul. Teste locale, server local și capturi; push, PR și verificarea preview-ului automat. Trimitem linkul utilizatorului pentru testare. Merge-ul și orice publicare în producție cer acord explicit.

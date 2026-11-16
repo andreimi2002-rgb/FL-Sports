@@ -6,10 +6,11 @@ import { esc, $, emb } from './ui.js';
 import { detailRo, noteRo } from './ro.js';
 import { installHtml, canInstall, isWindows, isStandalone } from './phone.js';
 import { buildSeries, bracketLayout, roundRo, confRo } from './bracket.js';
-import { PLACES, venueByName, cityOf, getWeather, stripHtml, STRIP, cityCard, roofWord, AMERICA, loadAmerica } from './places.js';
+import { PLACES, venueByName, cityOf, getWeather, stripHtml, STRIP, roofWord, AMERICA, loadAmerica } from './places.js';
 import { teamBtn, teamEmbBtn, AW, DATA, DOW, GAMES, MONTHS, OUT, TZNAME, addDays, ago, awake, busyMap, col, countdown, dayLabel, divisionRows, dowOf, entryOf, filtered, flKey, flSide, fmtHM, fmtShort, fmtTime, getJSON, horizonEnd, isLive, keyOf, lastGames, outcome, parts, played, ptsOf, recordOf, shortDate, state, tShort, teamStats, todayKey, writeFilters, myShort, outcomeFor, keepExtra, gameById, sp } from './core.js';
 import { cal, clubSide, entryById, go } from './pages.js';
 import { HEALTH, healthNote, sourcesHtml } from './health.js';
+import { FLORIDA_PATH, mapPoint } from './florida-map.js';
 import { WORLD, loadWorld, worldCardsHtml } from './views.js';
 
 /* ================= render: header & static ================= */
@@ -303,28 +304,50 @@ export function renderAgenda(list, busy) {
 }
 
 /* ================= render: map ================= */
-export const FL_OUTLINE = [[31.0, -87.6], [31.0, -85.0], [30.7, -84.9], [30.7, -82.2], [30.36, -82.05], [30.7, -81.45], [30.3, -81.4], [29.9, -81.3], [29.0, -80.9], [28.4, -80.55], [27.8, -80.4], [27.0, -80.05], [26.3, -80.07], [25.6, -80.25], [25.2, -80.4], [25.12, -81.1], [25.85, -81.7], [26.5, -82.1], [27.0, -82.4], [27.6, -82.75], [28.2, -82.8], [28.9, -82.7], [29.5, -83.4], [30.05, -84.0], [29.9, -84.4], [29.65, -85.1], [29.7, -85.4], [30.2, -85.9], [30.4, -86.6], [30.3, -87.5]];
+// Only the four Florida metro areas belong on this map (New York is shared config).
 export function renderMap() {
-  // The map is of Florida: shown only with the Florida pack.
   if (!HOME.map) { $('harta').hidden = true; return; }
-  const K = 40, px = lon => (lon + 88.2) * K, py = lat => (31.4 - lat) * K * 1.13, now = Date.now(), lim = horizonEnd();
-  const home = {}; for (const m in METROS) home[m] = [];
-  GAMES.forEach(g => { if (!played(g) && g.inFL && g.end > now && g.d.getTime() < lim && g.H.key) home[TEAMS[g.H.key].metro].push(g); });
-  let svg = `<svg viewBox="0 0 340 300" role="img" aria-label="Harta Floridei cu orașele echipelor"><path class="land" d="M${FL_OUTLINE.map(p => px(p[1]).toFixed(1) + ',' + py(p[0]).toFixed(1)).join('L')}Z"/>`;
-  for (const m in METROS) {
-    const M = METROS[m], x = px(M.lon), y = py(M.lat), n = home[m].length;
-    const r = 11 + Math.min(n, 14) * .5, lx = M.lx === -10 ? M.lx : Math.sign(M.lx) * (r + 5);
-    svg += `<g class="city${state.metro === m ? ' on' : ''}" data-metro="${m}" tabindex="0" role="button" aria-label="${M.n}: ${n} meciuri acasă"><circle cx="${x}" cy="${y}" r="${r}"/><text class="cnt" x="${x}" y="${y + 4}">${n}</text><text x="${x + lx}" y="${y + M.ly - (M.lx === -10 ? r - 11 : 0)}" text-anchor="${M.anc}">${M.short || M.n}</text></g>`;
+  const metros = Object.keys(METROS).filter(m => Object.values(TEAMS).some(t => t.metro === m));
+  if (!metros.includes(state.metro)) state.metro = metros[0];
+  const now = Date.now(), lim = horizonEnd(), home = Object.fromEntries(metros.map(m => [m, []]));
+  for (const g of GAMES) {
+    const metro = TEAMS[g.H.key]?.metro;
+    if (home[metro] && !played(g) && g.inFL && g.end > now && g.d.getTime() < lim) home[metro].push(g);
   }
-  $('map').innerHTML = svg + '</svg>';
+  for (const games of Object.values(home)) games.sort((a, b) => a.d - b.d);
   const M = METROS[state.metro], ks = Object.keys(TEAMS).filter(k => TEAMS[k].metro === state.metro), gs = home[state.metro];
   const P = PLACES.data, cities = P ? Object.values(P.cities).filter(c => c.metro === state.metro) : [];
   const venues = P ? Object.values(P.venues).filter(v => cities.some(c => c.id === v.city)) : [];
-  $('mpanel').innerHTML = `<h3>${M.n}</h3><p>${gs.length} ${gs.length === 1 ? 'meci' : 'meciuri'} acasă în următoarele ${state.horizon} de zile. Numărul din cerc arată meciurile de acasă.</p>
-    ${cities.length ? `<div class="mcities">${cities.map(cityCard).join('')}</div>` : ''}
-    ${venues.length ? `<div class="mvenues">${venues.map(v => `<button type="button" data-venue="${v.id}">${v.image ? `<img src="${esc(v.image.small)}" alt="" loading="lazy">` : ''}<span><b>${esc(v.name)}</b><small>${v.teams.map(k => esc(TEAMS[k].s)).join(', ')} · ${roofWord(v)}</small></span></button>`).join('')}</div>` : `<div class="mteams">${ks.map(k => `<button type="button" data-team="${k}">${emb(flSide(k), 'sm')}${esc(TEAMS[k].s)}</button>`).join('')}</div>`}
-    <div class="rows">${gs.slice(0, 7).map(g => `<button class="row" type="button" data-game="${g.id}"><span class="when">${tShort(g.d)}</span><span>${esc(TEAMS[g.H.key].s)} – ${esc(g.a)}</span><span class="r">${g.tbd ? '' : fmtTime[state.tz].format(g.d)}</span></button>`).join('') || '<div class="row"><span></span><span>Niciun meci acasă în perioadă.</span><span></span></div>'}</div>
-    ${gs.length > 7 ? `<div class="fn">și încă ${gs.length - 7}; vezi lista completă cu filtrul „Jucate în ${esc(HOME.name)}”.</div>` : ''}`;
+  const total = Object.values(home).reduce((n, games) => n + games.length, 0);
+  const word = n => n === 1 ? 'meci' : 'meciuri';
+  const grid = [26, 28, 30].map(lat => `<path d="M24,${mapPoint(-88.2, lat)[1]}H536"/><text x="28" y="${mapPoint(-88.2, lat)[1] - 6}">${lat}° N</text>`).join('');
+  const markers = metros.map(m => {
+    const t = METROS[m], [x, y] = mapPoint(t.lon, t.lat), n = home[m].length, on = m === state.metro;
+    const right = m === 'orl', tx = x + (right ? 31 : -31), anchor = right ? 'start' : 'end';
+    return `<g class="atlas-city${on ? ' on' : ''}" data-metro="${m}" tabindex="0" role="button" aria-pressed="${on}" aria-label="${esc(t.n)}: ${n} ${word(n)} acasă">
+      <circle class="city-halo" cx="${x}" cy="${y}" r="26"/><circle class="city-pin" cx="${x}" cy="${y}" r="17"/>
+      <text class="city-count" x="${x}" y="${y + 5}">${n}</text><text class="city-name" x="${tx}" y="${y + 4}" text-anchor="${anchor}">${esc(t.short || t.n)}</text></g>`;
+  }).join('');
+  $('map').innerHTML = `<div class="atlas-chart">
+    <div class="atlas-mast"><div><span class="atlas-kicker">Pe teren propriu</span><b>FLORIDA<span>ATLAS SPORTIV</span></b></div><span class="atlas-total"><strong>${total}</strong>${word(total)} · ${state.horizon} zile</span></div>
+    <svg viewBox="0 0 560 510" role="group" aria-label="Harta interactivă a Floridei; alege o zonă pentru echipe și meciuri">
+      <defs><linearGradient id="atlas-land" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#244462"/><stop offset="1" stop-color="#142c46"/></linearGradient></defs>
+      <g class="atlas-grid" aria-hidden="true">${grid}</g><path class="atlas-land" d="${FLORIDA_PATH}"/>
+      <g class="atlas-water" aria-hidden="true"><text x="170" y="270" text-anchor="middle">GOLFUL</text><text x="170" y="287" text-anchor="middle">MEXIC</text><text x="505" y="250" transform="rotate(-90 505 250)">OCEANUL ATLANTIC</text></g>
+      <g class="atlas-compass" aria-hidden="true"><path d="M45,400V365m-6,9 6,-9 6,9"/><text x="45" y="354" text-anchor="middle">N</text></g>${markers}
+    </svg><div class="atlas-map-note"><span class="atlas-legend-dot"></span> Numărul din cerc = meciuri acasă</div></div>
+    <div class="atlas-picker" role="group" aria-label="Zonele sportive din Florida">${metros.map(m => `<button type="button" data-metro="${m}" aria-pressed="${state.metro === m}"><span>${esc(METROS[m].short || METROS[m].n)}</span><small>${home[m].length} ${word(home[m].length)} <span aria-hidden="true">↗</span></small></button>`).join('')}</div>
+    <div class="atlas-credit">Contur: <a href="https://github.com/topojson/us-atlas" target="_blank" rel="noopener">U.S. Census / us-atlas</a></div>`;
+  const next = gs[0], nextVenue = next && venues.find(v => v.id === venueByName(next.v)?.id), featured = nextVenue || venues[0];
+  const photo = featured?.image;
+  const nextHtml = next ? `<div class="atlas-next"><span class="atlas-kicker">${isLive(next) ? 'Acum, pe teren' : 'Următorul meci acasă'} · ${esc(next.l)}</span><button class="atlas-game" type="button" data-game="${next.id}"><span>${emb(flSide(next.H.key), 'sm')}<b>${esc(TEAMS[next.H.key].s)} <span>vs</span> ${esc(next.a)}</b></span><small>${tShort(next.d)} · ${next.tbd ? 'Oră neanunțată' : fmtTime[state.tz].format(next.d)} ${next.tbd ? '' : esc(TZNAME[state.tz])}<i aria-hidden="true">↗</i></small></button></div>` : `<div class="atlas-no-games">Niciun meci acasă în următoarele ${state.horizon} de zile. Poți explora în continuare echipele și stadioanele.</div>`;
+  $('mpanel').innerHTML = `<div class="atlas-region"><span class="atlas-kicker">Explorează zona</span><h3 aria-live="polite">${esc(M.n)}</h3><p>${ks.length} ${ks.length === 1 ? 'echipă' : 'echipe'} · ${venues.length} ${venues.length === 1 ? 'stadion' : 'stadioane și arene'}</p></div>
+    <div class="atlas-teams">${ks.map(k => `<button type="button" data-team="${k}" title="Profil ${esc(TEAMS[k].espn)}">${emb(flSide(k), 'sm')}<span>${esc(TEAMS[k].s)}</span></button>`).join('')}</div>
+    ${featured ? `<div class="atlas-feature"><button type="button" data-venue="${featured.id}">${photo ? `<img src="${esc(photo.small)}" alt="" loading="lazy" decoding="async">` : ''}<span class="atlas-feature-title"><small>${esc(cityOf(featured)?.name || '')}</small><b>${esc(featured.name)}</b><span>${featured.kind === 'arena' ? 'Descoperă arena' : 'Descoperă stadionul'} <i aria-hidden="true">↗</i></span></span></button>${photo ? `<div class="atlas-photo-credit">Foto: <a href="${esc(photo.page)}" target="_blank" rel="noopener">${esc(photo.author)}</a> · <a href="${esc(photo.licenseUrl)}" target="_blank" rel="noopener">${esc(photo.license)}</a></div>` : ''}</div>` : ''}
+    ${nextHtml}
+    ${venues.length > 1 ? `<details class="atlas-details"><summary>Toate stadioanele și arenele <span>${venues.length}</span></summary><div class="atlas-venues">${venues.map(v => `<button type="button" data-venue="${v.id}"><span><b>${esc(v.name)}</b><small>${v.teams.map(k => esc(TEAMS[k].s)).join(', ')} · ${esc(roofWord(v))}</small></span><i aria-hidden="true">↗</i></button>`).join('')}</div></details>` : ''}
+    ${gs.length > 1 ? `<details class="atlas-details"><summary>Mai multe meciuri acasă <span>${gs.length - 1}</span></summary><div class="rows">${gs.slice(1).map(g => `<button class="row" type="button" data-game="${g.id}"><span class="when">${tShort(g.d)}</span><span>${esc(TEAMS[g.H.key].s)} – ${esc(g.a)}</span><span class="r">${g.tbd ? '' : fmtTime[state.tz].format(g.d)}</span></button>`).join('')}</div></details>` : ''}
+    ${cities.length ? `<div class="atlas-city-links"><span>Orașele zonei</span>${cities.map(c => `<button type="button" class="link" data-city="${esc(c.id)}">${esc(c.name)} ↗</button>`).join('')}</div>` : ''}`;
 }
 
 export function render() {
