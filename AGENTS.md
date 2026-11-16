@@ -7,7 +7,7 @@
 - Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos despre beta, monetizare și lansare publică sunt istoric, nu direcție de implementare.
 - Florida este pachetul implicit fără `?eu=1`. Preferințele existente `flgames-*`, calendarul, abonamentele push și adresa aplicației se păstrează. Marcajul Store rămâne doar pentru comportamentul aplicației și notificări, fără să restrângă conținutul personal.
 - Telemetria și colectarea feedback-ului sunt oprite; datele istorice nu se șterg automat. Nu adăuga promovare, donații, paywall sau lansare publică.
-- Push și PR către `main`, apoi verificarea Deploy Preview sunt autorizate pentru fiecare etapă. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
+- Lucrăm în loturi pe **etape mari**, cu un singur branch / PR deschis către `main` și același Deploy Preview actualizat. PR #29 (`stage-29-harta-florida`) include redesign-ul și va continua cu întreaga etapă 2 (video lung, fără spoilere și Game Night). Nu face merge pentru îmbunătățiri mici; păstrează PR-ul draft până la finalul etapei 2. Testează local înainte de push și grupează schimbările coerente. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
 - Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main` (verificat în panou). Nu schimba adresa și nu declanșa deploy în producție.
 - Ediție personală nu înseamnă acces privat: repository-ul și preview-urile erau publice la verificare. `noindex` și `robots.txt` nu sunt autentificare. Nu schimba vizibilitatea sau controlul accesului fără instrucțiunea utilizatorului.
 
@@ -44,9 +44,7 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 - **Interfața e în română.** Comunicarea cu utilizatorul: în română.
 - **Lucrăm pe branch-uri** (`stage-N-...`). Spune pe scurt ce faci pe parcurs și întreabă
   înainte de deciziile importante.
-- **Un PR pe etapă:** deploy preview-urile (PR-urile) sunt gratuite pe Netlify, doar
-  publicarea în producție (merge în `main`) consumă credit. Lucrăm local, verificăm cu
-  serverul local și capturi de ecran, iar la final facem push și deschidem PR-ul.
+- **Un PR pe etapă mare**, nu pe fiecare îmbunătățire. Push și preview pentru loturi coerente, merge numai la finalul etapei mari și cu acord explicit. Nu declanșa publicări în producție pentru corecții intermediare.
 - Trebuie să meargă bine pe telefon și pe desktop, în temă luminoasă și întunecată.
 - **Identitate (varianta „Arena”, etapa 7):** bleumarin `#0E1F3D`, roșu `#C8102E` (noaptea `#FF5A6E`),
   steaua albă pe roșu (`favicon.svg`, bara de sus) și în cercul roșu (`icons/icon.svg`; PNG-urile se
@@ -59,9 +57,9 @@ istoricul git, pe `main` până la merge-ul etapei 1).
   (`tools/test.mjs` verifică față de `main`). Doar așa aplicația instalată vede versiunea nouă:
   la revenirea în aplicație caută una nouă și, când e gata, se reîncarcă singură (`js/phone.js`).
 
-## Redesign în preview (v33)
+## Atlas unificat în preview (v34)
 
-`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Planul include și ideea Game Night, încă neimplementată.
+`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Secțiunea separată Orașe/stadioane/vreme este eliminată; vremea orașului selectat este încărcată la vizualizarea atlasului și reutilizată din cache. Planul include și ideea Game Night, încă neimplementată.
 
 ## Plan pe etape
 
@@ -69,9 +67,7 @@ Etapele 1–3 sunt în producție (PR #5, 11 noiembrie 2026): site cu date live,
 complete, orașele, stadioanele și vremea Floridei; aplicație instalabilă, offline, abonare la
 calendar; notificări (Web Push, `push-cron` la 15 minute, doar în producție).
 
-**Cum publicăm:** creditele Netlify sunt puține. Preview-urile (PR-uri spre `main`) sunt
-gratuite, fiecare merge în `main` consumă. Mai multe etape merg pe un singur branch / PR cu
-baza `main` (altfel Netlify nu face preview) și se unesc o singură dată, la final.
+**Cum publicăm:** economisim publicările în producție. Întreaga etapă 2 se acumulează în branch-ul / PR-ul #29 cu baza `main`, fără merge intermediar. Mai întâi verificări locale, apoi push în loturi coerente și același preview. Condițiile de tarifare Netlify se verifică în cont; nu presupunem că orice resursă din preview este gratuită.
 
 4. **Etapa 4** (în producție, PR #6, 11 noiembrie 2026):
    - **Partea 1, în plus pentru Florida:** profil de echipă bogat (lot,

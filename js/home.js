@@ -6,11 +6,12 @@ import { esc, $, emb } from './ui.js';
 import { detailRo, noteRo } from './ro.js';
 import { installHtml, canInstall, isWindows, isStandalone } from './phone.js';
 import { buildSeries, bracketLayout, roundRo, confRo } from './bracket.js';
-import { PLACES, venueByName, cityOf, getWeather, stripHtml, STRIP, roofWord, AMERICA, loadAmerica } from './places.js';
+import { PLACES, venueByName, cityOf, STRIP, roofWord } from './places.js';
 import { teamBtn, teamEmbBtn, AW, DATA, DOW, GAMES, MONTHS, OUT, TZNAME, addDays, ago, awake, busyMap, col, countdown, dayLabel, divisionRows, dowOf, entryOf, filtered, flKey, flSide, fmtHM, fmtShort, fmtTime, getJSON, horizonEnd, isLive, keyOf, lastGames, outcome, parts, played, ptsOf, recordOf, shortDate, state, tShort, teamStats, todayKey, writeFilters, myShort, outcomeFor, keepExtra, gameById, sp } from './core.js';
 import { cal, clubSide, entryById, go } from './pages.js';
 import { HEALTH, healthNote, sourcesHtml } from './health.js';
 import { FLORIDA_PATH, mapPoint } from './florida-map.js';
+import { atlasWeatherCache, atlasWeatherHtml } from './atlas-weather.js';
 import { WORLD, loadWorld, worldCardsHtml } from './views.js';
 
 /* ================= render: header & static ================= */
@@ -342,12 +343,14 @@ export function renderMap() {
   const photo = featured?.image;
   const nextHtml = next ? `<div class="atlas-next"><span class="atlas-kicker">${isLive(next) ? 'Acum, pe teren' : 'Următorul meci acasă'} · ${esc(next.l)}</span><button class="atlas-game" type="button" data-game="${next.id}"><span>${emb(flSide(next.H.key), 'sm')}<b>${esc(TEAMS[next.H.key].s)} <span>vs</span> ${esc(next.a)}</b></span><small>${tShort(next.d)} · ${next.tbd ? 'Oră neanunțată' : fmtTime[state.tz].format(next.d)} ${next.tbd ? '' : esc(TZNAME[state.tz])}<i aria-hidden="true">↗</i></small></button></div>` : `<div class="atlas-no-games">Niciun meci acasă în următoarele ${state.horizon} de zile. Poți explora în continuare echipele și stadioanele.</div>`;
   $('mpanel').innerHTML = `<div class="atlas-region"><span class="atlas-kicker">Explorează zona</span><h3 aria-live="polite">${esc(M.n)}</h3><p>${ks.length} ${ks.length === 1 ? 'echipă' : 'echipe'} · ${venues.length} ${venues.length === 1 ? 'stadion' : 'stadioane și arene'}</p></div>
+    <div id="atlas-weather" data-weather-metro="${state.metro}">${atlasWeatherHtml(atlasCity(), atlasWeatherCache.peek(atlasCity()?.id))}</div>
     <div class="atlas-teams">${ks.map(k => `<button type="button" data-team="${k}" title="Profil ${esc(TEAMS[k].espn)}">${emb(flSide(k), 'sm')}<span>${esc(TEAMS[k].s)}</span></button>`).join('')}</div>
     ${featured ? `<div class="atlas-feature"><button type="button" data-venue="${featured.id}">${photo ? `<img src="${esc(photo.small)}" alt="" loading="lazy" decoding="async">` : ''}<span class="atlas-feature-title"><small>${esc(cityOf(featured)?.name || '')}</small><b>${esc(featured.name)}</b><span>${featured.kind === 'arena' ? 'Descoperă arena' : 'Descoperă stadionul'} <i aria-hidden="true">↗</i></span></span></button>${photo ? `<div class="atlas-photo-credit">Foto: <a href="${esc(photo.page)}" target="_blank" rel="noopener">${esc(photo.author)}</a> · <a href="${esc(photo.licenseUrl)}" target="_blank" rel="noopener">${esc(photo.license)}</a></div>` : ''}</div>` : ''}
     ${nextHtml}
     ${venues.length > 1 ? `<details class="atlas-details"><summary>Toate stadioanele și arenele <span>${venues.length}</span></summary><div class="atlas-venues">${venues.map(v => `<button type="button" data-venue="${v.id}"><span><b>${esc(v.name)}</b><small>${v.teams.map(k => esc(TEAMS[k].s)).join(', ')} · ${esc(roofWord(v))}</small></span><i aria-hidden="true">↗</i></button>`).join('')}</div></details>` : ''}
     ${gs.length > 1 ? `<details class="atlas-details"><summary>Mai multe meciuri acasă <span>${gs.length - 1}</span></summary><div class="rows">${gs.slice(1).map(g => `<button class="row" type="button" data-game="${g.id}"><span class="when">${tShort(g.d)}</span><span>${esc(TEAMS[g.H.key].s)} – ${esc(g.a)}</span><span class="r">${g.tbd ? '' : fmtTime[state.tz].format(g.d)}</span></button>`).join('')}</div></details>` : ''}
     ${cities.length ? `<div class="atlas-city-links"><span>Orașele zonei</span>${cities.map(c => `<button type="button" class="link" data-city="${esc(c.id)}">${esc(c.name)} ↗</button>`).join('')}</div>` : ''}`;
+  refreshAtlasWeather();
 }
 
 export function render() {
@@ -409,28 +412,28 @@ export async function renderPlayoffs() {
     + '<div class="fn">Numărul mic din fața echipei e locul din sezonul regulat. Echipele tale sunt evidențiate; apasă pe seria lor pentru pagina meciului.</div>';
 }
 
-/* ----- weather strip on the home page ----- */
-export async function renderStrip() {
-  // New York (and any pack outside Florida): its cities and stadiums from data/america.json.
-  if (HOME.strip.src === 'america') {
-    const A = AMERICA.data || await loadAmerica();
-    if (!A) return;
-    const names = Object.fromEntries(Object.values(TEAMS).map(t => [t.espn, t.s]));
-    $('vstrip').innerHTML = HOME.strip.venues.map(id => A.venues[id]).filter(Boolean).map(v => `<button type="button" class="vchip" data-venue="${v.id}">${v.photo ? `<img src="${esc(v.photo)}" alt="" loading="lazy" decoding="async">` : ''}<span><b>${esc(v.name)}</b><small>${esc((v.teams || []).map(t => names[t.name]).filter(Boolean).join(', '))} · ${esc(A.cities[v.city]?.name || '')}</small></span></button>`).join('');
-    const cities = HOME.strip.cities.map(id => A.cities[id]).filter(Boolean);
-    $('wxstrip').innerHTML = stripHtml(null, cities);
-    try { $('wxstrip').innerHTML = stripHtml(await getWeather(cities, true), cities); }
-    catch (e) { $('wxstrip').innerHTML = stripHtml(null, cities).replace(/…/g, 'vremea nu e disponibilă'); }
-    return;
-  }
-  if (!PLACES.data) return;
-  // The nine stadiums, north to south, as a row that scrolls sideways on a phone.
-  $('vstrip').innerHTML = Object.values(PLACES.data.venues).sort((a, b) => b.lat - a.lat).map(v => `<button type="button" class="vchip" data-venue="${v.id}">${v.image ? `<img src="${esc(v.image.small)}" alt="" loading="lazy" decoding="async">` : ''}<span><b>${esc(v.name)}</b><small>${v.teams.map(k => esc(TEAMS[k].s)).join(', ')} · ${esc(cityOf(v)?.name || '')}</small></span></button>`).join('');
-  $('wxstrip').innerHTML = stripHtml(null);
-  try {
-    const list = await getWeather(STRIP.map(id => PLACES.data.cities[id]), true);
-    $('wxstrip').innerHTML = stripHtml(list);
-  } catch (e) { $('wxstrip').innerHTML = stripHtml(null).replace(/…/g, 'vremea nu e disponibilă'); }
+/* ----- selected-city weather, requested only while the atlas is visible ----- */
+let atlasVisible = false;
+const atlasCity = () => STRIP.map(id => PLACES.data?.cities[id]).find(c => c?.metro === state.metro);
+export async function refreshAtlasWeather() {
+  const el = $('atlas-weather'), city = atlasCity();
+  if (!atlasVisible || document.hidden || !el || !city) return;
+  const record = await atlasWeatherCache.load(city);
+  // A slow Miami request must never overwrite Orlando after switching cities.
+  if ($('atlas-weather') === el && el.dataset.weatherMetro === state.metro) el.innerHTML = atlasWeatherHtml(city, record);
+}
+export function setupAtlasWeather() {
+  const section = $('harta');
+  if (!section) return;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      atlasVisible = entries.some(e => e.isIntersecting);
+      if (atlasVisible) refreshAtlasWeather();
+    }).observe(section);
+  } else { atlasVisible = true; refreshAtlasWeather(); }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshAtlasWeather(); });
+  window.addEventListener('online', refreshAtlasWeather);
+  setInterval(refreshAtlasWeather, 10 * 60e3);
 }
 
 export function renderPhone() {

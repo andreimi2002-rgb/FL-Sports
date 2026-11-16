@@ -415,4 +415,40 @@ assert.equal((await import('../js/teamx.js')).roNum('27.7'), '27,7');
   }
 }
 
+// Atlas weather: redraws share one request; city responses remain separate and errors do not storm the API.
+{
+  const { createAtlasWeatherCache, atlasWeatherHtml } = await import('../js/atlas-weather.js');
+  let now = 0, calls = 0;
+  const resolvers = new Map();
+  const cache = createAtlasWeatherCache((cities, brief) => {
+    calls++; assert.equal(brief, true);
+    return new Promise(resolve => resolvers.set(cities[0].id, resolve));
+  }, () => now);
+  const miami = { id: 'miami', name: 'Miami' }, orlando = { id: 'orlando', name: 'Orlando' };
+  const m = cache.load(miami), duplicate = cache.load(miami), o = cache.load(orlando);
+  assert.equal(m, duplicate, 'panel redraw must not create another weather request');
+  await Promise.resolve(); assert.equal(calls, 2);
+  const forecast = temp => [{ now: { temp, code: 0, day: true }, days: [{ lo: 18, hi: 27, pp: 0 }] }];
+  resolvers.get('orlando')(forecast(21)); await o;
+  resolvers.get('miami')(forecast(26)); await m;
+  assert.equal(cache.peek('orlando').data.now.temp, 21, 'late Miami response cannot replace Orlando');
+  assert.equal(cache.peek('miami').data.now.temp, 26);
+  await cache.load(miami); assert.equal(calls, 2, 'cached city does not fetch again');
+  assert.match(atlasWeatherHtml(orlando, cache.peek('orlando')), /21°/);
+  assert.match(atlasWeatherHtml(orlando, cache.peek('orlando')), /Ploaie 0%/);
+  now = 600001;
+  const fresh = cache.load(miami); await Promise.resolve(); assert.equal(calls, 3);
+  resolvers.get('miami')(forecast(25)); await fresh;
+  let failures = 0;
+  const broken = createAtlasWeatherCache(async () => { failures++; throw new Error('offline'); }, () => now);
+  assert.equal((await broken.load(miami)).error, true);
+  await broken.load(miami); assert.equal(failures, 1, 'failed fetch has a retry cooldown');
+  now += 60001; await broken.load(miami); assert.equal(failures, 2);
+  assert.match(atlasWeatherHtml(miami, broken.peek('miami')), /nu este disponibilă/);
+  assert.doesNotMatch(atlasWeatherHtml(miami, broken.peek('miami')), /NaN|0°/);
+  const absent = createAtlasWeatherCache(async () => [{ now: { temp: null } }]);
+  assert.equal((await absent.load(miami)).error, true, 'missing temperature is not zero degrees');
+  assert.match(atlasWeatherHtml({ id:'x', name:'<City>' }), /&lt;City&gt;/);
+}
+
 console.log('all ESPN reader checks passed');
