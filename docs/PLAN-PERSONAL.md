@@ -27,6 +27,8 @@ Ediția personală nu introduce autentificare și nu modifică vizibilitatea rep
 
 ## Flux de livrare
 
+Etapa 2 a început local; progresul nepublicat și pașii rămași sunt în [ETAPA-2-CHECKPOINT.md](ETAPA-2-CHECKPOINT.md). Biblioteca video nu este încă conectată în interfață. Nu considera etapa finalizată din existența collectorului sau a seed-ului.
+
 Un branch / PR pe **etapă mare**, cu baza `main`, pentru a reduce publicările în producție. PR #29 (`stage-29-harta-florida`) rămâne draft și acumulează atlasul și întreaga etapă 2: video lung, fără spoilere și Game Night. Fără merge pentru fiecare îmbunătățire. Verificăm local și facem push în loturi coerente; actualizăm același PR și același Deploy Preview. După finalizarea și verificarea întregii etape 2, cerem acord explicit pentru un singur merge. Nu garantăm tarife sau gratuitatea tuturor resurselor de preview.
 
 La orice schimbare a fișierelor aplicației creștem atât `VERSION` din `sw.js`, cât și `APP_VERSION` din `js/phone.js`. Nu schimbăm cheile `flgames-*`, UID-urile calendarului sau adresa producției. Un preview are propriul origin: preferințele și abonamentele de producție nu apar automat acolo.

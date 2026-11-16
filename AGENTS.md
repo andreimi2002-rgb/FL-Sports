@@ -59,6 +59,8 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 
 ## Atlas unificat în preview (v34)
 
+Etapa 2 a început **local**, fără push: vezi [docs/ETAPA-2-CHECKPOINT.md](docs/ETAPA-2-CHECKPOINT.md) pentru fișierele scrise, verificările și pașii rămași. v35 este rezervată local; UI video încă neconectat. Nu declara etapa terminată și nu publica această bucată incompletă. `npm test`, inclusiv testele noi video, trece la checkpoint.
+
 `stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Secțiunea separată Orașe/stadioane/vreme este eliminată; vremea orașului selectat este încărcată la vizualizarea atlasului și reutilizată din cache. Planul include și ideea Game Night, încă neimplementată.
 
 ## Plan pe etape
