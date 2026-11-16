@@ -30,7 +30,7 @@ export default async req => {
     // A whole pack of default teams and nothing else: the plain name.
     const allFL = packs.length === 1 && fl.length === PACKS[packs[0]].keys.length && !clubs.length;
     const name = allFL ? 'American Sports Hub' : 'American Sports Hub: ' + [...fl.map(k => TEAMS[k].s), ...clubs.map(s => clubName(s, more) || s)].join(', ');
-    const body = calendar(games, { name, site: u.origin, alarm });
+    const body = calendar(games, { name, site: u.origin, alarm, hideResults: u.searchParams.get('nospoil') === '1' });
     return new Response(body, {
       headers: {
         'content-type': 'text/calendar; charset=utf-8',

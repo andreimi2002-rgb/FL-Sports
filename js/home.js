@@ -7,7 +7,7 @@ import { detailRo, noteRo } from './ro.js';
 import { installHtml, canInstall, isWindows, isStandalone } from './phone.js';
 import { buildSeries, bracketLayout, roundRo, confRo } from './bracket.js';
 import { PLACES, venueByName, cityOf, STRIP, roofWord } from './places.js';
-import { teamBtn, teamEmbBtn, AW, DATA, DOW, GAMES, MONTHS, OUT, TZNAME, addDays, ago, awake, busyMap, col, countdown, dayLabel, divisionRows, dowOf, entryOf, filtered, flKey, flSide, fmtHM, fmtShort, fmtTime, getJSON, horizonEnd, isLive, keyOf, lastGames, outcome, parts, played, ptsOf, recordOf, shortDate, state, tShort, teamStats, todayKey, writeFilters, myShort, outcomeFor, keepExtra, gameById, sp } from './core.js';
+import { SPOIL, teamBtn, teamEmbBtn, AW, DATA, DOW, GAMES, MONTHS, OUT, TZNAME, addDays, ago, awake, busyMap, col, countdown, dayLabel, divisionRows, dowOf, entryOf, filtered, flKey, flSide, fmtHM, fmtShort, fmtTime, getJSON, horizonEnd, isLive, keyOf, lastGames, outcome, parts, played, ptsOf, recordOf, shortDate, state, tShort, teamStats, todayKey, writeFilters, myShort, outcomeFor, keepExtra, gameById, sp } from './core.js';
 import { cal, clubSide, entryById, go } from './pages.js';
 import { HEALTH, healthNote, sourcesHtml } from './health.js';
 import { FLORIDA_PATH, mapPoint } from './florida-map.js';
@@ -144,6 +144,7 @@ export function renderMinePickList() {
   box.querySelector('.mplist').replaceWith(tmp.querySelector('.mplist'));
 }
 export function tableHtml(k) {
+  if (SPOIL.on) return '<p class="fn">Clasament ascuns · fără spoilere.</p>';
   const D = DIVISIONS[k], rows = divisionRows(k);
   const cols = D.l === 'NHL' ? ['V', 'Î', 'Îp', 'Pct'] : D.l === 'MLS' ? ['V–Î–E', 'Pct'] : ['V', 'Î'];
   const cells = e => D.l === 'NHL' ? [e.w, e.l, e.otl ?? 0, ptsOf(e, 'NHL')] : D.l === 'MLS' ? [recordOf(e, 'MLS'), ptsOf(e, 'MLS')] : [e.w, e.l];
@@ -379,6 +380,7 @@ export function playoffLeagues() {
 }
 export async function renderPlayoffs() {
   const sec = $('playoffs'), ls = playoffLeagues();
+  if (SPOIL.on) { sec.hidden = true; sec.innerHTML = ''; return; }
   if (!ls.length || DATA.mode === 'snapshot') { sec.hidden = true; return; }
   if (!ls.includes(PO.league)) PO.league = ls[0];
   const l = PO.league;

@@ -1,5 +1,13 @@
 # Etapa 2 — punct de reluare local, 17 noiembrie 2026
 
+## Ultima instrucțiune — prioritate față de descrierea inițială de mai jos
+
+Utilizatorul a cerut **„stop, fara spoilere acum pt economisre”**. Oprim lucrul la protecția contra spoilerelor, o amânăm pentru economisirea usage. Nu continua automat acest subtask. Nu s-a făcut push/deploy/merge. Producția și preview-ul rămân neschimbate.
+
+După checkpoint-ul inițial `1b0af03` au fost scrise local navigarea `#video`, conectarea bibliotecii/per-game, stilurile Game Night și schimbări WIP pentru spoilere în core/pages/home/views/leagues/sharecard/calendar/notify/push/SW. **Toate modulele modificate trec `node --check`; suita completă NU a fost rerulată după aceste schimbări, UI NU a fost verificat în browser.** Nu considera v35 gata de publicare. Păstrăm WIP ca să nu pierdem munca, nu reluăm toate investigațiile.
+
+La reluarea video-ului: separă întâi WIP-ul de spoilere într-un commit/branch local dedicat și păstrează fluxul existent dacă utilizatorul vrea doar video acum; nu publica modificări de spoilere incomplete. `syncSpoilerPreference` este definit în notify.js dar NU este încă legat la toggle/startup/online din app; protecția nu este completă. UI Game Night trebuie verificat (stare încărcare, redare ESPN, player păstrat la refresh, salvări, filtre, manual/reset). `npm test` a trecut numai înainte de acest al doilea set WIP.
+
 **În lucru, incomplet, nepublicat.** Același branch `stage-29-harta-florida`, PR #29 draft. Utilizatorul a semnalat că mai are puțin usage; salvăm progresul local și reluăm fără investigații repetate. Nu face push doar pentru acest checkpoint. Preview-ul existent rămâne v34; v35 este rezervată local. Fără merge / producție fără acord explicit. Grupăm întreaga etapă 2 într-o livrare coerentă.
 
 ## Ce există

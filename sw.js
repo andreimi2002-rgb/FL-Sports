@@ -9,7 +9,7 @@ const VERSION = 'v35';   // the same in js/phone.js (APP_VERSION)
 const SHELL = `shell-${VERSION}`, API = `api-${VERSION}`, IMG = `img-${VERSION}`;
 const FILES = [
   '/', '/index.html', '/css/app.css', '/favicon.svg', '/manifest.webmanifest', '/icons/icon-192.png',
-  '/js/atlas-weather.js', '/js/florida-map.js', '/js/app.js', '/js/teams.js', '/js/ui.js', '/js/ro.js', '/js/game.js', '/js/places.js', '/js/ics.js', '/js/phone.js', '/js/notify.js', '/js/teamx.js', '/js/bracket.js', '/js/leagues.js', '/js/mine.js', '/js/clubinfo.js', '/js/guide.js', '/js/core.js', '/js/home.js', '/js/pages.js', '/js/views.js', '/js/search.js', '/js/health.js', '/js/track.js', '/js/colors.js', '/js/motd.js', '/js/sharecard.js',
+  '/js/videos.js', '/js/video-data.js', '/data/video-catalog.json', '/js/atlas-weather.js', '/js/florida-map.js', '/js/app.js', '/js/teams.js', '/js/ui.js', '/js/ro.js', '/js/game.js', '/js/places.js', '/js/ics.js', '/js/phone.js', '/js/notify.js', '/js/teamx.js', '/js/bracket.js', '/js/leagues.js', '/js/mine.js', '/js/clubinfo.js', '/js/guide.js', '/js/core.js', '/js/home.js', '/js/pages.js', '/js/views.js', '/js/search.js', '/js/health.js', '/js/track.js', '/js/colors.js', '/js/motd.js', '/js/sharecard.js',
   '/data/places.json', '/data/snapshot.json'
 ];
 
@@ -18,7 +18,7 @@ self.addEventListener('install', e => {
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
-    .then(keys => Promise.all(keys.filter(k => ![SHELL, API, IMG].includes(k)).map(k => caches.delete(k))))
+    .then(keys => Promise.all(keys.filter(k => ![SHELL, API, IMG, 'flgames-prefs'].includes(k)).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 
@@ -54,10 +54,15 @@ async function cacheFirst(req) {
 self.addEventListener('push', e => {
   let m = {};
   try { m = e.data ? e.data.json() : {}; } catch (x) { m = { title: 'American Sports Hub', body: e.data ? e.data.text() : '' }; }
-  e.waitUntil(self.registration.showNotification(m.title || 'American Sports Hub', {
+  e.waitUntil((async () => {
+    let privateMode = true;
+    try { privateMode = await (await (await caches.open('flgames-prefs')).match('/__prefs/spoilers'))?.text() === '1'; } catch {}
+    if (privateMode && m.spoilerFree !== true) m = { ...m, title: 'American Sports Hub · fără spoilere', body: 'Ai noutăți sportive. Deschide aplicația pentru video și program.' };
+    return self.registration.showNotification(m.title || 'American Sports Hub', {
     body: m.body || '', tag: m.tag, renotify: !!m.tag, icon: '/icons/icon-192.png', badge: '/icons/icon-192.png',
     lang: 'ro', data: { url: m.url || '/' }
-  }));
+    });
+  })());
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
@@ -76,7 +81,7 @@ self.addEventListener('fetch', e => {
   const u = new URL(req.url);
   if (u.origin === location.origin) {
     if (u.pathname === '/sw.js') return;                              // the page reads the published version
-    if (u.pathname === '/api/game' || u.pathname === '/api/team') { e.respondWith(networkFirst(req, API, 8000)); return; }
+    if (u.pathname === '/api/game' || u.pathname === '/api/team' || u.pathname === '/api/videos') { e.respondWith(networkFirst(req, API, 8000)); return; }
     if (u.pathname.startsWith('/api/')) return;                       // network only
     if (req.mode === 'navigate') { e.respondWith(networkFirst(req, SHELL, 5000, '/index.html')); return; }
     e.respondWith(networkFirst(req, SHELL, 5000));

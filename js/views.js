@@ -7,23 +7,26 @@ import { detailRo } from './ro.js';
 import { lgHeadHtml, scoresHtml, standingsHtml, teamsHtml, todayStripHtml, worldHtml, eventInfo, countryRo } from './leagues.js';
 import { guideHtml } from './guide.js';
 import { PLACES, loadPlaces, AMERICA, loadAmerica, placesIndexHtml } from './places.js';
-import { DATA, TZNAME, col, dayLabel, flKey, fmtKey, fmtTime, gameById, getJSON, keepExtra, keyOf, state, tShort, sp, mineOf, entryOf, isLive, played, teamBtn, teamEmbBtn } from './core.js';
+import { SPOIL, spOpen, DATA, TZNAME, col, dayLabel, flKey, fmtKey, fmtTime, gameById, getJSON, keepExtra, keyOf, state, tShort, sp, mineOf, entryOf, isLive, played, teamBtn, teamEmbBtn } from './core.js';
 import { OV, refreshGame, route } from './pages.js';
+import { renderVideoLibrary } from './videos.js';
 
 /* ================= views: Florida | Ligile ================= */
 export const LG = { view: 'florida', tab: 'scoruri', day: null, chosen: new Set(Object.keys(LEAGUES)), scores: new Map() };
 export const usKey = d => fmtKey.fl.format(d);   // the US (Eastern) date: ESPN's scoreboards are by US day
 export const lgCtx = () => ({
-  emb, flKey, col, dayLabel, sp, ro: d => fmtTime.ro.format(d), dayOf: d => dayLabel(keyOf(d, 'ro')), zoneName: TZNAME[state.tz], today: usKey(new Date()),
-  status: g => g.state === 'in' ? `<b class="lv">LIVE</b><small>${esc(detailRo(g.detail, g.l))}</small>`
+  hideResults: SPOIL.on, emb, flKey, col, dayLabel, sp, ro: d => fmtTime.ro.format(d), dayOf: d => dayLabel(keyOf(d, 'ro')), zoneName: TZNAME[state.tz], today: usKey(new Date()),
+  status: g => !spOpen(g.id) && g.state !== 'pre' ? `<small>${g.state === 'post' ? 'Meci încheiat' : 'LIVE'}</small>` : g.state === 'in' ? `<b class="lv">LIVE</b><small>${esc(detailRo(g.detail, g.l))}</small>`
     : g.state === 'post' ? `<small>${esc(detailRo(g.detail, g.l) || 'Final')}</small>`
       : g.tbd ? '<small>oră neanunțată</small>' : `<b>${fmtTime[state.tz].format(g.d)}</b>${keyOf(g.d, state.tz) !== LG.day ? `<small>${esc(tShort(g.d))}</small>` : ''}`
 });
 export function setView(v) {
   LG.view = v;
   $('flview').hidden = v !== 'florida'; $('lgview').hidden = v !== 'ligi';
+  $('videoview').hidden = v !== 'video';
   document.querySelectorAll('.viewtabs [data-goview]').forEach(a => a.setAttribute('aria-current', a.dataset.goview === v ? 'page' : 'false'));
   if (v === 'ligi') renderLeagues();
+  if (v === 'video') renderVideoLibrary();
 }
 export function navView(hash) {
   history.pushState({ view: 1 }, '', location.pathname + location.search + hash);
@@ -140,9 +143,9 @@ export function renderMotd(data) {
   sec.hidden = false;
   sec.innerHTML = `<div class="tnhead"><h2 class="sec">Meciul zilei</h2><span class="motdsub">ales pentru România</span></div>
     <div class="motdc" style="--c:${col(g.l)}" data-gid="${esc(g.id)}">
-      <div class="k"><span class="ldot" style="--c:${col(g.l)}"></span>${g.l} · ${esc(dayLabel(keyOf(g.d, 'ro')))}${on ? ` · <b class="lv">LIVE</b> ${esc(detailRo(g.detail, g.l))}` : done ? ' · Final' : ''}</div>
+      <div class="k"><span class="ldot" style="--c:${col(g.l)}"></span>${g.l} · ${esc(dayLabel(keyOf(g.d, 'ro')))}${on ? ` · <b class="lv">LIVE</b> ${spOpen(g.id) ? esc(detailRo(g.detail, g.l)) : ''}` : done ? ' · Final' : ''}</div>
       <div class="mduo"><span class="mside">${teamEmbBtn(g.l, g.H, 'lg')}<span>${teamBtn(g.l, g.H)}</span></span><span class="mmid">${mid}<small>${on || done ? '' : 'ora României'}</small></span><span class="mside">${teamEmbBtn(g.l, g.A, 'lg')}<span>${teamBtn(g.l, g.A)}</span></span></div>
-      <ul class="notes">${[...m.reasons.slice(0, 3), done ? '' : when].filter(Boolean).map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+      <ul class="notes">${[...(SPOIL.on ? ['De urmărit · detalii ascunse pentru a evita spoilerele.'] : m.reasons.slice(0, 3)), done ? '' : when].filter(Boolean).map(r => `<li>${esc(r)}</li>`).join('')}</ul>
       ${watch && !done ? `<div class="fn">Unde îl vezi: ${esc(watch)}</div>` : ''}
       <div class="btns"><button class="primary" type="button" data-game="${esc(g.id)}">Detalii meci</button>${done ? '' : `<button class="ghost" type="button" data-ics-game="${esc(g.id)}">Adaugă în calendar</button>`}</div>
     </div>`;

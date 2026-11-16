@@ -33,7 +33,7 @@ async function takeUpdate(v) {
   const reg = await navigator.serviceWorker.getRegistration().catch(() => null);
   if (reg) { await reg.update().catch(() => {}); await waitActive(reg, 8000); }
   const keys = await caches.keys().catch(() => []);
-  await Promise.all(keys.filter(k => !k.endsWith('-' + v)).map(k => caches.delete(k)));
+  await Promise.all(keys.filter(k => k !== 'flgames-prefs' && !k.endsWith('-' + v)).map(k => caches.delete(k)));
   location.reload();
 }
 // Is a newer version out? Takes it when there is. Returns the published version ('' offline / unknown).
@@ -106,8 +106,9 @@ export function installHtml() {
 export const ALARMS = [[0, 'fără amintire'], [15, 'cu 15 minute înainte'], [30, 'cu 30 de minute înainte'], [60, 'cu o oră înainte'], [120, 'cu 2 ore înainte'], [180, 'cu 3 ore înainte']];
 export function feedUrl(teams, alarm) {
   // Florida teams in their usual order, then the followed teams from elsewhere ('NBA-2').
+  const hide = (() => { try { return localStorage.getItem('flgames-nospoil') === '1'; } catch { return false; } })();
   const list = [...Object.keys(TEAMS).filter(k => teams.includes(k)), ...teams.filter(k => parseClub(k))];
-  return `${location.origin}/api/calendar.ics?e=${list.join(',')}${alarm ? `&a=${alarm}` : ''}`;
+  return `${location.origin}/api/calendar.ics?e=${list.join(',')}${alarm ? `&a=${alarm}` : ''}${hide ? '&nospoil=1' : ''}`;
 }
 export function calendarLinks(url, name) {
   const webcal = url.replace(/^https?:/, 'webcal:');
@@ -139,7 +140,7 @@ export function calendarHtml(sel, alarm, emb, clubs = [], addHtml = '') {
       <select id="calalarm" aria-label="Amintire înainte de meci">${ALARMS.map(([m, t]) => `<option value="${m}" ${m === alarm ? 'selected' : ''}>${t}</option>`).join('')}</select>
       <div class="fn">Amintirea o afișează aplicația de calendar. iPhone, Mac și Outlook o preiau; Google Calendar de obicei nu preia amintirile din calendarele la care ești abonat.</div>
     </section>
-    <section><h3>3. Adaugă calendarul</h3>
+    <section><h3>3. Adaugă calendarul</h3><p class="fn">Modul fără spoilere se aplică linkurilor generate acum. Pentru un abonament mai vechi, înlocuiește-l cu noul link; aplicația nu poate modifica abonamentele deja salvate în Google sau Apple Calendar.</p>
       ${url ? `<div class="calbtns">
         <a class="primary" href="${esc(L.google)}" target="_blank" rel="noopener">Google Calendar</a>
         <a class="primary" href="${esc(L.apple)}">iPhone, iPad, Mac</a>
@@ -149,7 +150,7 @@ export function calendarHtml(sel, alarm, emb, clubs = [], addHtml = '') {
       <div class="fn">Pentru alte aplicații: adaugă un calendar „din URL” sau „prin abonare” și lipește linkul.</div>` : '<div class="empty">Alege cel puțin o echipă.</div>'}
     </section>
     <section><h3>De știut</h3><ul class="notes">
-      <li>Calendarul are meciurile din ultimele 45 de zile (cu scorul final) și toate meciurile programate ale sezonului.</li>
+      <li>Calendarul are meciurile din ultimele 45 de zile (rezultatele sunt ascunse dacă linkul conține nospoil=1) și toate meciurile programate ale sezonului.</li>
       <li>Orele sunt scrise în timpul universal, așa că apar automat la ora ta, în România sau oriunde ai fi.</li>
       <li>Meciurile fără oră anunțată apar ca eveniment pe toată ziua și primesc ora când o anunță ligile.</li>
       <li>iPhone și Mac verifică noutățile după cum alegi la setările calendarului. Google Calendar actualizează calendarele abonate în ritmul lui, de obicei de câteva ori pe zi.</li>
@@ -159,7 +160,8 @@ export function calendarHtml(sel, alarm, emb, clubs = [], addHtml = '') {
 
 // One game as a downloadable .ics file (raw game from /api/schedule).
 export function downloadGame(raw) {
-  const body = calendar([raw], { name: 'Meci', site: location.origin });
+  let hideResults = false; try { hideResults = localStorage.getItem('flgames-nospoil') === '1'; } catch {}
+  const body = calendar([raw], { name: 'Meci', site: location.origin, hideResults });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([body], { type: 'text/calendar;charset=utf-8' }));
   a.download = `meci-${raw.l.toLowerCase()}-${raw.id}.ics`;

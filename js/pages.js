@@ -15,6 +15,8 @@ import { teamBtn, teamEmbBtn, DATA, GAMES, OUT, OUTL, REC_LABEL, TEAMINFO, TZNAM
 import { card, tableHtml, allTeamsList } from './home.js';
 import { LG, lgCtx, loadScores, setView, usKey } from './views.js';
 import { trackView, trackEvent } from './track.js';
+import { gameVideosHtml, loadGameVideos } from './videos.js';
+import { SPOIL } from './core.js';
 
 /* ================= overlays ================= */
 // Each overlay has its own address: #meci/NBA/401909963[/tab] or #echipa/heat. Opening one adds a
@@ -65,6 +67,7 @@ export function go(hash) {
 export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
+  if (h[0] === 'video') { hideOv(); setView('video'); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) gameView.side = ''; gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }
@@ -127,8 +130,13 @@ window.addEventListener('popstate', () => route());
   $('ov').addEventListener('touchend', () => { if (y0 == null) return; prof().style.transform = ''; if (dy > 90) closeOv(); y0 = null; });
 }
 
+function safeTeamProfile(l, name, side, list, cid, keep) {
+  const next = list.filter(g => g.state !== 'post' && g.end > Date.now()).slice(0, 8);
+  show(`<div class="band plain"><div class="id">${emb(side, 'xl', true)}<div><div class="lgn">${l}</div><h2 id="prof-name">${esc(name)}</h2></div></div><button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div><div class="pbody"><p>Fără spoilere: bilanțul, statisticile, clasamentele și știrile echipei sunt ascunse.</p><h3>Program</h3><div class="rows">${next.map(g => `<button type="button" class="row" data-game="${esc(g.id)}"><span>${esc(tShort(g.d))}</span><span>${esc(g.a)} – ${esc(g.h)}</span><span>${isLive(g) ? 'LIVE' : g.tbd ? 'Oră neanunțată' : fmtTime[state.tz].format(g.d)}</span></button>`).join('') || '<p class="fn">Niciun meci viitor disponibil.</p>'}</div><div class="btns"><button class="ghost" type="button" data-team-cal="${esc(cid)}">Calendar</button><button class="ghost" type="button" data-team-ntf="${esc(cid)}">Notificări</button><button class="ghost" type="button" data-follow="${esc(cid)}" aria-pressed="${isMine(cid)}">${isMine(cid) ? '★ În echipele mele' : '☆ Urmărește echipa'}</button><a class="ghost" href="#video" data-goview="video">Game Night</a><button class="ghost" type="button" data-nospoil>Dezactivează protecția și arată profilul complet</button></div></div>`, keep);
+}
 export function openTeam(k, keep) {
   const T = TEAMS[k]; if (!T) return;
+  if (SPOIL.on) { OV.game = null; OV.place = null; teamView.k = k; safeTeamProfile(T.l, T.espn, flSide(k), GAMES.filter(g => g.teams.includes(k)), k, keep); return; }
   OV.game = null; OV.place = null;
   teamView.k = k;
   loadTeamX(k);
@@ -263,6 +271,7 @@ export function openClub(l, id, keep) {
   const c = CLUB.get(key), now = Date.now();
   const name = e?.name || c?.games?.[0] && [c.games[0].H, c.games[0].A].find(s => s.id === String(id))?.name || 'Echipă';
   const side = { name, abbr: e?.abbr, logo: e?.logo, logoDark: e?.logoDark, color: e?.color, alt: e?.alt };
+  if (SPOIL.on) { safeTeamProfile(l, name, side, c?.games || [], clubId(l, id), keep); return; }
   const bg = e?.color || '#38474b', fg = pickInk(bg, e?.alt || '#ffffff');
   const info = clubInfo(l, id), cid = clubId(l, id), following = isMine(cid);
   if (e) refreshMine(cid, side);
@@ -372,11 +381,13 @@ export function openNotify(keep) {
 }
 
 export function sideInfo(g, side) {
+  if (SPOIL.on) return '';
   const k = side.key;
   if (k && TEAMS[k]) { const st = teamStats(k); return `<small>${st.rec}${st.conf != null ? ` · locul ${st.conf} ${esc(st.confN)}` : ''}</small><div class="form sm">${formChips(k)}</div>`; }
   const o = oppInfo(g.l, side.name); return o ? `<small>${esc(o)}</small>` : '<small>&nbsp;</small>';
 }
 export function gameStatus(g) {
+  if (!spOpen(g.id)) return played(g) ? 'Meci încheiat' : isLive(g) ? 'LIVE' : g.tbd ? 'oră neanunțată' : 'Programat';
   const now = Date.now(), d = detailRo(g.detail, g.l);
   if (played(g)) return d && d !== 'Final' ? d : 'Final';
   if (isLive(g)) return 'LIVE · ' + d;
@@ -389,7 +400,7 @@ export function openGame(id, keep) {
   keep = keep && OV.game === g.id;
   OV.game = g.id;
   const done = played(g), on = isLive(g), other = state.tz === 'ro' ? 'fl' : 'ro', k = keyOf(g.d, state.tz);
-  const ctx = gameContext(g);
+  const ctx = gameContext(g), locked = !spOpen(g.id);
   const canFetch = DATA.mode !== 'snapshot';
   const s = SUMMARY.get(g.l + g.id);
   show(`<div class="band plain"><div><div class="lgn" style="color:${col(g.l)}">${g.l}${g.note ? ' · ' + esc(noteRo(g.note)) : ''}</div><h2 id="prof-name" style="font-size:22px">${dayLabel(k)}</h2></div>
@@ -400,12 +411,14 @@ export function openGame(id, keep) {
       <div class="mid${on ? ' on' : ''}" id="gscore" aria-live="polite">${midScore(g)}<small>${esc(gameStatus(g))}</small></div>
       <div class="side">${teamEmbBtn(g.l, g.A, 'lg')}<span>${teamBtn(g.l, g.A)}</span>${sideInfo(g, g.A)}</div>
     </div>
-    ${done || on ? `<div class="spbody${spOpen(g.id) ? ' open' : ''}" data-sp="${esc(g.id)}"><button class="spcover" type="button" data-spshow="${esc(g.id)}"><b>Fără spoilere: rezultatul e ascuns</b><span>Apasă ca să vezi scorul, statisticile și rezumatul</span></button>` : ''}
+    ${gameVideosHtml(g, s)}
+    ${locked ? `<div class="spbody" data-sp="${esc(g.id)}"><button class="spcover" type="button" data-spshow="${esc(g.id)}"><b>Fără spoilere: rezultatul e ascuns</b><span>Arată scorul, statisticile și cronica acestui meci</span></button></div>${summaryTop(g, [], k, other, done, on)}` : `
     <div id="gtabs">${tabsHtml(g, s, gameView.tab)}</div>
-    <div id="gdetail" role="tabpanel">${gameView.tab === 'rezumat' || !s ? summaryTop(g, ctx, k, other, done, on) : ''}${s ? panelHtml(g, s, viewFor()) : canFetch ? '<div class="skeleton" style="height:70px"></div>' : '<div class="fn">Detaliile meciului (statistici, jucători, faze) apar când sursa live răspunde.</div>'}</div>${done || on ? '</div>' : ''}
+    <div id="gdetail" role="tabpanel">${gameView.tab === 'rezumat' || !s ? summaryTop(g, ctx, k, other, done, on) : ''}${s ? panelHtml(g, s, viewFor()) : canFetch ? '<div class="skeleton" style="height:70px"></div>' : '<div class="fn">Detaliile meciului (statistici, jucători, faze) apar când sursa live răspunde.</div>'}</div>`}
     <div class="btns">${[g.H, g.A].map(s => s.key ? `<button class="ghost" type="button" data-team="${s.key}">Profil ${esc(TEAMS[s.key].s)}</button>` : s.id ? `<button class="ghost" type="button" data-club="${g.l}|${esc(s.id)}">${esc(s.name)}</button>` : '').join('')}${g.teams.length ? `<button class="ghost" type="button" data-day="${k}" data-jump="1">Toate meciurile zilei</button>` : ''}${done ? '' : `<button class="ghost" type="button" data-ics-game="${g.id}">Adaugă în calendar</button>`}<button class="ghost" type="button" data-sharecard="${esc(g.id)}">Imagine de distribuit</button><button class="ghost" type="button" data-share>Copiază linkul</button></div>
     </div>`, keep);
   OV.place = null;
+  loadGameVideos(g, s);
   // Asked again while the game is live, and when the details kept from an earlier visit are of another state
   // (opened before the start or during the game, now over).
   if (canFetch && (!s || isLive(g) || (s.state && s.state !== g.state))) loadGame(g);
@@ -414,6 +427,7 @@ export function openGame(id, keep) {
   else loadPlaces()?.then(d => { if (d && OV.game === g.id) { refreshGame(g); if (canFetch) loadGameWeather(g); } });
 }
 export function gameContext(g) {
+  if (SPOIL.on) return [];
   const ctx = [];
   if (g.derby) ctx.push(`Derby: ambele echipe sunt din ${HOME.name}.`);
   const sameDiv = (() => { if (g.l === 'MLS') return null; for (const [dk, D] of Object.entries(DIVISIONS)) if (D.members && D.members.some(m => norm(m) === norm(g.h)) && D.members.some(m => norm(m) === norm(g.a))) return D.t.split(' · ')[1]; return null; })();
@@ -427,7 +441,7 @@ export function gameContext(g) {
   if (h2h) ctx.push(`Ultimul meci direct (${tShort(h2h.d)}): ${h2h.h} ${h2h.hs}–${h2h.as} ${h2h.a}.`);
   return ctx;
 }
-export const viewFor = () => ({ ...gameView, known: id => !!gameById(id) });
+export const viewFor = () => ({ ...gameView, hideVideos: true, known: id => !!gameById(id) });
 // The game page's "Clasament" tab: the league's standings from the loaded season.
 setStandingsSource(l => DATA.raw?.standings?.[l] || []);
 export function summaryTop(g, ctx, k, other, done, on) {
@@ -456,10 +470,12 @@ export async function loadGameWeather(g) {
 }
 // Draws the tabs and the open tab again, keeping the scroll position (new data, tab switch, live score).
 export function refreshGame(g) {
-  if (OV.game !== g.id || !$('gdetail')) return;
+  if (OV.game !== g.id) return;
   const s = SUMMARY.get(g.l + g.id);
+  loadGameVideos(g, s);
   $('gscore').innerHTML = `${midScore(g)}<small>${esc(gameStatus(g))}</small>`;
   $('gscore').classList.toggle('on', isLive(g));
+  if (!spOpen(g.id) || !$('gdetail')) return;
   $('gtabs').innerHTML = tabsHtml(g, s, gameView.tab);
   // A clip being watched (playing, paused part-way, full screen) is not replaced by a live update, which
   // would stop it: the tab is drawn again when the clip ends. Switching tabs still redraws at once.

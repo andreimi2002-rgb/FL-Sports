@@ -28,7 +28,7 @@ async function load() {
 export function renderVideoLibrary() {
   const root = $('videoview'); if (!root || root.hidden) return;
   const followed = sourcePrefs(), savedIds = new Set(saved().map(v => v.id));
-  const mine = MINE.list.map(t => TEAMS[t.id]?.name || t.name).filter(Boolean);
+  const mine = MINE.list.map(t => TEAMS[t.id]?.espn || t.name).filter(Boolean);
   const videos = allVideos().filter(v => (!prefs.l || v.l === prefs.l) && (!prefs.kind || v.kind === prefs.kind) && (!prefs.source || v.source === prefs.source) && (!prefs.onlySaved || savedIds.has(v.id)) && (!prefs.onlyMine || mine.some(t => mentionsTeam(v.title, t, v.l))));
   root.innerHTML = `<section class="video-library"><div class="video-heading"><span class="eyebrow">Dincolo de tabela de scor</span><h2>Game Night</h2><p>Pregame, atmosfera arenei, pauze, studio, culise și rezumate. Pachetul întreg, când sursele oficiale îl publică.</p></div>
   <div class="video-filters"><label>Ligă<select data-video-filter="l"><option value="">Toate ligile</option>${['NBA','NFL','NHL','MLS','MLB'].map(l => `<option${prefs.l === l ? ' selected' : ''}>${l}</option>`).join('')}</select></label><label>Moment<select data-video-filter="kind"><option value="">Tot pachetul</option>${Object.entries(VIDEO_KINDS).map(([k,v]) => `<option value="${k}"${prefs.kind === k ? ' selected' : ''}>${v}</option>`).join('')}</select></label><label>Sursă<select data-video-filter="source"><option value="">Toate sursele</option>${VIDEO_SOURCES.filter(s => !prefs.l || s.l === prefs.l).map(s => `<option value="${s.id}"${prefs.source === s.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</select></label>

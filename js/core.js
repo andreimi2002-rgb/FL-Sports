@@ -34,6 +34,7 @@ export const SPOIL = {
 export function setNoSpoil(on) {
   SPOIL.on = on; store.set('flgames-nospoil', on ? '1' : '0');
   document.documentElement.classList.toggle('nospoil', on);
+  globalThis.caches?.open?.('flgames-prefs').then(c => c.put('/__prefs/spoilers', new Response(on ? '1' : '0'))).catch(() => {});
 }
 export function revealGame(id) {
   id = String(id); SPOIL.open.add(id);
@@ -41,7 +42,7 @@ export function revealGame(id) {
   document.querySelectorAll(`[data-sp="${CSS.escape(id)}"]`).forEach(el => el.classList.add('open'));
 }
 // A score or a result of game `id`, to be covered when "Fără spoilere" is on.
-export const sp = (id, html) => `<span class="sp${SPOIL.open.has(String(id)) ? ' open' : ''}" data-sp="${esc(id)}">${html}</span>`;
+export const sp = (id, html) => spOpen(id) ? `<span class="sp open" data-sp="${esc(id)}">${html}</span>` : `<span class="sp" role="button" tabindex="0" aria-label="Arată rezultatul acestui meci" data-sp="${esc(id)}">?</span>`;
 export const spOpen = id => !SPOIL.on || SPOIL.open.has(String(id));
 
 export const fmtRoH = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bucharest', hour: '2-digit', minute: '2-digit', hour12: false });
@@ -161,6 +162,7 @@ export function outcomeFor(g, id) {
 /* ----- per-team numbers ----- */
 export function entryOf(l, name) { return ENTRY.get(l + '|' + norm(name)) || null; }
 export function recordOf(e, l) {
+  if (SPOIL.on) return 'bilanț ascuns';
   if (!e || e.w == null) return null;
   if (l === 'NHL') return `${e.w}–${e.l}–${e.otl ?? 0}`;
   if (l === 'MLS') return `${e.w}–${e.l}–${e.t ?? 0}`;
@@ -194,6 +196,7 @@ export function streakRo(s) {
   return n === 1 ? '1 egal' : `${n} egaluri la rând`;
 }
 export function teamStats(k) {
+  if (SPOIL.on) return { rec: 'Ascuns', recL: 'fără spoilere' };
   const T = TEAMS[k] || ALL_TEAMS[k], info = TEAMINFO[k] || {}, e = entryOf(T.l, T.espn);
   const st = { rec: recordOf(e, T.l) || (info.record ? info.record.replace(/-/g, '–') : '–'), recL: REC_LABEL[T.l] };
   if (e) {
@@ -208,6 +211,7 @@ export function teamStats(k) {
   return st;
 }
 export function oppInfo(l, name) {
+  if (SPOIL.on) return '';
   const e = entryOf(l, name);
   return e ? `${recordOf(e, l)} · locul ${e.seed ?? e.order} ${e.conf}` : '';
 }
