@@ -1,5 +1,5 @@
 // The overlay pages and the address router: team, club, city, stadium, calendar, notifications, game.
-import { LEAGUES, TEAMS, ALL_TEAMS, DIVISIONS, DIVISION_OF, norm, parseClub, HOME, STORE } from './teams.js';
+import { LEAGUES, TEAMS, ALL_TEAMS, DIVISIONS, DIVISION_OF, norm, parseClub, HOME } from './teams.js';
 import { MINE, mineIds, isMine, mineClubs, clubId, refreshMine } from './mine.js';
 import { esc, $, emb, pickInk } from './ui.js';
 import { detailRo, noteRo } from './ro.js';
@@ -45,104 +45,15 @@ export function closeOv() {
   if (depth) history.go(-depth);            // popstate then hides it
   else { history.replaceState(null, '', location.pathname + location.search); hideOv(); }
 }
-// What the site counts, said plainly (no cookies, nothing personal).
+// Personal edition: explain the data the app actually keeps.
 export function openPrivacy(keep) {
   OV.game = null; OV.place = null;
-  show(`<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Pe scurt</div><h2 id="prof-name" style="font-size:24px">Confidențialitate</h2></div>
-      <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
+  show(`<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Ediție personală</div><h2 id="prof-name" style="font-size:24px">Datele mele</h2></div>
+    <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
     <div class="pbody">
-      <p class="lead">Nu folosim cookie-uri și nu păstrăm nimic care să te identifice: nici adresa IP, nici un cont, nici traseul tău pe site.</p>
-      <section><h3>Ce numărăm</h3><ul class="notes">
-        <li>Câte vizite are site-ul pe zi și câte sunt ale celor care revin.</li>
-        <li>De unde vin vizitele (de exemplu Instagram sau Google), pe ce fel de dispozitiv și sistem.</li>
-        <li>Ce pagini, secțiuni, echipe și meciuri se deschid, pe ce se apasă și cât durează o vizită.</li>
-        <li>Erorile care apar, ca să le putem repara.</li>
-      </ul><p class="fn">Totul se adună pe zile, ca numere. Ca să știm dacă o vizită e nouă sau a cuiva care revine, browserul tău păstrează două date (prima vizită și ultima zi), care nu pleacă nicăieri.</p></section>
-      <section><h3>Ce păstrăm doar dacă alegi tu</h3><ul class="notes">
-        <li>Echipele tale, tema și ora: doar în browserul tău.</li>
-        <li>Notificările: adresa de livrare dată de browser și echipele alese, ca să-ți putem trimite anunțurile. Le oprești oricând.</li>
-        <li>Mesajele din „Spune-ne ce crezi”, cu contactul doar dacă îl scrii.</li>
-      </ul></section>
-      <section><h3>Nu vrei să fii numărat?</h3><p>Activează „Do Not Track” în browser și nu mai numărăm nimic de pe dispozitivul tău.</p></section>
-      <section><h3>Cine mai primește date</h3><ul class="notes">
-        <li><b>Netlify</b>, unde e găzduit site-ul: primește cererile paginii, ca orice gazdă web, și păstrează numerele de mai sus, abonamentele la notificări și mesajele.</li>
-        <li><b>Serviciul de notificări al browserului tău</b> (Google, Apple, Microsoft sau Mozilla), care livrează anunțurile; primește doar textul lor.</li>
-        <li><b>Serverele de unde vin imaginile și datele</b> afișate (ESPN, Wikimedia, Open-Meteo): browserul tău le cere direct, deci ele văd adresa ta IP, ca la orice site.</li>
-        <li>Nu vindem și nu dăm date nimănui altcuiva. Nu avem reclame.</li>
-      </ul></section>
-      <section><h3>Cât păstrăm și cum ștergi</h3><ul class="notes">
-        <li>Abonamentul la notificări: până apeși „Oprește notificările” (se șterge atunci de pe server) sau până browserul îl anulează.</li>
-        <li>Mesajele din „Spune-ne ce crezi”: cel mult 12 luni.</li>
-        <li>Echipele, tema și ora din browser: le ștergi ștergând datele site-ului din setările browserului.</li>
-        <li>Poți cere oricând ce știm despre tine, corectarea sau ștergerea, scriind la <a href="mailto:${CONTACT}">${CONTACT}</a>. Ai și dreptul să te plângi la ANSPDCP (dataprotection.ro).</li>
-      </ul></section>
-      <p class="fn">American Sports Hub e un proiect independent, administrat de o persoană fizică din România. Contact: <a href="mailto:${CONTACT}">${CONTACT}</a>. Actualizat la 13 noiembrie 2026. <a href="#termeni" data-terms>Termeni de folosire</a></p>
-    </div>`, keep);
-}
-// The terms of use: an independent, free beta; data from public sources, without guarantees.
-export function openTerms(keep) {
-  OV.game = null; OV.place = null;
-  show(`<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Pe scurt</div><h2 id="prof-name" style="font-size:24px">Termeni de folosire</h2></div>
-      <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
-    <div class="pbody">
-      <p class="lead">American Sports Hub e gratuit și în versiune beta. Folosindu-l, ești de acord cu cele de mai jos.</p>
-      <section><h3>Ce este</h3><ul class="notes">
-        <li>Un proiect independent, administrat de o persoană fizică din România.</li>
-        <li><b>Nu e afiliat</b> NBA, NHL, NFL, MLB, MLS, ESPN sau vreunei echipe. Numele, siglele și mărcile ligilor și echipelor aparțin proprietarilor lor și apar doar ca să arate despre ce echipă e vorba.</li>
-      </ul></section>
-      <section><h3>Datele</h3><ul class="notes">
-        <li>Programul, scorurile, clasamentele și statisticile vin din surse publice (ESPN), vremea de la Open-Meteo, textele și pozele de pe Wikipedia și Wikimedia Commons, cu autorii și licențele lor.</li>
-        <li>Pot avea întârzieri sau greșeli, iar orele meciurilor se pot schimba, mai ales la NFL. Nu garantăm că sunt exacte sau complete și <b>nu sunt potrivite pentru pariuri</b>.</li>
-        <li>Notificările pleacă la fiecare 15 minute și pot întârzia sau lipsi.</li>
-      </ul></section>
-      <section><h3>Folosirea</h3><ul class="notes">
-        <li>Pentru uz personal. Nu copia automat conținutul și nu folosi site-ul ca să-l încarci excesiv.</li>
-        <li>Legăturile spre alte site-uri (YouTube, ESPN, servicii de streaming) duc la conținutul lor, cu regulile lor; nu răspundem de el.</li>
-        <li>Site-ul e oferit „așa cum este”. În limitele legii, nu răspundem pentru pierderi venite din folosirea lui.</li>
-      </ul></section>
-      <section><h3>Schimbări și contact</h3><ul class="notes">
-        <li>Termenii se pot schimba; versiunea de aici e cea valabilă. Se aplică legea română.</li>
-        <li>Întrebări sau probleme: <a href="mailto:${CONTACT}">${CONTACT}</a> sau „Spune-ne ce crezi”.</li>
-      </ul></section>
-      <p class="fn">Actualizat la 13 noiembrie 2026. <a href="#confidentialitate" data-privacy>Confidențialitate</a></p>
-    </div>`, keep);
-}
-// The address for privacy and terms questions (Microsoft Store and the privacy law ask for one).
-export const CONTACT = 'andreimi1308@gmail.com';
-// "Susține proiectul": a voluntary donation through Revolut.me or Ko-fi (the owner's links; empty = hidden).
-// Not in the Microsoft Store app (its payment rules are checked first).
-export const DONATE = { revolut: 'https://revolut.me/mihalam98n', kofi: '' };
-export const canDonate = () => !STORE && !!(DONATE.revolut || DONATE.kofi);
-export function openDonate(keep) {
-  OV.game = null; OV.place = null;
-  show(`<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Gratuit, fără reclame</div><h2 id="prof-name" style="font-size:24px">Susține proiectul</h2></div>
-      <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
-    <div class="pbody">
-      <p class="lead">American Sports Hub e făcut de o singură persoană, din pasiune, și rămâne gratuit. Dacă îți e de folos, o cafea ajută la ce urmează: pagina de jucător, varianta în engleză, o adresă proprie.</p>
-      <div class="donbtns">
-        ${DONATE.revolut ? `<a class="primary" href="${esc(DONATE.revolut)}" target="_blank" rel="noopener" data-donate="revolut">Donează prin Revolut</a>` : ''}
-        ${DONATE.kofi ? `<a class="ghost" href="${esc(DONATE.kofi)}" target="_blank" rel="noopener" data-donate="kofi">Ko-fi · card sau PayPal</a>` : ''}
-      </div>
-      <ul class="notes">
-        <li>Orice sumă, o singură dată; nu e un abonament și nu primești nimic în schimb, doar mulțumirile noastre.</li>
-        <li>Plata se face pe pagina Revolut, cu Revolut sau cu cardul, după regulile lor; noi nu vedem datele cardului tău.</li>
-        <li>Site-ul rămâne la fel pentru toată lumea, cu sau fără donație.</li>
-      </ul>
-    </div>`, keep);
-}
-// "Spune-ne ce crezi": a short message to the owner (beta).
-export function openFeedback(keep) {
-  OV.game = null; OV.place = null;
-  show(`<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Beta</div><h2 id="prof-name" style="font-size:24px">Spune-ne ce crezi</h2></div>
-      <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
-    <div class="pbody fbform">
-      <p class="lead">Ce îți place, ce lipsește, ce nu merge. Citim fiecare mesaj.</p>
-      <label for="fbtext">Mesajul tău</label>
-      <textarea id="fbtext" rows="6" maxlength="2000"></textarea>
-      <label for="fbcontact">Cum te putem contacta, dacă vrei răspuns (opțional)</label>
-      <input id="fbcontact" type="text" maxlength="200" autocomplete="email">
-      <div class="btns"><button class="primary" type="button" data-fb-send>Trimite</button></div>
-      <p class="nmsg" id="fbmsg" role="status"></p>
+      <p class="lead">Echipele, tema, preferințele și datele pentru folosirea offline rămân în acest browser. Aplicația nu trimite statistici de utilizare sau mesaje de feedback.</p>
+      <section><h3>Notificări și calendar</h3><p>Dacă activezi notificările, Netlify păstrează abonamentul browserului și echipele alese; serviciul push al browserului livrează mesajele. Le poți opri din pagina Notificări. Calendarul primește echipele din adresa la care te abonezi.</p></section>
+      <section><h3>Surse</h3><p>Datele sportive vin de la ESPN, vremea de la Open-Meteo, iar imaginile de la ESPN și Wikimedia. Cererile către aceste servicii și Netlify urmează regulile lor. Logo-urile aparțin echipelor; această ediție este pentru uz personal.</p></section>
     </div>`, keep);
 }
 export function go(hash) {
@@ -154,10 +65,7 @@ export function go(hash) {
 export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
-  if (h[0] === 'parere') { openFeedback(keep); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
-  if (h[0] === 'termeni') { openTerms(keep); return; }
-  if (h[0] === 'sustine' && canDonate()) { openDonate(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) gameView.side = ''; gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }
   if (h[0] === 'notificari') {

@@ -1,6 +1,6 @@
 // Game page: the tabs under the score (summary, players, team stats, plays, absentees)
 // and the win-probability chart. Pure rendering from the /api/game data; app.js owns the overlay.
-import { TEAMS, STORE } from './teams.js';
+import { TEAMS } from './teams.js';
 import { esc, emb } from './ui.js';
 import { detailRo, TEAM_STATS, statNum, statText, boxCols, NFL_GROUP, injStatusRo, injSerious, bodyRo, nflKindRo, nflPlayRo, catRo, dnpRo, leaderValRo } from './ro.js';
 
@@ -125,15 +125,11 @@ function summaryHtml(g, s, known) {
   // longest of the short clips. A live game shows its plays as they come.
   const single = played(g) && !s.recap && s.videos?.length > 1;
   const vids = single ? [s.videos.slice().sort((a, b) => (b.dur || 0) - (a.dur || 0))[0]] : s.videos || [];
-  if (vids.length && !STORE) html += `<section><h3>${s.recap ? 'Rezumatul meciului' : played(g) ? 'Faza meciului' : 'Faze video'}</h3><div class="vids${s.recap || single ? ' one' : ''}">${vids.map(v => `<figure><video controls preload="none" playsinline src="${esc(v.mp4)}"${v.thumb ? ` poster="${esc(v.thumb)}"` : ''}></video><figcaption>${esc(v.title)}${v.dur ? ` <span>· ${Math.floor(v.dur / 60)}:${String(v.dur % 60).padStart(2, '0')}</span>` : ''}</figcaption></figure>`).join('')}</div><div class="fn">Clipuri ESPN, în engleză.${played(g) && !s.recap && g.l !== 'NFL' ? ' Rezumatul oficial (1–3 minute) apare când îl publică ESPN, uneori la câteva ore după final, și ia locul acestei faze.' : ''}</div></section>`;
+  if (vids.length) html += `<section><h3>${s.recap ? 'Rezumatul meciului' : played(g) ? 'Faza meciului' : 'Faze video'}</h3><div class="vids${s.recap || single ? ' one' : ''}">${vids.map(v => `<figure><video controls preload="none" playsinline src="${esc(v.mp4)}"${v.thumb ? ` poster="${esc(v.thumb)}"` : ''}></video><figcaption>${esc(v.title)}${v.dur ? ` <span>· ${Math.floor(v.dur / 60)}:${String(v.dur % 60).padStart(2, '0')}</span>` : ''}</figcaption></figure>`).join('')}</div><div class="fn">Clipuri ESPN, în engleză.${played(g) && !s.recap && g.l !== 'NFL' ? ' Rezumatul oficial (1–3 minute) apare când îl publică ESPN, uneori la câteva ore după final, și ia locul acestei faze.' : ''}</div></section>`;
   // NFL: ESPN has no video rights; the league's own recap is on YouTube.
-  // NFL (ESPN has no video rights), and every league in the store app (no ESPN video there): the league's own
-  // highlights on YouTube.
-  if (played(g) && (STORE || (g.l === 'NFL' && !s.videos?.length))) html += `<section><h3>Rezumatul meciului</h3><a class="ytbtn" href="${esc(recapUrl(g))}" target="_blank" rel="noopener"><span aria-hidden="true">▶</span> Rezumatul pe YouTube</a><div class="fn">Video oficial ${g.l}, se deschide pe YouTube.${g.l === 'NFL' && !STORE ? ' ESPN nu are drepturi video pentru NFL.' : ''}</div></section>`;
-  // The written recap: its first paragraphs; in the store app only the headline and the link (no ESPN text).
-  if (s.article && played(g)) html += STORE
-    ? (s.article.url ? `<section><h3>Cronica meciului</h3><a class="ytbtn" href="${esc(s.article.url)}" target="_blank" rel="noopener" lang="en">${esc(s.article.title)} ›</a><div class="fn">Cronica ESPN, în engleză; se deschide pe site-ul ESPN.</div></section>` : '')
-    : `<section><h3>Cronica meciului</h3><div class="recap" lang="en"><b>${esc(s.article.title)}</b>${s.article.text.map(p => `<p>${esc(p)}</p>`).join('')}</div><div class="fn">Text ESPN, în engleză.${s.article.url ? ` <a href="${esc(s.article.url)}" target="_blank" rel="noopener">Citește tot pe ESPN ›</a>` : ''}</div></section>`;
+  if (played(g) && (g.l === 'NFL' && !s.videos?.length)) html += `<section><h3>Rezumatul meciului</h3><a class="ytbtn" href="${esc(recapUrl(g))}" target="_blank" rel="noopener"><span aria-hidden="true">▶</span> Rezumatul pe YouTube</a><div class="fn">Video oficial ${g.l}, se deschide pe YouTube.${g.l === 'NFL' ? ' ESPN nu are drepturi video pentru NFL.' : ''}</div></section>`;
+  // The written recap: its first paragraphs and original ESPN link.
+  if (s.article && played(g)) html += `<section><h3>Cronica meciului</h3><div class="recap" lang="en"><b>${esc(s.article.title)}</b>${s.article.text.map(p => `<p>${esc(p)}</p>`).join('')}</div><div class="fn">Text ESPN, în engleză.${s.article.url ? ` <a href="${esc(s.article.url)}" target="_blank" rel="noopener">Citește tot pe ESPN ›</a>` : ''}</div></section>`;
   if (s.series?.games?.length) html += seriesHtml(g, s, known);
   if (s.last5?.length) html += `<section><h3>Forma, ultimele 5 meciuri</h3><div class="l5">${s.last5.map(t => `<div class="tbl"><h4>${emb(sideOf(g, t.side), 'sm')}${esc(shortOf(g, t.side))}</h4><div class="rows">${t.games.map(x => `<div class="row"><span class="when">${dayShort(x.date)}</span><span>${x.at ? 'la' : 'vs'} ${esc(x.opp)}</span><span class="r ${x.res}">${x.res === 'V' ? 'V' : x.res === 'I' ? 'Î' : 'E'} ${x.mine ?? ''}–${x.their ?? ''}</span></div>`).join('')}</div></div>`).join('')}</div></section>`;
   if (s.attendance) html += `<div class="fn">Spectatori: ${s.attendance.toLocaleString('ro-RO')}</div>`;

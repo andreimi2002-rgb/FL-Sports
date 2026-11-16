@@ -1,5 +1,5 @@
 // Small helpers shared by the page modules: escaping, theme, team emblems.
-import { TEAMS, STORE } from './teams.js';
+import { TEAMS } from './teams.js';
 import { COLORS } from './colors.js';
 
 export const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -20,8 +20,7 @@ export function pickInk(bg, fg) {
 // Team emblem: the official logo when it loads (the dark-background version in the dark theme),
 // a coloured circle with the abbreviation otherwise. `onWhite`: the emblem sits on a white disc
 // (hero, team band), so the normal logo is right in both themes (a white dark-theme logo would vanish).
-// In the store app (STORE) only our own emblem is drawn, never the official logo; the colours missing from
-// the data come from js/colors.js.
+// Missing colours come from js/colors.js; the personal edition always allows official logos.
 const nameKey = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
 export function emb(side, cls = '', onWhite = false) {
   const k = side.key, T = k && TEAMS[k], C = COLORS[nameKey(side.name)];
@@ -29,7 +28,7 @@ export function emb(side, cls = '', onWhite = false) {
   const alt = side.alt || C?.[1], fg = alt && alt.toLowerCase() !== (bg || '').toLowerCase() ? alt : (T ? T.col[1] : '#fff');
   const style = bg ? `style="--bg-e:${esc(bg)};--fg-e:${esc(pickInk(bg, fg))}"` : '';
   const ab = esc(side.abbr || C?.[2] || (side.name || '').split(' ').pop().slice(0, 3).toUpperCase());
-  const src = STORE ? '' : isDark() && !onWhite && side.logoDark ? side.logoDark : side.logo;
+  const src = isDark() && !onWhite && side.logoDark ? side.logoDark : side.logo;
   const pic = src ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '';
   return `<span class="emb ${cls}${bg ? '' : ' neutral'}${src ? ' has-logo' : ''}" ${style}>${pic}<b>${ab}</b></span>`;
 }
