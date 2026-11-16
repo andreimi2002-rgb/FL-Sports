@@ -123,20 +123,11 @@ export const PACKS = {
     strip: { src: 'america', cities: ['new-york-city-ny', 'east-rutherford-nj'], venues: ['madison-square-garden', 'metlife-stadium', 'yankee-stadium'] } }
 };
 export const packOf = k => Object.values(PACKS).find(p => p.keys.includes(k))?.id || null;
-// The page's pack: the owner's devices (marked with ?eu=1, which also stops counting their visits) keep
-// Florida; everyone else gets New York. The Netlify functions (no browser) start from Florida.
-export const PACK = (() => {
-  if (typeof window === 'undefined') return 'fl';
-  try {
-    const eu = new URLSearchParams(location.search).get('eu');
-    if (eu === '1' || (eu !== '0' && localStorage.getItem('flgames-notrack') === '1')) return 'fl';
-  } catch (e) { /* storage blocked */ }
-  return 'ny';
-})();
+// Personal edition: the full experience on every device, without an owner marker.
+export const PACK = 'fl';
 export const HOME = PACKS[PACK];
-// The app from the Microsoft Store (it starts at /?app=store, remembered on the device): only content we may
-// show in a store app, so no official team logos, ESPN photos or ESPN video (Store Policy 11.2); the rest is
-// the same site. ?app=web turns it off again (for testing).
+// Detect the existing Store wrapper for installation and push handling only.
+// The personal edition keeps all media enabled. ?app=web clears the wrapper marker.
 export const STORE = (() => {
   if (typeof window === 'undefined') return false;
   try {
@@ -146,8 +137,8 @@ export const STORE = (() => {
     return localStorage.getItem('flgames-store') === '1' || a === 'store';
   } catch (e) { return new URLSearchParams(location.search).get('app') === 'store'; }
 })();
-// May this picture be shown? In the store app, not when it comes from ESPN (logos, players, stadiums, news).
-export const okImg = url => !(STORE && /(^|\.)espn(cdn)?\.com\//i.test(String(url || '').replace(/^https?:\/\//, '')));
+// Kept for shared image renderers.
+export const okImg = () => true; // Personal edition: ESPN images are enabled.
 export const TEAMS = Object.fromEntries(HOME.keys.map(k => [k, ALL_TEAMS[k]]));
 
 // Division tables shown on the page. Members are ESPN display names.

@@ -224,43 +224,14 @@ await test('stats: counting views and actions, nothing else accepted', async () 
   let big = null;
   for (let i = 0; i < 320; i++) big = st.addHit(big, { c: 'search', v: 'x' + i });
   assert.equal(Object.keys(big.counts.search).length, 300, 'a day keeps at most 300 values per kind');
-  const track = await import('../js/track.js').catch(() => null);
-  if (track) {
-    assert.equal(track.kindOf(''), 'acasa'); assert.equal(track.kindOf('#ligi/ghid'), 'ghid');
-    assert.equal(track.kindOf('#meci/NBA/1'), 'meci'); assert.equal(track.kindOf('#ceva'), 'acasa');
-  }
 });
-await test('stats: the hit and feedback functions, and the key on the stats page', async () => {
-  const hit = (await import('../netlify/functions/hit.mjs')).default;
-  const fb = (await import('../netlify/functions/feedback.mjs')).default;
-  const stats = (await import('../netlify/functions/stats.mjs')).default;
-  const post = (fn, path, o, ua = 'Mozilla/5.0') => fn(req(path, { method: 'POST', headers: { 'content-type': 'application/json', 'user-agent': ua }, body: JSON.stringify(o) }), {});
-  assert.equal((await post(hit, '/api/hit', { k: 'ghid', f: true, n: true, a: false })).status, 204);
-  assert.equal((await post(hit, '/api/hit', { k: 'nope' })).status, 400);
-  assert.equal((await post(hit, '/api/hit', { k: 'ghid', f: true }, 'Googlebot/2.1')).status, 204, 'bots answered, not counted');
-  assert.equal((await post(hit, '/api/hit', { b: [{ k: 'meci', f: true, n: false, src: 'instagram' }, { c: 'team', v: 'heat' }] })).status, 204, 'a batch');
-  assert.equal((await post(hit, '/api/hit', { b: [{ c: 'nope' }] })).status, 400);
-  assert.equal((await post(fb, '/api/feedback', { text: '' })).status, 400);
-  assert.equal((await post(fb, '/api/feedback', { text: 'x'.repeat(2001) })).status, 400);
-  assert.equal((await post(fb, '/api/feedback', { text: 'Îmi place ghidul <b>mult</b>', contact: 'test' })).status, 200);
-  delete process.env.STATS_KEY;
-  assert.equal((await stats(req('/api/stats?key=x'), {})).status, 503);
-  process.env.STATS_KEY = 'secret-key-123';
-  assert.equal((await stats(req('/api/stats?key=wrong'), {})).status, 403);
-  const page = await stats(req('/api/stats?key=secret-key-123'), {});
-  assert.equal(page.status, 200);
-  const html = await page.text();
-  assert.match(html, /Ghid<\/td><td>\d+/);
-  assert.match(html, /De unde vin, ultimele 7 zile[\s\S]*instagram/);
-  assert.match(html, /Echipe deschise[\s\S]*Miami Heat/, 'team keys shown by name');
-  assert.match(html, /Nu număra acest browser|devbtn/, 'the owner can switch counting off from the stats page');
-  // Today from zero: only with the key.
-  const reset = (k) => stats(req('/api/stats?key=' + k, { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'action=reset-day' }), {});
-  assert.equal((await reset('wrong')).status, 403);
-  assert.equal((await reset('secret-key-123')).status, 303);
-  assert.match(await (await stats(req('/api/stats?key=secret-key-123'), {})).text(), /Nicio vizită încă/);
-  assert.match(html, /Îmi place ghidul &lt;b&gt;mult&lt;\/b&gt;/, 'messages are escaped');
-  delete process.env.STATS_KEY;
+await test('personal: retired beta endpoints reject collection', async () => {
+  for (const name of ['hit', 'feedback']) {
+    const fn = (await import(`../netlify/functions/${name}.mjs`)).default;
+    const r = await fn(req(`/api/${name}`, { method: 'POST', body: JSON.stringify({ text: 'Test', k: 'ghid' }) }), {});
+    assert.equal(r.status, 410);
+    assert.match((await r.json()).error, /colectarea este oprită/);
+  }
 });
 
 globalThis.fetch = realFetch;

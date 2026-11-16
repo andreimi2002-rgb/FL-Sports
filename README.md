@@ -1,5 +1,7 @@
 # American Sports Hub
 
+Ediție personală premium, în română: experiența completă, fără abonament. Direcția de produs public este oprită. [Planul de dezvoltare și verificare](docs/PLAN-PERSONAL.md).
+
 Sportul american pe românește: echipele tale din NBA, NHL, NFL, MLS și MLB (implicit cele din
 Florida: Heat, Magic, Panthers, Lightning, Dolphins, Buccaneers, Jaguars, Inter Miami, Orlando City,
 Marlins, Rays), cu ora României, scor live, rezultate,

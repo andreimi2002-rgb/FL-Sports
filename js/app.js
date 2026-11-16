@@ -14,7 +14,7 @@ import { OV, cal, closeOv, clubSide, clubView, gameView, go, loadGame, notifyOpe
 import { LG, navView, renderLeagues, renderTodayStrip, setLgHash, setupJump, usKey } from './views.js';
 import { pickSearch } from './search.js';
 import { loadHealth } from './health.js';
-import { trackEvent, trackInstall, setupActivity, setNotCounted, notCounted } from './track.js';
+import { trackEvent, trackInstall, setupActivity } from './track.js';
 
 /* ----- theme ----- */
 function applyTheme() {
@@ -53,7 +53,6 @@ window.addEventListener('click', e => {
 }, true);
 
 /* ================= events ================= */
-let vtaps = 0, vtapAt = 0;
 function setTz(z) { state.tz = z; state.day = null; state.week = null; state.month = null; store.set('flgames-tz', z); render(); }
 function resetFilters() { state.team = ''; state.home = false; state.awake = false; $('homeonly').checked = false; $('awake').checked = false; Object.keys(LEAGUES).forEach(l => state.leagues.add(l)); renderStatic(); }
 $('tz-ro').onclick = () => setTz('ro');
@@ -116,34 +115,7 @@ function handle(e) {
   }
   // Counted actions that also go on to their normal handling.
   if (e.target.closest('a[href^="webcal:"], a[href*="calendar.google.com"], [data-copycal]')) trackEvent('calendar');
-  if ((el = q('[data-feedback]'))) { e.preventDefault(); go('#parere'); return; }
   if ((el = q('[data-privacy]'))) { e.preventDefault(); go('#confidentialitate'); return; }
-  if ((el = q('[data-terms]'))) { e.preventDefault(); go('#termeni'); return; }
-  if ((el = q('[data-donate-open]'))) { e.preventDefault(); go('#sustine'); return; }
-  if ((el = q('[data-fb-send]'))) {
-    const text = $('fbtext').value.trim(), contact = $('fbcontact').value.trim(), msg = $('fbmsg');
-    if (text.length < 3) { msg.textContent = 'Scrie câteva cuvinte.'; return; }
-    el.disabled = true; msg.textContent = 'Se trimite…';
-    fetch('/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text, contact, page: matchMedia('(display-mode: standalone)').matches || navigator.standalone ? 'din aplicație' : 'din browser' }) })
-      .then(r => r.json().then(j => { if (!r.ok) throw new Error(j.error || 'Eroare ' + r.status); }))
-      .then(() => { trackEvent('feedback'); $('fbtext').value = ''; msg.className = 'nmsg ok'; msg.textContent = 'Mulțumim! Am primit mesajul.'; })
-      .catch(x => { msg.className = 'nmsg'; msg.textContent = navigator.onLine ? String(x.message || x) : 'Ești offline; încearcă din nou cu internet.'; })
-      .finally(() => { el.disabled = false; });
-    return;
-  }
-  if ((el = q('#appver'))) {
-    // Five taps on the version: this is the owner's device (visits not counted, the Florida pack). Only ever
-    // marks: an accidental second round of taps must not take the mark away (?eu=0 does that).
-    vtaps = Date.now() - vtapAt < 1500 ? vtaps + 1 : 1; vtapAt = Date.now();
-    if (vtaps >= 5) {
-      vtaps = 0;
-      const was = notCounted();
-      setNotCounted(true);
-      el.textContent = 'Dispozitivul tău: vizitele nu se numără';
-      if (!was && PACK !== 'fl') setTimeout(() => location.reload(), 1200);   // the Florida pack comes with a reload
-    }
-    return;
-  }
   // Footer: look for a newer version now (the installed app also does it on every return).
   if ((el = q('[data-update]'))) {
     el.textContent = 'Caut…';

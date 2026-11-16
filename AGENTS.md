@@ -1,5 +1,17 @@
 # American Sports Hub
 
+## Direcția curentă — ediție personală premium (17 noiembrie 2026)
+
+- Dezvoltăm varianta personală, cu logo-uri oficiale ESPN, imagini, clipuri și toate funcțiile sportive existente. „Premium” descrie experiența completă, fără abonament sau plată.
+- Baza verificată: `stage-27-jucator`, commit `0c4a0c2`, descendent al `main` (`c936956`). Ediția personală începe pe `stage-28-personal-premium` (v32).
+- Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos despre beta, monetizare și lansare publică sunt istoric, nu direcție de implementare.
+- Florida este pachetul implicit fără `?eu=1`. Preferințele existente `flgames-*`, calendarul, abonamentele push și adresa aplicației se păstrează. Marcajul Store rămâne doar pentru comportamentul aplicației și notificări, fără să restrângă conținutul personal.
+- Telemetria și colectarea feedback-ului sunt oprite; datele istorice nu se șterg automat. Nu adăuga promovare, donații, paywall sau lansare publică.
+- Push și PR către `main`, apoi verificarea Deploy Preview sunt autorizate pentru fiecare etapă. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
+- Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main` (verificat în panou). Nu schimba adresa și nu declanșa deploy în producție.
+- Ediție personală nu înseamnă acces privat: repository-ul și preview-urile erau publice la verificare. `noindex` și `robots.txt` nu sunt autentificare. Nu schimba vizibilitatea sau controlul accesului fără instrucțiunea utilizatorului.
+
+
 Sportul american pe românește (fost „Meciuri Florida”): echipele tale din NBA, NHL, NFL, MLS și
 MLB, implicit cele din Florida, cu ora României, rezultate, clasamente, profiluri de echipă și pagini de meci.
 Proiect pentru uz personal. Repo-ul a fost înainte jocul Airport Operations Manager (rămas în

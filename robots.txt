@@ -1,5 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /api/
-
-Sitemap: https://americansportshub.netlify.app/sitemap.xml
+Disallow: /
