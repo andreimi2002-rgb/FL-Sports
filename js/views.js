@@ -9,6 +9,7 @@ import { guideHtml } from './guide.js';
 import { PLACES, loadPlaces, AMERICA, loadAmerica, placesIndexHtml } from './places.js';
 import { DATA, TZNAME, col, dayLabel, flKey, fmtKey, fmtTime, gameById, getJSON, keepExtra, keyOf, state, tShort, sp, mineOf, entryOf, isLive, played, teamBtn, teamEmbBtn } from './core.js';
 import { OV, refreshGame, route } from './pages.js';
+import { renderMorning } from './morning.js';
 
 /* ================= views: Florida | Ligile ================= */
 export const LG = { view: 'florida', tab: 'scoruri', day: null, chosen: new Set(Object.keys(LEAGUES)), scores: new Map() };
@@ -22,8 +23,10 @@ export const lgCtx = () => ({
 export function setView(v) {
   LG.view = v;
   $('flview').hidden = v !== 'florida'; $('lgview').hidden = v !== 'ligi';
+  $('morningview').hidden = v !== 'morning';
   document.querySelectorAll('.viewtabs [data-goview]').forEach(a => a.setAttribute('aria-current', a.dataset.goview === v ? 'page' : 'false'));
   if (v === 'ligi') renderLeagues();
+  if (v === 'morning') renderMorning();
 }
 export function navView(hash) {
   history.pushState({ view: 1 }, '', location.pathname + location.search + hash);

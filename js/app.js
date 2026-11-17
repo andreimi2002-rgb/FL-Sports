@@ -15,6 +15,7 @@ import { LG, navView, renderLeagues, renderTodayStrip, setLgHash, setupJump, usK
 import { pickSearch } from './search.js';
 import { loadHealth } from './health.js';
 import { trackEvent, trackInstall, setupActivity } from './track.js';
+import { renderMorning } from './morning.js';
 
 /* ----- theme ----- */
 function applyTheme() {
@@ -34,6 +35,7 @@ function setTheme(t) {
 function rerenderAll() {
   if (!GAMES.length) return;
   renderStatic(); render();
+  renderMorning();
   if (!$('ov').hidden) route(true);
 }
 applyTheme();
@@ -44,7 +46,7 @@ const paintSpoil = () => document.querySelectorAll('[data-nospoil]').forEach(b =
 setNoSpoil(SPOIL.on); paintSpoil();
 // Before any other click handler: a tap on a covered score shows that game, instead of opening it.
 window.addEventListener('click', e => {
-  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); return; }
+  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); renderMorning(); return; }
   if (!SPOIL.on) return;
   const c = e.target.closest?.('[data-spshow], .sp:not(.open), .spbody:not(.open)');
   if (!c) return;
@@ -128,6 +130,7 @@ function handle(e) {
     if (el.dataset.lgto) LG.tab = el.dataset.lgto;
     if (el.dataset.lgguide && LEAGUES[el.dataset.lgguide]) LG.chosen = new Set([el.dataset.lgguide]);
     if (el.dataset.goview === 'ligi') navView('#ligi' + (LG.tab !== 'scoruri' ? '/' + LG.tab : ''));
+    else if (el.dataset.goview === 'morning') navView('#dimineata');
     else navView('');
     return;
   }
