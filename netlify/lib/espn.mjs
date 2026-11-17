@@ -1,3 +1,4 @@
+import { excitementIndex } from './excitement.mjs';
 // Reads ESPN's public JSON endpoints (free, no key) and turns them into the small format the page uses.
 // ESPN's site API is unofficial: every reader below is defensive and returns partial data instead of throwing.
 import { LEAGUES, ALL_TEAMS, PACKS, norm } from '../../js/teams.js';
@@ -383,6 +384,7 @@ export function normalizeSummary(j, l) {
     plays,
     box: safe(() => boxPlayers(j, sideOf), []),
     teamStats: safe(() => teamStats(j, sideOf), []),
+    excitement: safe(() => excitementIndex(j.winprobability, l, comp.status?.type?.state), {value:null,reason:'missing',version:1}),
     wp: safe(() => winProbability(j), []),
     injuries: safe(() => injuries(j, sideOf), []),
     series: safe(() => series(j), null),
