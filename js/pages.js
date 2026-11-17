@@ -166,7 +166,7 @@ export function openTeam(k, keep) {
       ${st.away ? `<div class="stat"><div class="v">${st.away}</div><div class="l">În deplasare</div></div>` : ''}
       ${st.streak ? `<div class="stat"><div class="v" style="font-size:17px">${last[0] ? sp(last[0].id, esc(st.streak)) : esc(st.streak)}</div><div class="l">Serie curentă</div></div>` : ''}
     </div>
-    ${['NFL', 'NHL'].includes(T.l) ? teamBasicStatsHtml(TEAMX.get(k), !!TEAMINFO[k]?.id) : ''}
+    ${['NFL', 'NHL', 'MLS'].includes(T.l) ? teamBasicStatsHtml(TEAMX.get(k), !!TEAMINFO[k]?.id) : ''}
     <div><h3>Forma, ultimele ${last.length} meciuri</h3><div class="form">${formChips(k)}<span>cel mai recent în dreapta</span></div></div>
     ${aboutHtml(fi)}
     <dl class="facts">
