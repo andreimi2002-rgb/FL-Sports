@@ -10,8 +10,8 @@ export default async req=>{if(req.method!=='GET')return new Response(null,{statu
  const season=seasonFromTitle||Math.max(0,...seasonNames)||new Date().getFullYear();
  let seasons=null,recent=null,advanced=null,advancedStatus='not-applicable';
  if(league==='NFL'){
-   seasons=(st.categories||[]).map(c=>({name:c.displayName||c.name||'',names:c.names||[],labels:c.labels||[],displayNames:c.displayNames||[],totals:c.totals||[],rows:(c.statistics||[]).map(r=>({label:r.season?.displayName||'',team:st.teams?.[r.teamSlug]?.abbreviation||'',stats:r.stats||[]}))})).filter(c=>c.rows.length);
-   recent=(o.gameLog?.statistics||[]).map(g=>({name:g.displayName||'',names:g.names||[],labels:g.labels||[],displayNames:g.displayNames||[],rows:(g.events||[]).slice(0,5).map(r=>{const e=o.gameLog.events?.[r.eventId];return {id:r.eventId,date:e?.gameDate,opponent:e?.opponent?.displayName||'',stats:r.stats||[]};})})).filter(g=>g.rows.length);
+   seasons=(st.categories||[]).map(c=>({key:c.name||'',name:c.displayName||c.name||'',names:c.names||[],labels:c.labels||[],displayNames:c.displayNames||[],totals:c.totals||[],rows:(c.statistics||[]).map(r=>({label:r.season?.displayName||'',team:st.teams?.[r.teamSlug]?.abbreviation||'',stats:r.stats||[]}))})).filter(c=>c.rows.length);
+   recent=(o.gameLog?.statistics||[]).map(g=>({key:g.name||'',name:g.displayName||'',names:g.names||[],labels:g.labels||[],displayNames:g.displayNames||[],rows:(g.events||[]).slice(0,5).map(r=>{const e=o.gameLog.events?.[r.eventId];return {id:r.eventId,date:e?.gameDate,opponent:e?.opponent?.displayName||'',stats:r.stats||[]};})})).filter(g=>g.rows.length);
    try{const result=await nflversePlayerMetrics(id,season,a.position?.abbreviation||'');advanced=result.advanced||null;advancedStatus=result.status;}catch(e){console.warn('nflverse player stats unavailable:',e.message);advancedStatus='unavailable';}
  }else{
    const career=st.categories?.find(c=>c.name==='averages');const recentGroup=o.gameLog?.statistics?.[0];

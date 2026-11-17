@@ -10,7 +10,7 @@ import { install, calendarHtml } from './phone.js';
 import { groupTableHtml as groupTbl } from './leagues.js';
 import { CLUBS, loadClubs, clubInfo, aboutHtml, infoFactsHtml } from './clubinfo.js';
 import { watchLine } from './guide.js';
-import { teamTabsHtml, seasonChartHtml, leadersHtml, rosterHtml, newsHtml } from './teamx.js';
+import { teamTabsHtml, seasonChartHtml, leadersHtml, teamBasicStatsHtml, rosterHtml, newsHtml } from './teamx.js';
 import { N, refreshNotify, notifyHtml } from './notify.js';
 import { PLACES, loadPlaces, venueByName, venueOfTeam, cityOf, getWeather, gameWeatherHtml, cityHtml, venueHtml, placeWeatherHtml, floridaClock, AMERICA, loadAmerica, getVenue, getCity, venueOfClub, cityLiteHtml, venueLiteHtml, clockIn, hoursBehindRomania } from './places.js';
 import { teamBtn, teamEmbBtn, DATA, GAMES, OUT, OUTL, REC_LABEL, TEAMINFO, TZNAME, col, confShort, countdown, dayLabel, flKey, flSide, fmtShort, fmtTime, formChips, gameById, getJSON, isLive, keepExtra, keyOf, lastGames, oppInfo, outcome, played, recordOf, state, store, streakRo, tShort, teamStats, sp, spOpen, entryOf } from './core.js';
@@ -166,6 +166,7 @@ export function openTeam(k, keep) {
       ${st.away ? `<div class="stat"><div class="v">${st.away}</div><div class="l">În deplasare</div></div>` : ''}
       ${st.streak ? `<div class="stat"><div class="v" style="font-size:17px">${last[0] ? sp(last[0].id, esc(st.streak)) : esc(st.streak)}</div><div class="l">Serie curentă</div></div>` : ''}
     </div>
+    ${T.l === 'NFL' ? teamBasicStatsHtml(TEAMX.get(k), !!TEAMINFO[k]?.id && DATA.mode !== 'snapshot') : ''}
     <div><h3>Forma, ultimele ${last.length} meciuri</h3><div class="form">${formChips(k)}<span>cel mai recent în dreapta</span></div></div>
     ${aboutHtml(fi)}
     <dl class="facts">

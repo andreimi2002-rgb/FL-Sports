@@ -77,6 +77,11 @@ export function leadersHtml(x) {
   if (!x?.leaders?.length) return '';
   return `<section><h3>Liderii echipei în sezon</h3><div class="tleaders">${x.leaders.map(p => `<div class="tlead">${p.head && okImg(p.head) ? `<img src="${esc(p.head)}" alt="" loading="lazy">` : '<span class="ph"></span>'}<span><small>${esc(LEAD_RO[p.cat] || p.label)}</small><b>${esc(p.who)}</b></span><span class="v">${esc(roNum(p.val))}</span></div>`).join('')}</div></section>`;
 }
+export function teamBasicStatsHtml(x, loading = false) {
+  if (!x) return `<section><h3>Statistici de bază</h3><p class="fn">${loading ? 'Se încarcă statisticile echipei…' : 'Statisticile echipei nu sunt disponibile acum.'}</p></section>`;
+  if (!x.stats?.length) return '<section><h3>Statistici de bază</h3><p class="fn">Statisticile echipei nu sunt disponibile acum.</p></section>';
+  return `<section><h3>Statistici de bază · ${esc(x.season)}</h3><div class="stats">${x.stats.map(s => `<div class="stat"><div class="v">${esc(roNum(s.value))}</div><div class="l">${esc(s.label)}</div></div>`).join('')}</div></section>`;
+}
 
 /* ---------- roster ---------- */
 const GROUP_RO = {

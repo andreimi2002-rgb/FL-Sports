@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { parseCsv, parseNflPlayerIds } from '../netlify/lib/csv.mjs';
+import { normalizeNflTeamStats } from '../netlify/lib/espn.mjs';
 import { parseNflSeasonStats, nflversePlayerMetrics } from '../netlify/lib/nflverse.mjs';
 import player from '../netlify/functions/player.mjs';
 import { playerHtml } from '../js/player.js';
-import { rosterHtml } from '../js/teamx.js';
+import { rosterHtml, teamBasicStatsHtml } from '../js/teamx.js';
 import { panelHtml } from '../js/game.js';
 
 assert.deepEqual(parseCsv('a,b\r\n1,"two, words"\r\n2,"x""y"'), [['a', 'b'], ['1', 'two, words'], ['2', 'x"y']]);
@@ -74,11 +75,20 @@ try {
   const runnerMetrics = await nflversePlayerMetrics('3139477', 2026, 'RB');
   assert.equal(runnerMetrics.advanced.metrics.find(m => m.label === 'EPA / alergare').value, 3.139 / 25);
   assert.equal(runnerMetrics.advanced.metrics.find(m => m.label === 'RACR').value, 1.2);
+  const receiverHtml = playerHtml({ ...profile, position: 'WR', advanced: receiverMetrics.advanced });
+  assert.match(receiverHtml, /EPA \/ țintă/);
+  assert.match(receiverHtml, /Ținte din echipă/);
+  assert.doesNotMatch(receiverHtml, /WOPR|RACR|CPOE/);
+  const runnerHtml = playerHtml({ ...profile, position: 'RB', advanced: runnerMetrics.advanced });
+  assert.match(runnerHtml, /EPA \/ alergare/);
+  assert.match(runnerHtml, /EPA \/ țintă/);
+  assert.doesNotMatch(runnerHtml, /RACR|CPOE/);
 
   const html = playerHtml(profile, [{ id: '123', name: 'Alt jucător' }], null);
   assert.match(html, /NFL · Kansas City Chiefs/);
-  assert.match(html, /Metrici avansate · 2026/);
+  assert.match(html, /Eficiență · 2026/);
   assert.match(html, /EPA \/ dropback/);
+  assert.match(html, /Puncte estimate adăugate pe pasă sau sack/);
   assert.match(html, /Sezon regulat/);
   assert.match(html, /Carieră/);
   assert.doesNotMatch(html, /Projected|Last 5 Games/);
@@ -94,6 +104,44 @@ try {
     ...profile, id: '123', name: 'Josh Allen', summary: compareSummary
   });
   assert.match(compareHtml, /Josh Allen<\/th><td>175<\/td>/);
+
+  const defender = {
+    ...profile,
+    position: 'DE',
+    advanced: null,
+    advancedStatus: 'unsupported',
+    summary: {
+      names: ['totalTackles', 'sacks', 'interceptions', 'totalTouchdowns'],
+      categories: [{ name: 'defensive', displayName: 'Defense', count: 3 }, { name: 'scoring', displayName: 'Scoring', count: 1 }],
+      rows: [{ label: 'Sezon regulat', stats: ['5', '2', '1', '0'] }, { label: 'Carieră', stats: ['50', '5', '2', '1'] }]
+    },
+    seasons: [
+      { key: 'defensive', name: 'Defense', names: ['gamesPlayed', 'totalTackles', 'sacks', 'interceptions'], rows: [{ label: '2026', stats: ['9', '5', '2', '1'] }] },
+      { key: 'scoring', name: 'Scoring', names: ['gamesPlayed', 'totalTouchdowns'], rows: [{ label: '2026', stats: ['9', '1'] }] }
+    ],
+    recent: [
+      { name: 'Tackles', names: ['totalTackles', 'sacks'], rows: [{ label: '', opponent: 'Falcons', stats: ['5', '2'] }] },
+      { name: 'Fumbles', names: ['fumblesForced'], rows: [{ label: '', opponent: 'Falcons', stats: ['1'] }] }
+    ]
+  };
+  const defenderHtml = playerHtml(defender);
+  assert.match(defenderHtml, /Defense/);
+  assert.doesNotMatch(defenderHtml, /Scoring|Fumbles|Eficiență|Metrici avansate/);
+
+  const teamStats = normalizeNflTeamStats({ results: { stats: { categories: [
+    { name: 'scoring', stats: [{ name: 'totalPointsPerGame', displayValue: '20.5' }] },
+    { name: 'passing', stats: [{ name: 'netPassingYardsPerGame', displayValue: '230.1' }] },
+    { name: 'rushing', stats: [{ name: 'rushingYardsPerGame', displayValue: '115.2' }] },
+    { name: 'defensive', stats: [{ name: 'sacks', perGameDisplayValue: '2.1' }] },
+    { name: 'defensiveInterceptions', stats: [{ name: 'interceptions', displayValue: '8' }] }
+  ] } } });
+  assert.deepEqual(teamStats.map(s => s.value), ['20.5', '230.1', '115.2', '2.1', '8']);
+  const teamHtml = teamBasicStatsHtml({ season: 2026, stats: teamStats });
+  assert.match(teamHtml, /Puncte pe meci/);
+  assert.match(teamHtml, /Yarzi din alergare pe meci/);
+  assert.match(teamBasicStatsHtml(null, true), /Se încarcă statisticile echipei/);
+  assert.match(teamBasicStatsHtml({ stats: [] }), /nu sunt disponibile/);
+
   assert.match(rosterHtml({ roster: [{ name: 'QB', players: [{ id: '3139477', n: 'Patrick Mahomes' }] }] }, 'NFL'), /data-league="NFL"/);
   const gameHtml = panelHtml(
     { state: 'post', l: 'NFL', h: 'Kansas City Chiefs', a: 'Miami Dolphins', H: { name: 'Kansas City Chiefs' }, A: { name: 'Miami Dolphins' } },
