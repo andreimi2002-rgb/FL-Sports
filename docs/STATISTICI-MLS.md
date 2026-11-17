@@ -2,7 +2,7 @@
 
 ## Stare
 
-MLS este implementat la v50 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. Testele locale și verificările live ESPN au trecut. Deploy Preview-ul MLS este în curs de verificare; nu s-a făcut merge în producție.
+MLS este implementat la v50 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. `npm.cmd test` și toate cele 13 smoke checks au trecut. Deploy Preview-ul a fost verificat pe profile live, căutare și pagina Inter Miami; nu s-a făcut merge în producție.
 
 ## Profiluri de jucători
 
@@ -20,4 +20,4 @@ Pagina echipei afișează până la cinci repere ESPN: goluri marcate și primit
 
 ## Verificări
 
-Testul MLS acoperă jucător de câmp și portar, fallback-ul la split-ul MLS din overview, ultimele meciuri, comparații, statisticile echipei și linkurile de profil din roster și boxscore. `npm.cmd test` a trecut local. Endpoint-urile live au fost verificate pe un jucător de câmp, un portar și Inter Miami; verificarea vizuală a preview-ului v50 este în curs.
+Testul MLS acoperă jucător de câmp și portar, fallback-ul la split-ul MLS din overview, ultimele meciuri, comparații, statisticile echipei și linkurile de profil din roster și boxscore. `npm.cmd test` a trecut local. Endpoint-urile live au fost verificate pe un jucător de câmp, un portar și Inter Miami. În preview, profilurile de jucători și statisticile echipei au fost verificate pe desktop și mobil; pe mobil, temele luminoasă și întunecată au fost verificate fără overflow orizontal.
