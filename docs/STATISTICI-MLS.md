@@ -2,7 +2,7 @@
 
 ## Stare
 
-MLS este implementat la v50 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. `npm.cmd test` și toate cele 13 smoke checks au trecut. Deploy Preview-ul a fost verificat pe profile live, căutare și pagina Inter Miami; nu s-a făcut merge în producție.
+MLS a fost adăugat la v50 în PR #32 și este acum în producție prin commitul `9da9fcb` pe `main`. `npm.cmd test`, toate cele 13 smoke checks și verificările live/vizuale au trecut. Deploy Preview-ul a fost verificat pe profiluri, căutare și pagina Inter Miami.
 
 ## Profiluri de jucători
 

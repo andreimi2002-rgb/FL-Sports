@@ -2,7 +2,7 @@
 
 ## Stare
 
-NFL a fost adăugat în PR #32 pe `stage-32-statistici-nfl-nhl-mls`, la v46. PR-ul rămâne draft; Deploy Preview-ul NFL a fost verificat pe date live. Același preview este acum v47 cu NHL inclus și a trecut smoke checks. Nu s-a făcut merge în producție. MLS urmează în același PR; MLB este amânat.
+NFL a fost adăugat la v46 în PR #32, împreună cu NHL și MLS, apoi tot lotul a fost merge-uit în `main` la commitul `9da9fcb`. Preview-ul NFL a fost verificat pe date live; v50 în producție a trecut toate cele 13 smoke checks. MLB este amânat.
 
 ## Profilul jucătorului
 

@@ -2,7 +2,7 @@
 
 ## Stare
 
-NHL este implementat la v47 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. [Deploy Preview-ul](https://deploy-preview-32--americansportshub.netlify.app) a trecut toate cele 13 smoke checks; au fost verificate profilurile live skater/goalie, căutarea NBA/NFL/NHL, statisticile Florida Panthers și afișarea desktop/mobil. Nu s-a făcut merge în producție. NFL este descris în [STATISTICI-NFL.md](STATISTICI-NFL.md); planul etapelor este în [PLAN-PERSONAL.md](PLAN-PERSONAL.md).
+NHL a fost adăugat la v47 în PR #32, împreună cu NFL și MLS, apoi tot lotul a fost merge-uit în `main` la commitul `9da9fcb` (producție v50). [Deploy Preview-ul](https://deploy-preview-32--americansportshub.netlify.app) a trecut toate cele 13 smoke checks; au fost verificate profilurile live skater/goalie, căutarea NBA/NFL/NHL, statisticile Florida Panthers și afișarea desktop/mobil. După merge, toate cele 13 smoke checks au trecut și în producție. NFL este descris în [STATISTICI-NFL.md](STATISTICI-NFL.md); planul etapelor este în [PLAN-PERSONAL.md](PLAN-PERSONAL.md).
 
 ## Profiluri de jucători
 
