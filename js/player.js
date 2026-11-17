@@ -209,7 +209,7 @@ function mlsSummaryHtml(summary, position) {
 
 function mlsRecentHtml(recent, position) {
   const columns = mlsColumns(recent?.names || [], position)
-    .filter(([key]) => key !== 'appearances' && key !== 'savePct');
+    .filter(([key]) => !['appearances', 'savePct', 'yellowCards', 'redCards'].includes(key));
   if (!recent?.rows?.length || !columns.length) return '<p class="fn">Date indisponibile.</p>';
   const rows = recent.rows.slice(0, 5).map(r => ({
     ...r,

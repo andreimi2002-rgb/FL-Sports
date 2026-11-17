@@ -78,6 +78,7 @@ try {
   const fieldHtml = playerHtml(field, [{ id: '54321', name: 'Dayne St. Clair' }], field);
   assert.match(fieldHtml, /Sezon MLS/);
   assert.match(fieldHtml, /Ultimele 5 meciuri/);
+  assert.match(fieldHtml, /Perioadă<\/th><th>G<\/th><th>A<\/th><th>ȘUT<\/th><\/tr>/);
   assert.match(fieldHtml, /Comparație · statistici în sezon/);
   assert.match(fieldHtml, /G = goluri; A = pase decisive/);
   assert.match(fieldHtml, /Statistici de sezon și meciuri recente de la ESPN/);
