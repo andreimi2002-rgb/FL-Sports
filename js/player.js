@@ -282,7 +282,7 @@ function advancedHtml(p) {
   return `<p class="fn">${note}</p>`;
 }
 
-export function playerHtml(p, options = [], compare = null, hideStats = false) {
+export function playerHtml(p, options = [], compare = null) {
   const league = p.league || 'NBA';
   const isNfl = league === 'NFL';
   const isNhl = league === 'NHL';
@@ -311,9 +311,7 @@ export function playerHtml(p, options = [], compare = null, hideStats = false) {
         }) }
       ]
     });
-  const stats = hideStats
-    ? '<p class="fn">Statisticile sunt ascunse în modul fără spoilere.</p>'
-    : isNfl
+  const stats = isNfl
       ? `<section><h3>Sezon curent și carieră</h3>${nflSummaryHtml(p.summary, p.position)}</section>${advancedHtml(p)}<section><h3>Ultimele 5 meciuri</h3>${nflRecentHtml(p.recent, p.position)}</section><section><h3>Comparație · statistici în sezon</h3><label>Jucători din meciurile și loturile încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section><section><h3>Carieră</h3>${nflSeasonsHtml(p.seasons, p.position)}</section>`
       : isNhl
         ? `<section><h3>Sezon curent și carieră</h3>${nhlSummaryHtml(p.summary, p.position)}</section>${advancedHtml(p)}<section><h3>Ultimele 5 meciuri</h3>${nhlRecentHtml(p.recent, p.position)}</section><section><h3>Comparație · statistici în sezon</h3><label>Jucători din loturile NHL încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section><section><h3>Carieră</h3><details><summary>Istoric pe sezoane (ultimii 5)</summary>${nhlSeasonsHtml(p.seasons, p.position)}</details></section>`

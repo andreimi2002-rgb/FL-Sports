@@ -7,7 +7,7 @@ import { detailRo } from './ro.js';
 import { lgHeadHtml, scoresHtml, standingsHtml, teamsHtml, todayStripHtml, worldHtml, eventInfo, countryRo } from './leagues.js';
 import { guideHtml } from './guide.js';
 import { PLACES, loadPlaces, AMERICA, loadAmerica, placesIndexHtml } from './places.js';
-import { DATA, TZNAME, col, dayLabel, flKey, fmtKey, fmtTime, gameById, getJSON, keepExtra, keyOf, state, tShort, sp, mineOf, entryOf, isLive, played, teamBtn, teamEmbBtn } from './core.js';
+import { DATA, TZNAME, col, dayLabel, flKey, fmtKey, fmtTime, gameById, getJSON, keepExtra, keyOf, state, tShort, mineOf, entryOf, isLive, played, teamBtn, teamEmbBtn } from './core.js';
 import { OV, refreshGame, route } from './pages.js';
 import { renderMorning } from './morning.js';
 
@@ -15,18 +15,18 @@ import { renderMorning } from './morning.js';
 export const LG = { view: 'florida', tab: 'scoruri', day: null, chosen: new Set(Object.keys(LEAGUES)), scores: new Map() };
 export const usKey = d => fmtKey.fl.format(d);   // the US (Eastern) date: ESPN's scoreboards are by US day
 export const lgCtx = () => ({
-  emb, flKey, col, dayLabel, sp, ro: d => fmtTime.ro.format(d), dayOf: d => dayLabel(keyOf(d, 'ro')), zoneName: TZNAME[state.tz], today: usKey(new Date()),
+  emb, flKey, col, dayLabel, ro: d => fmtTime.ro.format(d), dayOf: d => dayLabel(keyOf(d, 'ro')), zoneName: TZNAME[state.tz], today: usKey(new Date()),
   status: g => g.state === 'in' ? `<b class="lv">LIVE</b><small>${esc(detailRo(g.detail, g.l))}</small>`
     : g.state === 'post' ? `<small>${esc(detailRo(g.detail, g.l) || 'Final')}</small>`
       : g.tbd ? '<small>oră neanunțată</small>' : `<b>${fmtTime[state.tz].format(g.d)}</b>${keyOf(g.d, state.tz) !== LG.day ? `<small>${esc(tShort(g.d))}</small>` : ''}`
 });
 export function setView(v) {
+  if (v !== 'ligi' || LG.tab !== 'dimineata') $('morningview').querySelector('video')?.pause();
   LG.view = v;
   $('flview').hidden = v !== 'florida'; $('lgview').hidden = v !== 'ligi';
-  $('morningview').hidden = v !== 'morning';
+  $('morningview').hidden = v !== 'ligi' || LG.tab !== 'dimineata';
   document.querySelectorAll('.viewtabs [data-goview]').forEach(a => a.setAttribute('aria-current', a.dataset.goview === v ? 'page' : 'false'));
   if (v === 'ligi') renderLeagues();
-  if (v === 'morning') renderMorning();
 }
 export function navView(hash) {
   history.pushState({ view: 1 }, '', location.pathname + location.search + hash);
@@ -97,6 +97,9 @@ export function renderLeagues() {
   if (LG.view !== 'ligi') return;
   const el = $('lgview'), ctx = lgCtx();
   const head = lgHeadHtml(LG.tab, Object.keys(LEAGUES), LG.chosen);
+  if (LG.tab !== 'dimineata') $('morningview').querySelector('video')?.pause();
+  $('morningview').hidden = LG.tab !== 'dimineata';
+  if (LG.tab === 'dimineata') { el.innerHTML = head; renderMorning(); return; }
   if (LG.tab === 'scoruri') {
     LG.day ||= ctx.today;
     const day = LG.day, data = LG.scores.get(day);
@@ -138,7 +141,7 @@ export function renderMotd(data) {
   if (!m) { sec.hidden = true; return; }
   const g = m.g, on = isLive(g), done = played(g), ro = fmtTime.ro.format(g.d);
   const when = m.watch === 2 ? `La ${ro}, oră bună în România.` : m.watch === 1 ? `Începe la ${ro}, târziu în România.` : `Începe la ${ro} ora României, noaptea: bun de văzut în reluare sau dimineața, în rezumat.`;
-  const mid = on || done ? sp(g.id, `${g.hs ?? 0}–${g.as ?? 0}`) : esc(ro);
+  const mid = on || done ? `${g.hs ?? 0}–${g.as ?? 0}` : esc(ro);
   const watch = watchLine(g.l);
   sec.hidden = false;
   sec.innerHTML = `<div class="tnhead"><h2 class="sec">Meciul zilei</h2><span class="motdsub">ales pentru România</span></div>

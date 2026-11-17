@@ -5,14 +5,14 @@
 import { HOME } from './teams.js';
 import { esc } from './ui.js';
 
-export const LG_TABS = [['scoruri', 'Scoruri'], ['clasamente', 'Clasamente'], ['echipe', 'Echipe'], ['evenimente', 'Europa și evenimente'], ['orase', 'Orașe și stadioane'], ['ghid', 'Ghid']];
+export const LG_TABS = [['scoruri', 'Scoruri'], ['dimineata', 'Dimineața mea'], ['clasamente', 'Clasamente'], ['echipe', 'Echipe'], ['evenimente', 'Europa și evenimente'], ['orase', 'Orașe și stadioane'], ['ghid', 'Ghid']];
 const L_ORDER = ['NBA', 'NHL', 'NFL', 'MLS', 'MLB'];
 const L_NAME = { NBA: 'NBA, baschet', NHL: 'NHL, hochei', NFL: 'NFL, fotbal american', MLS: 'MLS, fotbal', MLB: 'MLB, baseball' };
 
 export function lgHeadHtml(tab, leagues, chosen) {
   return `<div class="lghead">
     <div class="tabs lgtabs" role="tablist" aria-label="Ligile">${LG_TABS.map(([k, n]) => `<button type="button" role="tab" data-lgtab="${k}" aria-selected="${k === tab}" ${k === tab ? '' : 'tabindex="-1"'}>${n}</button>`).join('')}</div>
-    <div class="filters">${L_ORDER.filter(l => leagues.includes(l)).map(l => `<button class="chip" type="button" data-lgl="${l}" aria-pressed="${chosen.has(l)}" style="--c:var(--${l.toLowerCase()})"><span class="dot"></span>${l}</button>`).join('')}</div>
+    ${tab === 'dimineata' ? '' : `<div class="filters">${L_ORDER.filter(l => leagues.includes(l)).map(l => `<button class="chip" type="button" data-lgl="${l}" aria-pressed="${chosen.has(l)}" style="--c:var(--${l.toLowerCase()})"><span class="dot"></span>${l}</button>`).join('')}</div>`}
   </div>`;
 }
 
@@ -20,7 +20,7 @@ export function lgHeadHtml(tab, leagues, chosen) {
 const side = (g, s, ctx) => {
   const t = s === 'home' ? g.H : g.A, sc = s === 'home' ? g.hs : g.as, other = s === 'home' ? g.as : g.hs;
   const win = g.state === 'post' && sc != null && other != null && sc > other;
-  return `<span class="gsd${t.key ? ' fl' : ''}${win ? ' win' : ''}">${ctx.emb(t, 'sm')}<span class="nm">${esc(t.name)}${t.key ? ' <i aria-label="una dintre echipele tale">★</i>' : ''}</span>${g.state !== 'pre' ? `<b>${ctx.sp ? ctx.sp(g.id, sc ?? 0) : sc ?? 0}</b>` : ''}</span>`;
+  return `<span class="gsd${t.key ? ' fl' : ''}${win ? ' win' : ''}">${ctx.emb(t, 'sm')}<span class="nm">${esc(t.name)}${t.key ? ' <i aria-label="una dintre echipele tale">★</i>' : ''}</span>${g.state !== 'pre' ? `<b>${sc ?? 0}</b>` : ''}</span>`;
 };
 export function gameRowHtml(g, ctx) {
   const st = ctx.status(g);
@@ -117,7 +117,7 @@ export function eventInfo(e) {
   const [, title, text] = EVENT_RO.find(([re]) => re.test(key));
   return { title: title(e.title || ''), text };
 }
-const wrow = (g, ctx) => `<button class="row" type="button" data-game="${esc(g.id)}"><span class="when">${esc(ctx.dayOf(g.d))}</span><span><span class="ldot" style="--c:${ctx.col(g.l)}"></span>${g.l} · ${g.A.name === g.H.name && /stabilit/.test(g.H.name) ? 'echipele se decid în playoff' : `${esc(g.A.name)} – ${esc(g.H.name)}`}${g.raw?.country ? ` <small>${esc(g.v || '')}, ${esc(g.raw.city || '')} (${esc(countryRo(g.raw.country))})</small>` : ''}</span><span class="r">${g.state === 'pre' ? (g.tbd ? 'oră neanunțată' : esc(ctx.ro(g.d))) : ctx.sp(g.id, `${g.as ?? 0}–${g.hs ?? 0}`)}</span></button>`;
+const wrow = (g, ctx) => `<button class="row" type="button" data-game="${esc(g.id)}"><span class="when">${esc(ctx.dayOf(g.d))}</span><span><span class="ldot" style="--c:${ctx.col(g.l)}"></span>${g.l} · ${g.A.name === g.H.name && /stabilit/.test(g.H.name) ? 'echipele se decid în playoff' : `${esc(g.A.name)} – ${esc(g.H.name)}`}${g.raw?.country ? ` <small>${esc(g.v || '')}, ${esc(g.raw.city || '')} (${esc(countryRo(g.raw.country))})</small>` : ''}</span><span class="r">${g.state === 'pre' ? (g.tbd ? 'oră neanunțată' : esc(ctx.ro(g.d))) : `${g.as ?? 0}–${g.hs ?? 0}`}</span></button>`;
 export function worldHtml(data, chosen, ctx) {
   if (!data) return '<div class="skeleton" style="height:240px"></div>';
   if (data._err) return '<div class="empty">Lista nu a putut fi încărcată. Încearcă din nou mai târziu.</div>';

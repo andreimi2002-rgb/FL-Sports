@@ -22,8 +22,6 @@
 <script>
   // Apply the chosen theme before the first paint, so the page never flashes in the wrong one.
   try { var t = localStorage.getItem('flgames-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
-  // "Fără spoilere": scores covered from the first paint.
-  try { if (localStorage.getItem('flgames-nospoil') === '1') document.documentElement.classList.add('nospoil'); } catch (e) {}
 </script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.webmanifest">
@@ -60,7 +58,6 @@
       <div class="hbtns">
         <button class="hbtn" type="button" data-team-cal="" title="Meciurile în Google Calendar, pe iPhone sau în Outlook"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="1.8" fill="currentColor"/></svg>Calendar</button>
         <button class="hbtn icon" type="button" data-team-ntf="" title="Notificări înainte de meciuri" aria-label="Notificări"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.6 2H4.4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-        <button class="hbtn" type="button" data-nospoil aria-pressed="false" title="Fără spoilere: ascunde scorurile până apeși pe ele"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path class="slash" d="M4 20L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="nsl">Fără spoilere</span></button>
         <button class="hbtn" type="button" id="hinstall" data-install hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Instalează</button>
       </div>
       <div class="seg theme" role="group" aria-label="Temă">
@@ -77,7 +74,6 @@
     <nav class="viewtabs" aria-label="Pagini">
       <a href="./" data-goview="florida" aria-current="page">Acasă <small>echipele mele</small></a>
       <a href="#ligi" data-goview="ligi">Ligile <small>toate echipele</small></a>
-      <a href="#dimineata" data-goview="morning">Dimineața mea <small>toată noaptea · Mod TV</small></a>
     </nav>
   </header>
 

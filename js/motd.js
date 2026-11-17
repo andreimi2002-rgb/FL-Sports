@@ -21,7 +21,7 @@ const PLAYOFF = /playoff|round|wild card|semifinal|final|play-in|championship|su
 // Romanian time: 19:00–00:30 is the evening to watch; until 02:00 still possible; later is the night.
 export const watchable = d => { const h = roHour(d); return h >= 18 && h <= 23.99 ? 2 : h < 2 ? 1 : 0; };
 
-export function scoreGame(g, { entry = () => null, rivals = () => false } = {}) {
+export function scoreGame(g, { entry = () => null, rivals = () => false, watchTime = true } = {}) {
   const eh = entry(g.l, g.H.name), ea = entry(g.l, g.A.name);
   const sh = strength(eh, g.l), sa = strength(ea, g.l);
   const known = sh != null && sa != null;
@@ -44,12 +44,12 @@ export function scoreGame(g, { entry = () => null, rivals = () => false } = {}) 
   if (NATIONAL.test(g.tv || '')) { score += 5; reasons.push({ w: 5, t: `Transmis național în SUA (${g.tv.split(/[,/]/)[0].trim()}).` }); }
   if (g.l === 'NFL') score += 10;   // 17 games a season: every NFL game counts
   const w = watchable(g.d);
-  score += w === 2 ? 14 : w === 1 ? 6 : 0;
+  if (watchTime) score += w === 2 ? 14 : w === 1 ? 6 : 0;
   return { g, score, reasons: reasons.sort((a, b) => b.w - a.w).map(r => r.t), watch: w };
 }
 
 // The best game of one day's games: an evening one when there is any. Finished games stay candidates, so the
-// pick holds all day (once played, the page shows its result, covered in "Fără spoilere").
+// pick holds all day, including after the game is played.
 export function pickMotd(games, opts = {}) {
   const list = games.filter(g => !g.tbd && g.d && !/postponed|canceled|cancelled/i.test(g.detail || ''));
   if (!list.length) return null;
