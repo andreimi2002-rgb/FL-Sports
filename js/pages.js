@@ -209,7 +209,7 @@ export async function loadTeamX(k) {
   const info = TEAMINFO[k];
   if (!info?.id || TEAMX.has(k)) return;
   try {
-    const x = await getJSON(`/api/team?l=${TEAMS[k].l}&id=${info.id}`, 12000);
+    const x = await getJSON(`/api/team?l=${TEAMS[k].l}&id=${info.id}`, 12000, { cache: 'no-store' });
     TEAMX.set(k, x);
   } catch (e) { TEAMX.set(k, { roster: [], leaders: [], news: [] }); }
   if (teamView.k === k && $('tpanel') && location.hash.startsWith('#echipa/' + k)) openTeam(k, true);
