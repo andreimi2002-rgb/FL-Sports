@@ -1,3 +1,5 @@
+import {playerHtml} from './player.js';
+import {SPOIL} from './core.js';
 // The overlay pages and the address router: team, club, city, stadium, calendar, notifications, game.
 import { LEAGUES, TEAMS, ALL_TEAMS, DIVISIONS, DIVISION_OF, norm, parseClub, HOME } from './teams.js';
 import { MINE, mineIds, isMine, mineClubs, clubId, refreshMine } from './mine.js';
@@ -20,6 +22,14 @@ import { trackView, trackEvent } from './track.js';
 // Each overlay has its own address: #meci/NBA/401909963[/tab] or #echipa/heat. Opening one adds a
 // history entry, so the phone's Back button closes it; the × closes the whole chain at once.
 export const OV = { focus: null, game: null, place: null };   // what the overlay shows
+const PLAYER_CACHE = new Map();
+async function openPlayer(id, other, keep) {
+ OV.game=null; OV.place=null;
+ const wanted=location.hash;
+ const get=async k=>{const hit=PLAYER_CACHE.get(k);if(hit&&Date.now()-hit.at<600000)return hit.data;const data=await getJSON('/api/player?id='+k,15000);PLAYER_CACHE.set(k,{data,at:Date.now()});return data;};
+ show('<div class="band plain"><h2 id="prof-name">Profil jucător NBA</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody"><p role="status">Se încarcă profilul…</p></div>',keep);
+ try {const [p,c]=await Promise.all([get(id),other?get(other).catch(()=>null):null]);if(location.hash!==wanted)return;const options=[...new Map([...SUMMARY.values()].filter(s=>s.l==='NBA').flatMap(s=>(s.box||[]).flatMap(b=>b.groups.flatMap(g=>g.rows.map(r=>({id:r.id,name:r.n}))))).filter(r=>/^\d+$/.test(r.id||'')).map(r=>[r.id,r])).values()];for(const [k,x] of TEAMX)if(TEAMS[k]?.l==='NBA')for(const group of x.roster||[])for(const a of group.players||[])if(/^\d+$/.test(a.id||'')&&!options.some(o=>o.id===a.id))options.push({id:a.id,name:a.n});show(playerHtml(p,options,c,SPOIL.on),true);}catch{if(location.hash===wanted)show('<div class="band plain"><h2 id="prof-name">Profil indisponibil</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody">Datele nu au putut fi încărcate. Revino la meci și reîncearcă.</div>',true);}
+}
 export const gameView = { tab: 'rezumat', side: '' };
 export function show(html, keep) {
   const ov = $('ov'), wasHidden = ov.hidden;
@@ -66,8 +76,9 @@ export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
   if (h[0] === 'dimineata') { hideOv(); setView('morning'); return; }
+  if (h[0] === 'jucator' && h[1] === 'NBA' && /^\d{1,12}$/.test(h[2] || '')) { openPlayer(h[2], /^\d{1,12}$/.test(h[3] || '') ? h[3] : null, keep); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
-  if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) gameView.side = ''; gameView.tab = t; openGame(h[2], keep); return; }
+  if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) { gameView.side = ''; gameView.shotTeam = ''; gameView.shotPlayer = ''; gameView.shotPeriod = ''; } gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }
   if (h[0] === 'notificari') {
     const pre = (h[1] || '').split(',').filter(k => TEAMS[k] || parseClub(k));

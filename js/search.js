@@ -8,8 +8,12 @@ import { gameView, go } from './pages.js';
 
 /* ================= search ================= */
 // Everything findable: Florida teams, every opponent in the schedule, cities, stadiums.
+let nbaPlayers = [], nbaLoad;
+function loadNbaPlayers() {
+  return nbaLoad ||= fetch('data/nba-players.json').then(r => { if (!r.ok) throw Error('Catalog indisponibil'); return r.json(); }).then(j => { nbaPlayers = j.players || []; }).catch(() => { nbaLoad = null; });
+}
 export function searchIndex() {
-  const out = [];
+  const out = nbaPlayers.map(p => ({kind: 'Jucător', text: p.name + ' NBA ' + p.team, label: p.name, sub: 'NBA · ' + p.team, hash: '#jucator/NBA/' + p.id, rank: 0}));
   for (const k in TEAMS) out.push({ kind: 'Echipă', text: `${TEAMS[k].espn} ${TEAMS[k].s} ${TEAMS[k].city} ${TEAMS[k].l}`, label: TEAMS[k].espn, sub: `${TEAMS[k].l} · ${TEAMS[k].city}`, hash: '#echipa/' + k, side: flSide(k), rank: 0 });
   const now = Date.now(), opp = new Map();
   for (const g of GAMES) for (const s of [g.H, g.A]) {
@@ -66,7 +70,7 @@ document.addEventListener('input', e => {
 });
 $('q').addEventListener('focus', () => {
   runSearch();
-  for (const p of [!PLACES.data && loadPlaces(), !AMERICA.data && loadAmerica()]) p?.then?.(() => { if (document.activeElement === $('q')) runSearch(); });
+  for (const p of [loadNbaPlayers(), !PLACES.data && loadPlaces(), !AMERICA.data && loadAmerica()]) p?.then?.(() => { if (document.activeElement === $('q')) runSearch(); });
 });
 $('q').addEventListener('keydown', e => {
   if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {

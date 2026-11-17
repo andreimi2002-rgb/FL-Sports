@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';import {nbaShots,shotTotals}from '../netlify/lib/nba-shots.mjs';
+const shot=(id,x,y,points=2,made=true)=>({id,shootingPlay:true,pointsAttempted:points,scoringPlay:made,coordinate:{x,y},participants:[{athlete:{id:'10'}}],team:{id:'2'},period:{number:1}});
+const raw={plays:[shot('1',25,3),shot('2',2,-1,3,false),shot('3',25,10,1),shot('4',null,0),shot('1',25,3)],boxscore:{players:[{team:{id:'2'},statistics:[{keys:['fieldGoalsMade-fieldGoalsAttempted'],totals:['1-2'],athletes:[{athlete:{id:'10',displayName:'Test'}}]}]}]}};
+const r=nbaShots(raw);assert.equal(r.shots.length,2);assert.equal(r.total,3);assert.equal(r.missing,1);assert.equal(r.mismatch,false);assert.equal(r.shots[0].name,'Test');assert.equal(r.shots[1].y,-1);assert.deepEqual(shotTotals(r.shots),{made:1,attempts:2,fg:50,efg:50});assert.equal(shotTotals([]).fg,null);assert.equal(shotTotals([{made:true,points:3}]).efg,150);
+assert.equal(nbaShots({...raw,boxscore:{players:[{team:{id:'2'},statistics:[{keys:['fieldGoalsMade-fieldGoalsAttempted'],totals:['2-4']}]}]}}).mismatch,true);
+console.log('NBA shots: free throws excluded, deduplication, missing coordinates, negative baseline, box reconciliation and eFG OK');
+const {default:handler}=await import('../netlify/functions/player.mjs');
+assert.equal((await handler(new Request('https://test/api/player?id=abc'))).status,400);assert.equal((await handler(new Request('https://test/api/player?id=1',{method:'POST'}))).status,405);
+const priorFetch=globalThis.fetch;globalThis.fetch=async url=>{const value=String(url).endsWith('/overview')?{statistics:{names:['avgPoints'],splits:[{displayName:'Career',stats:['12.3']}]}}:String(url).endsWith('/stats')?{categories:[]}:{athlete:{id:'123',displayName:'Test Player',team:{displayName:'Test Team'}}};return Response.json(value);};
+const response=await handler(new Request('https://test/api/player?id=123'));assert.equal(response.status,200);const player=await response.json();assert.equal(player.summary.rows[0].label,'Carieră');assert.equal(player.summary.rows[0].stats[0],'12.3');assert.equal(player.seasons,null);globalThis.fetch=priorFetch;
+console.log('NBA player API: validation, career values, missing season handling OK');
