@@ -492,7 +492,7 @@ const CORE_PATH = { NBA: 'basketball/leagues/nba', NHL: 'hockey/leagues/nhl', NF
 // The categories worth showing, in order, per league (ESPN has many more).
 export const LEADER_CATS = {
   NBA: ['pointsPerGame', 'reboundsPerGame', 'assistsPerGame', 'stealsPerGame', 'blocksPerGame'],
-  NHL: ['points', 'goals', 'assists', 'plusMinus', 'savePct', 'wins'],
+  NHL: ['points', 'goals', 'assists', 'savePct', 'wins'],
   NFL: ['passingYards', 'rushingYards', 'receivingYards'],
   MLS: ['goals', 'assists', 'totalShots', 'saves'],
   MLB: ['avg', 'homeRuns', 'RBIs', 'ERA', 'strikeouts']
@@ -549,6 +549,18 @@ export function normalizeNflTeamStats(j) {
   ];
   return metrics.filter(([, value]) => value != null && value !== '').map(([label, value]) => ({ label, value }));
 }
+export function normalizeNhlTeamStats(j) {
+  const categories = j?.results?.stats?.categories || [];
+  const find = (category, name) => categories.find(c => c.name === category)?.stats?.find(s => s.name === name);
+  const metrics = [
+    ['Goluri marcate / meci', find('offensive', 'goals')?.perGameDisplayValue],
+    ['Goluri primite / meci', find('defensive', 'avgGoalsAgainst')?.displayValue],
+    ['Șuturi / meci', find('offensive', 'shotsTotal')?.perGameDisplayValue],
+    ['Șuturi primite / meci', find('defensive', 'shotsAgainst')?.perGameDisplayValue],
+    ['Angajamente câștigate (%)', find('offensive', 'faceoffPercent')?.displayValue]
+  ];
+  return metrics.filter(([, value]) => value != null && value !== '').map(([label, value]) => ({ label, value }));
+}
 export async function teamExtras(l, id) {
   const base = `${SITE}${LEAGUES[l].path}`;
   const [rosterJ, newsJ, teamJ] = await Promise.all([
@@ -565,10 +577,10 @@ export async function teamExtras(l, id) {
   const [leadersJ, coachesJ, teamStatsJ] = await Promise.all([
     getJSON(`${CORE_API}${CORE_PATH[l]}/seasons/${year}/types/2/teams/${id}/leaders`, 8000).catch(() => null),
     getJSON(`${CORE_API}${CORE_PATH[l]}/seasons/${year}/teams/${id}/coaches`, 8000).catch(() => null),
-    l === 'NFL' ? getJSON(`${base}/teams/${id}/statistics?season=${year}&seasontype=2`, 8000).catch(() => null) : Promise.resolve(null)
+    ['NFL', 'NHL'].includes(l) ? getJSON(`${base}/teams/${id}/statistics?season=${year}&seasontype=2`, 8000).catch(() => null) : Promise.resolve(null)
   ]);
   try { if (leadersJ) leaders = normalizeLeaders(leadersJ, l, roster); } catch (e) { /* leaders are optional */ }
-  const stats = l === 'NFL' ? normalizeNflTeamStats(teamStatsJ) : [];
+  const stats = l === 'NFL' ? normalizeNflTeamStats(teamStatsJ) : l === 'NHL' ? normalizeNhlTeamStats(teamStatsJ) : [];
   // The head coach: the first coach of the season (ESPN lists only the head coach there; none for MLS).
   try {
     const ref = coachesJ?.items?.[0]?.$ref;

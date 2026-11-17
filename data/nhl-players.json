@@ -1,0 +1,5201 @@
+{
+  "updated": "2026-11-17T11:51:00.356Z",
+  "players": [
+    {
+      "id": "3648015",
+      "name": "A.J. Greer",
+      "team": "Anaheim Ducks",
+      "pos": "LW"
+    },
+    {
+      "id": "3114717",
+      "name": "Aaron Ekblad",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "4874912",
+      "name": "Aatu Raty",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4894222",
+      "name": "Adam Edstrom",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "5188450",
+      "name": "Adam Engstrom",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "5136617",
+      "name": "Adam Fantilli",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "4197146",
+      "name": "Adam Fox",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "3942868",
+      "name": "Adam Gaudette",
+      "team": "San Jose Sharks",
+      "pos": "RW"
+    },
+    {
+      "id": "5073306",
+      "name": "Adam Klapka",
+      "team": "Calgary Flames",
+      "pos": "RW"
+    },
+    {
+      "id": "2562610",
+      "name": "Adam Larsson",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "2563066",
+      "name": "Adam Lowry",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "3069621",
+      "name": "Adam Pelech",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "5080232",
+      "name": "Adam Sykora",
+      "team": "New York Rangers",
+      "pos": "LW"
+    },
+    {
+      "id": "4697765",
+      "name": "Adam Wilsby",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "3939714",
+      "name": "Adin Hill",
+      "team": "Vegas Golden Knights",
+      "pos": "G"
+    },
+    {
+      "id": "3114802",
+      "name": "Adrian Kempe",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "4378682",
+      "name": "Akil Thomas",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "4587845",
+      "name": "Akira Schmid",
+      "team": "Florida Panthers",
+      "pos": "G"
+    },
+    {
+      "id": "4565282",
+      "name": "Albert Johansson",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "5334662",
+      "name": "Alberts Smits",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "4331611",
+      "name": "Alec Regula",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "3041970",
+      "name": "Aleksander Barkov",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "5188510",
+      "name": "Aleksanteri Kaskimaki",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "5188356",
+      "name": "Alex Bump",
+      "team": "Philadelphia Flyers",
+      "pos": "LW"
+    },
+    {
+      "id": "4063433",
+      "name": "Alex DeBrincat",
+      "team": "Detroit Red Wings",
+      "pos": "RW"
+    },
+    {
+      "id": "4233882",
+      "name": "Alex Formenton",
+      "team": "Edmonton Oilers",
+      "pos": "LW"
+    },
+    {
+      "id": "5188419",
+      "name": "Alex Gagne",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "3652598",
+      "name": "Alex Iafallo",
+      "team": "Winnipeg Jets",
+      "pos": "LW"
+    },
+    {
+      "id": "4968",
+      "name": "Alex Killorn",
+      "team": "Anaheim Ducks",
+      "pos": "LW"
+    },
+    {
+      "id": "4697725",
+      "name": "Alex Laferriere",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "3654006",
+      "name": "Alex Lyon",
+      "team": "Buffalo Sabres",
+      "pos": "G"
+    },
+    {
+      "id": "3114994",
+      "name": "Alex Nedeljkovic",
+      "team": "San Jose Sharks",
+      "pos": "G"
+    },
+    {
+      "id": "4565237",
+      "name": "Alex Newhook",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "3101",
+      "name": "Alex Ovechkin",
+      "team": "Washington Capitals",
+      "pos": "LW"
+    },
+    {
+      "id": "4013",
+      "name": "Alex Pietrangelo",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "3114766",
+      "name": "Alex Tuch",
+      "team": "Washington Capitals",
+      "pos": "RW"
+    },
+    {
+      "id": "4565226",
+      "name": "Alex Turcotte",
+      "team": "Los Angeles Kings",
+      "pos": "C"
+    },
+    {
+      "id": "4565266",
+      "name": "Alex Vlasic",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "5361718",
+      "name": "Alexander Command",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "3069394",
+      "name": "Alexander Kerfoot",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "4915850",
+      "name": "Alexander Nikishin",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "4587854",
+      "name": "Alexander Romanov",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "3042017",
+      "name": "Alexander Wennberg",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "3942064",
+      "name": "Alexandre Carrier",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "4233880",
+      "name": "Alexandre Texier",
+      "team": "Montreal Canadiens",
+      "pos": "LW"
+    },
+    {
+      "id": "4392454",
+      "name": "Alexey Toropchenko",
+      "team": "St. Louis Blues",
+      "pos": "RW"
+    },
+    {
+      "id": "4697382",
+      "name": "Alexis Lafreniere",
+      "team": "New York Rangers",
+      "pos": "LW"
+    },
+    {
+      "id": "4587943",
+      "name": "Aliaksei Protas",
+      "team": "Washington Capitals",
+      "pos": "C"
+    },
+    {
+      "id": "5173500",
+      "name": "Amadeus Lombardi",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "5793",
+      "name": "Anders Lee",
+      "team": "Utah Mammoth",
+      "pos": "LW"
+    },
+    {
+      "id": "3042044",
+      "name": "Andre Burakovsky",
+      "team": "Ottawa Senators",
+      "pos": "LW"
+    },
+    {
+      "id": "4997131",
+      "name": "Andre Lee",
+      "team": "Los Angeles Kings",
+      "pos": "LW"
+    },
+    {
+      "id": "3114997",
+      "name": "Andreas Englund",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "5077308",
+      "name": "Andrei Kuzmenko",
+      "team": "Pittsburgh Penguins",
+      "pos": "LW"
+    },
+    {
+      "id": "4352683",
+      "name": "Andrei Svechnikov",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "2976847",
+      "name": "Andrei Vasilevskiy",
+      "team": "Tampa Bay Lightning",
+      "pos": "G"
+    },
+    {
+      "id": "3042114",
+      "name": "Andrew Copp",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "3149619",
+      "name": "Andrew Mangiapane",
+      "team": "Chicago Blackhawks",
+      "pos": "LW"
+    },
+    {
+      "id": "4064936",
+      "name": "Andrew Peeke",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "3904107",
+      "name": "Anthony Beauvillier",
+      "team": "Washington Capitals",
+      "pos": "LW"
+    },
+    {
+      "id": "3941973",
+      "name": "Anthony Cirelli",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "3042086",
+      "name": "Anthony Duclair",
+      "team": "New York Islanders",
+      "pos": "LW"
+    },
+    {
+      "id": "3042037",
+      "name": "Anthony Mantha",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "3067313",
+      "name": "Anthony Stolarz",
+      "team": "Toronto Maple Leafs",
+      "pos": "G"
+    },
+    {
+      "id": "3036851",
+      "name": "Anton Forsberg",
+      "team": "Los Angeles Kings",
+      "pos": "G"
+    },
+    {
+      "id": "5291935",
+      "name": "Anton Frondell",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "5188582",
+      "name": "Anton Johansson",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "4697395",
+      "name": "Anton Lundell",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "5216879",
+      "name": "Anton Silaev",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4565258",
+      "name": "Antti Tuomisto",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4893969",
+      "name": "Arber Xhekaj",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "4915855",
+      "name": "Arseny Gritsyuk",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "5103536",
+      "name": "Arshdeep Bains",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "5080205",
+      "name": "Artem Duda",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "4712021",
+      "name": "Artem Zub",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "3891952",
+      "name": "Artemi Panarin",
+      "team": "Los Angeles Kings",
+      "pos": "LW"
+    },
+    {
+      "id": "5209793",
+      "name": "Arttu Hyry",
+      "team": "Dallas Stars",
+      "pos": "RW"
+    },
+    {
+      "id": "3042050",
+      "name": "Artturi Lehkonen",
+      "team": "Colorado Avalanche",
+      "pos": "LW"
+    },
+    {
+      "id": "4576894",
+      "name": "Arturs Silovs",
+      "team": "Pittsburgh Penguins",
+      "pos": "G"
+    },
+    {
+      "id": "5206648",
+      "name": "Artyom Levshunov",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "4894729",
+      "name": "Arvid Soderblom",
+      "team": "New York Rangers",
+      "pos": "G"
+    },
+    {
+      "id": "4024123",
+      "name": "Auston Matthews",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "5172806",
+      "name": "Avery Hayes",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "5149192",
+      "name": "Axel Sandin-Pellikka",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "5188613",
+      "name": "Aydar Suniev",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "3069411",
+      "name": "Barclay Goodrow",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "4352699",
+      "name": "Barrett Hayton",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "4063240",
+      "name": "Beck Malenstyn",
+      "team": "Buffalo Sabres",
+      "pos": "LW"
+    },
+    {
+      "id": "5216858",
+      "name": "Beckett Sennecke",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "5246",
+      "name": "Ben Chiarot",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "3571762",
+      "name": "Ben Hutton",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "5291947",
+      "name": "Ben Kindel",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "4586827",
+      "name": "Ben McCartney",
+      "team": "Utah Mammoth",
+      "pos": "LW"
+    },
+    {
+      "id": "4755729",
+      "name": "Ben Meyers",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "5216877",
+      "name": "Berkly Catton",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "2563026",
+      "name": "Blake Coleman",
+      "team": "Minnesota Wild",
+      "pos": "LW"
+    },
+    {
+      "id": "4316983",
+      "name": "Blake Lizotte",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "3042002",
+      "name": "Bo Horvat",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "4565257",
+      "name": "Bobby Brink",
+      "team": "Minnesota Wild",
+      "pos": "RW"
+    },
+    {
+      "id": "5048894",
+      "name": "Bobby McMann",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "3939856",
+      "name": "Bokondji Imama",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "2563054",
+      "name": "Boone Jenner",
+      "team": "Washington Capitals",
+      "pos": "C"
+    },
+    {
+      "id": "4565225",
+      "name": "Bowen Byram",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "3852",
+      "name": "Brad Marchand",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "4697402",
+      "name": "Braden Schneider",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "2976856",
+      "name": "Brady Skjei",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4319858",
+      "name": "Brady Tkachuk",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "5272307",
+      "name": "Braeden Bowman",
+      "team": "Vegas Golden Knights",
+      "pos": "RW"
+    },
+    {
+      "id": "5451873",
+      "name": "Brandon Buhr",
+      "team": "Vancouver Canucks",
+      "pos": "RW"
+    },
+    {
+      "id": "4996097",
+      "name": "Brandon Bussi",
+      "team": "Carolina Hurricanes",
+      "pos": "G"
+    },
+    {
+      "id": "3904175",
+      "name": "Brandon Carlo",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "4197009",
+      "name": "Brandon Duhaime",
+      "team": "Toronto Maple Leafs",
+      "pos": "RW"
+    },
+    {
+      "id": "4065019",
+      "name": "Brandon Hagel",
+      "team": "Tampa Bay Lightning",
+      "pos": "LW"
+    },
+    {
+      "id": "3115032",
+      "name": "Brandon Montour",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "4874722",
+      "name": "Brandt Clarke",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "5202",
+      "name": "Brayden McNabb",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4392769",
+      "name": "Brayden Pachal",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "3151187",
+      "name": "Brayden Point",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "5219",
+      "name": "Brayden Schenn",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "5149188",
+      "name": "Brayden Yager",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "4697412",
+      "name": "Brendan Brisson",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "5614",
+      "name": "Brendan Gallagher",
+      "team": "Vancouver Canucks",
+      "pos": "RW"
+    },
+    {
+      "id": "4973",
+      "name": "Brendan Smith",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "2554903",
+      "name": "Brenden Dillon",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4874733",
+      "name": "Brennan Othmann",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "2300",
+      "name": "Brent Burns",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "4697654",
+      "name": "Brett Berard",
+      "team": "Montreal Canadiens",
+      "pos": "LW"
+    },
+    {
+      "id": "4024989",
+      "name": "Brett Howden",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "3068665",
+      "name": "Brett Kulak",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "4565278",
+      "name": "Brett Leason",
+      "team": "San Jose Sharks",
+      "pos": "RW"
+    },
+    {
+      "id": "3025535",
+      "name": "Brett Pesce",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "5738",
+      "name": "Brian Dumoulin",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "3899979",
+      "name": "Brock Boeser",
+      "team": "Vancouver Canucks",
+      "pos": "RW"
+    },
+    {
+      "id": "4697449",
+      "name": "Brock Faber",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "5798",
+      "name": "Brock Nelson",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "2591155",
+      "name": "Bryan Rust",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "4393055",
+      "name": "Cale Fleury",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "4233563",
+      "name": "Cale Makar",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "3941970",
+      "name": "Caleb Jones",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "4220707",
+      "name": "Calle Rosen",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "5149210",
+      "name": "Calum Ritchie",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "5524",
+      "name": "Calvin Pickard",
+      "team": "Minnesota Wild",
+      "pos": "G"
+    },
+    {
+      "id": "5495",
+      "name": "Cam Fowler",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "5734",
+      "name": "Cam Talbot",
+      "team": "Columbus Blue Jackets",
+      "pos": "G"
+    },
+    {
+      "id": "4565235",
+      "name": "Cam York",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4587571",
+      "name": "Cameron Crotty",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "4064582",
+      "name": "Carter Hart",
+      "team": "Vegas Golden Knights",
+      "pos": "G"
+    },
+    {
+      "id": "4997026",
+      "name": "Carter Mazur",
+      "team": "Detroit Red Wings",
+      "pos": "LW"
+    },
+    {
+      "id": "3042088",
+      "name": "Carter Verhaeghe",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "5216868",
+      "name": "Carter Yakemchuk",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "5262",
+      "name": "Casey Cizikas",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "3025540",
+      "name": "Casey DeSmith",
+      "team": "Dallas Stars",
+      "pos": "G"
+    },
+    {
+      "id": "4233575",
+      "name": "Casey Mittelstadt",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "3067858",
+      "name": "Chandler Stephenson",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "4588175",
+      "name": "Charle-Edouard D'Astous",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "2555315",
+      "name": "Charlie Coyle",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "3095975",
+      "name": "Charlie Lindgren",
+      "team": "Washington Capitals",
+      "pos": "G"
+    },
+    {
+      "id": "3988803",
+      "name": "Charlie McAvoy",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "5149196",
+      "name": "Charlie Stramel",
+      "team": "Minnesota Wild",
+      "pos": "C"
+    },
+    {
+      "id": "5302544",
+      "name": "Chase Pietila",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "5833",
+      "name": "Chris Kreider",
+      "team": "Montreal Canadiens",
+      "pos": "LW"
+    },
+    {
+      "id": "5592",
+      "name": "Chris Tanev",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "3115035",
+      "name": "Christian Dvorak",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "3775",
+      "name": "Claude Giroux",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "5104602",
+      "name": "Clay Stevenson",
+      "team": "Winnipeg Jets",
+      "pos": "G"
+    },
+    {
+      "id": "4024857",
+      "name": "Clayton Keller",
+      "team": "Utah Mammoth",
+      "pos": "RW"
+    },
+    {
+      "id": "2976843",
+      "name": "Cody Ceci",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "4233568",
+      "name": "Cody Glass",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "4565236",
+      "name": "Cole Caufield",
+      "team": "Montreal Canadiens",
+      "pos": "RW"
+    },
+    {
+      "id": "5216918",
+      "name": "Cole Hutson",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5188341",
+      "name": "Cole Knuble",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "4419679",
+      "name": "Cole Koepke",
+      "team": "Winnipeg Jets",
+      "pos": "LW"
+    },
+    {
+      "id": "5136696",
+      "name": "Cole McWard",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "4697392",
+      "name": "Cole Perfetti",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "4894702",
+      "name": "Cole Reinhardt",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "4845286",
+      "name": "Cole Schwindt",
+      "team": "Florida Panthers",
+      "pos": "RW"
+    },
+    {
+      "id": "4874725",
+      "name": "Cole Sillinger",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "4197130",
+      "name": "Cole Smith",
+      "team": "Chicago Blackhawks",
+      "pos": "RW"
+    },
+    {
+      "id": "2590857",
+      "name": "Colin Blackwell",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "5136607",
+      "name": "Collin Graf",
+      "team": "San Jose Sharks",
+      "pos": "RW"
+    },
+    {
+      "id": "4736758",
+      "name": "Colten Ellis",
+      "team": "Buffalo Sabres",
+      "pos": "G"
+    },
+    {
+      "id": "4874940",
+      "name": "Colton Dach",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "3069341",
+      "name": "Colton Parayko",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "2993474",
+      "name": "Colton Sissons",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "5149125",
+      "name": "Connor Bedard",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "3067951",
+      "name": "Connor Brown",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "3042191",
+      "name": "Connor Clifton",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "4588004",
+      "name": "Connor Dewar",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "3020225",
+      "name": "Connor Hellebuyck",
+      "team": "New Jersey Devils",
+      "pos": "G"
+    },
+    {
+      "id": "3895074",
+      "name": "Connor McDavid",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4565246",
+      "name": "Connor McMichael",
+      "team": "St. Louis Blues",
+      "pos": "LW"
+    },
+    {
+      "id": "2562618",
+      "name": "Connor Murphy",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "3939718",
+      "name": "Conor Garland",
+      "team": "Columbus Blue Jackets",
+      "pos": "RW"
+    },
+    {
+      "id": "5080155",
+      "name": "Conor Geekie",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "4233868",
+      "name": "Conor Timmins",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "5206956",
+      "name": "Cooper Black",
+      "team": "Florida Panthers",
+      "pos": "G"
+    },
+    {
+      "id": "2273",
+      "name": "Corey Perry",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "4331586",
+      "name": "Curtis Douglas",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "5080145",
+      "name": "Cutter Gauthier",
+      "team": "Anaheim Ducks",
+      "pos": "LW"
+    },
+    {
+      "id": "4697711",
+      "name": "Daemon Hunt",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4588638",
+      "name": "Dakota Joshua",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "3069273",
+      "name": "Dakota Mermis",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "5149178",
+      "name": "Dalibor Dvorsky",
+      "team": "St. Louis Blues",
+      "pos": "RW"
+    },
+    {
+      "id": "3068087",
+      "name": "Damon Severson",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "3942459",
+      "name": "Dan Vladar",
+      "team": "Philadelphia Flyers",
+      "pos": "G"
+    },
+    {
+      "id": "5149183",
+      "name": "Daniil But",
+      "team": "Utah Mammoth",
+      "pos": "LW"
+    },
+    {
+      "id": "4587994",
+      "name": "Daniil Tarasov",
+      "team": "Detroit Red Wings",
+      "pos": "G"
+    },
+    {
+      "id": "5080172",
+      "name": "Danila Yurov",
+      "team": "Minnesota Wild",
+      "pos": "RW"
+    },
+    {
+      "id": "4024959",
+      "name": "Dante Fabbro",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "3151741",
+      "name": "Danton Heinen",
+      "team": "Columbus Blue Jackets",
+      "pos": "LW"
+    },
+    {
+      "id": "2610321",
+      "name": "Darcy Kuemper",
+      "team": "Los Angeles Kings",
+      "pos": "G"
+    },
+    {
+      "id": "3041997",
+      "name": "Darnell Nurse",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "3149843",
+      "name": "Darren Raddysh",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "5080147",
+      "name": "David Jiricek",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "3114778",
+      "name": "David Pastrnak",
+      "team": "Boston Bruins",
+      "pos": "RW"
+    },
+    {
+      "id": "3792",
+      "name": "David Perron",
+      "team": "Dallas Stars",
+      "pos": "LW"
+    },
+    {
+      "id": "5149157",
+      "name": "David Reinbacher",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "5103533",
+      "name": "David Spacek",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "4697401",
+      "name": "Dawson Mercer",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "5103825",
+      "name": "Declan Carlile",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "4587929",
+      "name": "Declan Chisholm",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "5174160",
+      "name": "Dennis Hildeby",
+      "team": "Tampa Bay Lightning",
+      "pos": "G"
+    },
+    {
+      "id": "5080156",
+      "name": "Denton Mateychuk",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "5173105",
+      "name": "Denver Barkey",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "4319911",
+      "name": "Devin Cooley",
+      "team": "Calgary Flames",
+      "pos": "G"
+    },
+    {
+      "id": "4894487",
+      "name": "Devon Levi",
+      "team": "Edmonton Oilers",
+      "pos": "G"
+    },
+    {
+      "id": "3096249",
+      "name": "Devon Toews",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "5090524",
+      "name": "Dillon Boucher",
+      "team": "Chicago Blackhawks",
+      "pos": "LW"
+    },
+    {
+      "id": "4063268",
+      "name": "Dillon Dube",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "5149158",
+      "name": "Dmitri Simashev",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "4915856",
+      "name": "Dmitri Voronkov",
+      "team": "Columbus Blue Jackets",
+      "pos": "LW"
+    },
+    {
+      "id": "5328",
+      "name": "Dmitry Kulikov",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "5646",
+      "name": "Dmitry Orlov",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "4997033",
+      "name": "Dominic James",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "2562605",
+      "name": "Dougie Hamilton",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4271734",
+      "name": "Drake Batherson",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "4697450",
+      "name": "Drew Commesso",
+      "team": "Chicago Blackhawks",
+      "pos": "G"
+    },
+    {
+      "id": "3995",
+      "name": "Drew Doughty",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "4565270",
+      "name": "Drew Helleson",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "4712146",
+      "name": "Drew O'Connor",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "4587952",
+      "name": "Dustin Wolf",
+      "team": "Calgary Flames",
+      "pos": "G"
+    },
+    {
+      "id": "4063606",
+      "name": "Dylan Coghlan",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4565228",
+      "name": "Dylan Cozens",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "2590861",
+      "name": "Dylan DeMelo",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "4697705",
+      "name": "Dylan Garand",
+      "team": "New York Rangers",
+      "pos": "G"
+    },
+    {
+      "id": "4874723",
+      "name": "Dylan Guenther",
+      "team": "Utah Mammoth",
+      "pos": "RW"
+    },
+    {
+      "id": "4697397",
+      "name": "Dylan Holloway",
+      "team": "St. Louis Blues",
+      "pos": "LW"
+    },
+    {
+      "id": "5275580",
+      "name": "Dylan Hryckowian",
+      "team": "Dallas Stars",
+      "pos": "RW"
+    },
+    {
+      "id": "4233878",
+      "name": "Dylan Samberg",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "3899933",
+      "name": "Dylan Strome",
+      "team": "Washington Capitals",
+      "pos": "C"
+    },
+    {
+      "id": "5149211",
+      "name": "Easton Cowan",
+      "team": "Toronto Maple Leafs",
+      "pos": "RW"
+    },
+    {
+      "id": "4233720",
+      "name": "Eeli Tolvanen",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "4233877",
+      "name": "Eetu Luostarinen",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "4697404",
+      "name": "Egor Chinakhov",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "3041994",
+      "name": "Elias Lindholm",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "5238086",
+      "name": "Elias N. Pettersson",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "4233566",
+      "name": "Elias Pettersson",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "5080223",
+      "name": "Elias Salomonsson",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "5452947",
+      "name": "Elijah Neuenschwander",
+      "team": "Anaheim Ducks",
+      "pos": "G"
+    },
+    {
+      "id": "5075840",
+      "name": "Elmer Soderblom",
+      "team": "Pittsburgh Penguins",
+      "pos": "LW"
+    },
+    {
+      "id": "4697457",
+      "name": "Emil Andrae",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "4697447",
+      "name": "Emil Heineman",
+      "team": "New York Islanders",
+      "pos": "LW"
+    },
+    {
+      "id": "5146599",
+      "name": "Emil Lilleberg",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "5188599",
+      "name": "Emmitt Finnie",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "5188651",
+      "name": "Eric Pohlkamp",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "4319879",
+      "name": "Eric Robinson",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "3904178",
+      "name": "Erik Cernak",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "5503",
+      "name": "Erik Gudbranson",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "3891922",
+      "name": "Erik Gustafsson",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "2593311",
+      "name": "Erik Haula",
+      "team": "Los Angeles Kings",
+      "pos": "LW"
+    },
+    {
+      "id": "5164",
+      "name": "Erik Karlsson",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "3069352",
+      "name": "Esa Lindell",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "4894726",
+      "name": "Ethan Del Mastro",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "4996093",
+      "name": "Ethen Frank",
+      "team": "Washington Capitals",
+      "pos": "C"
+    },
+    {
+      "id": "4352722",
+      "name": "Evan Bouchard",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "3648008",
+      "name": "Evan Rodrigues",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "3124",
+      "name": "Evgeni Malkin",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "4587837",
+      "name": "Fabian Zetterlund",
+      "team": "Ottawa Senators",
+      "pos": "LW"
+    },
+    {
+      "id": "4874736",
+      "name": "Fedor Svechkov",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "4233643",
+      "name": "Filip Chytil",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "2968772",
+      "name": "Filip Forsberg",
+      "team": "Nashville Predators",
+      "pos": "LW"
+    },
+    {
+      "id": "4588331",
+      "name": "Filip Hallander",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4063607",
+      "name": "Filip Hronek",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "5188457",
+      "name": "Florian Xhekaj",
+      "team": "Montreal Canadiens",
+      "pos": "LW"
+    },
+    {
+      "id": "5080157",
+      "name": "Frank Nazar",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "3527554",
+      "name": "Frank Vatrano",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "5080207",
+      "name": "Fraser Minten",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "5103647",
+      "name": "Frederic Brunet",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "3149649",
+      "name": "Frederick Gaudreau",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "2517899",
+      "name": "Frederik Andersen",
+      "team": "Edmonton Oilers",
+      "pos": "G"
+    },
+    {
+      "id": "5149204",
+      "name": "Gabe Perreault",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "2562609",
+      "name": "Gabriel Landeskog",
+      "team": "Colorado Avalanche",
+      "pos": "LW"
+    },
+    {
+      "id": "4233583",
+      "name": "Gabriel Vilardi",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "4697470",
+      "name": "Gage Goncalves",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "3149633",
+      "name": "Garnet Hathaway",
+      "team": "Florida Panthers",
+      "pos": "RW"
+    },
+    {
+      "id": "5136614",
+      "name": "Gavin Brindley",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "5342529",
+      "name": "Gavin McKenna",
+      "team": "Toronto Maple Leafs",
+      "pos": "LW"
+    },
+    {
+      "id": "5103687",
+      "name": "Georgii Merkulov",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "4392876",
+      "name": "Gerry Mayhew",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "3942352",
+      "name": "Glenn Gawdin",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "3942866",
+      "name": "Guillaume Brisebois",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "3151784",
+      "name": "Gustav Forsling",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "2968818",
+      "name": "Hampus Lindholm",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "5206683",
+      "name": "Harrison Scott",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "3150479",
+      "name": "Hayden Hodgson",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "3114735",
+      "name": "Haydn Fleury",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "4697440",
+      "name": "Helge Grans",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4697405",
+      "name": "Hendrix Lapierre",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "4997138",
+      "name": "Henry Thrun",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "4991",
+      "name": "Ian Cole",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "4319916",
+      "name": "Ian Mitchell",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "5188523",
+      "name": "Ian Moore",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "5216907",
+      "name": "Igor Chernyshov",
+      "team": "San Jose Sharks",
+      "pos": "LW"
+    },
+    {
+      "id": "3151297",
+      "name": "Igor Shesterkin",
+      "team": "New York Rangers",
+      "pos": "G"
+    },
+    {
+      "id": "4342107",
+      "name": "Ilya Lyubushkin",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4422415",
+      "name": "Ilya Mikheyev",
+      "team": "Tampa Bay Lightning",
+      "pos": "RW"
+    },
+    {
+      "id": "5229146",
+      "name": "Ilya Protas",
+      "team": "Washington Capitals",
+      "pos": "LW"
+    },
+    {
+      "id": "3151981",
+      "name": "Ilya Sorokin",
+      "team": "New York Islanders",
+      "pos": "G"
+    },
+    {
+      "id": "4874731",
+      "name": "Isak Rosen",
+      "team": "Winnipeg Jets",
+      "pos": "RW"
+    },
+    {
+      "id": "3114985",
+      "name": "Ivan Barbashev",
+      "team": "Vegas Golden Knights",
+      "pos": "LW"
+    },
+    {
+      "id": "5216860",
+      "name": "Ivan Demidov",
+      "team": "Montreal Canadiens",
+      "pos": "RW"
+    },
+    {
+      "id": "5080168",
+      "name": "Ivan Miroshnichenko",
+      "team": "Washington Capitals",
+      "pos": "LW"
+    },
+    {
+      "id": "3899939",
+      "name": "Ivan Provorov",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "5361709",
+      "name": "Ivar Stenberg",
+      "team": "San Jose Sharks",
+      "pos": "LW"
+    },
+    {
+      "id": "3041995",
+      "name": "J.T. Compher",
+      "team": "Detroit Red Wings",
+      "pos": "LW"
+    },
+    {
+      "id": "2590852",
+      "name": "J.T. Miller",
+      "team": "New York Rangers",
+      "pos": "LW"
+    },
+    {
+      "id": "3069836",
+      "name": "Jaccob Slavin",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "4316979",
+      "name": "Jack Ahcan",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4997013",
+      "name": "Jack Devine",
+      "team": "Florida Panthers",
+      "pos": "RW"
+    },
+    {
+      "id": "4378671",
+      "name": "Jack Drury",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "3648002",
+      "name": "Jack Eichel",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "4565222",
+      "name": "Jack Hughes",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "4755695",
+      "name": "Jack McBain",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "4697389",
+      "name": "Jack Quinn",
+      "team": "Buffalo Sabres",
+      "pos": "RW"
+    },
+    {
+      "id": "3904098",
+      "name": "Jack Roslovic",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4755690",
+      "name": "Jack St. Ivany",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5275582",
+      "name": "Jack Williams",
+      "team": "Columbus Blue Jackets",
+      "pos": "RW"
+    },
+    {
+      "id": "5103645",
+      "name": "Jackson Blake",
+      "team": "Carolina Hurricanes",
+      "pos": "RW"
+    },
+    {
+      "id": "4565262",
+      "name": "Jackson LaCombe",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "4352798",
+      "name": "Jacob Bernard-Docker",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "5188437",
+      "name": "Jacob Fowler",
+      "team": "Montreal Canadiens",
+      "pos": "G"
+    },
+    {
+      "id": "5452",
+      "name": "Jacob Markstrom",
+      "team": "Florida Panthers",
+      "pos": "G"
+    },
+    {
+      "id": "4894747",
+      "name": "Jacob Melanson",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "4997056",
+      "name": "Jacob Quillan",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "2976839",
+      "name": "Jacob Trouba",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "5835",
+      "name": "Jaden Schwartz",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "5080204",
+      "name": "Jagger Firkus",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "5111",
+      "name": "Jake Allen",
+      "team": "New Jersey Devils",
+      "pos": "G"
+    },
+    {
+      "id": "4392782",
+      "name": "Jake Christiansen",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "3900240",
+      "name": "Jake DeBrusk",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "4393049",
+      "name": "Jake Evans",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "3042083",
+      "name": "Jake Guentzel",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "3020803",
+      "name": "Jake McCabe",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "3149839",
+      "name": "Jake Middleton",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "4697409",
+      "name": "Jake Neighbours",
+      "team": "St. Louis Blues",
+      "pos": "LW"
+    },
+    {
+      "id": "5302595",
+      "name": "Jake O'Brien",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "4196914",
+      "name": "Jake Oettinger",
+      "team": "Dallas Stars",
+      "pos": "G"
+    },
+    {
+      "id": "4697386",
+      "name": "Jake Sanderson",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "3151136",
+      "name": "Jake Walman",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "4024950",
+      "name": "Jakob Chychrun",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "4697686",
+      "name": "Jakub Dobes",
+      "team": "Montreal Canadiens",
+      "pos": "G"
+    },
+    {
+      "id": "4063449",
+      "name": "Jalen Chatfield",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "5275337",
+      "name": "James Hagens",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "3998",
+      "name": "Jamie Benn",
+      "team": "Dallas Stars",
+      "pos": "LW"
+    },
+    {
+      "id": "4697387",
+      "name": "Jamie Drysdale",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "2562625",
+      "name": "Jamie Oleksiak",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "5080217",
+      "name": "Jani Nyman",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "3114777",
+      "name": "Jared McCann",
+      "team": "Seattle Kraken",
+      "pos": "LW"
+    },
+    {
+      "id": "5079",
+      "name": "Jared Spurgeon",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "5188348",
+      "name": "Jaroslav Chmelar",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "3042062",
+      "name": "Jason Dickinson",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4233875",
+      "name": "Jason Robertson",
+      "team": "Dallas Stars",
+      "pos": "LW"
+    },
+    {
+      "id": "2593315",
+      "name": "Jason Zucker",
+      "team": "Buffalo Sabres",
+      "pos": "LW"
+    },
+    {
+      "id": "5451622",
+      "name": "Jaxon Fuder",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "4565269",
+      "name": "Jayden Struble",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "2593131",
+      "name": "Jean-Gabriel Pageau",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "4895214",
+      "name": "Jeff Malott",
+      "team": "Anaheim Ducks",
+      "pos": "LW"
+    },
+    {
+      "id": "4588188",
+      "name": "Jeffrey Viel",
+      "team": "Tampa Bay Lightning",
+      "pos": "LW"
+    },
+    {
+      "id": "4271542",
+      "name": "Jeremy Davies",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "3904185",
+      "name": "Jeremy Lauzon",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4712036",
+      "name": "Jeremy Swayman",
+      "team": "Boston Bruins",
+      "pos": "G"
+    },
+    {
+      "id": "4233872",
+      "name": "Jesper Boqvist",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "4268771",
+      "name": "Jesper Bratt",
+      "team": "New Jersey Devils",
+      "pos": "LW"
+    },
+    {
+      "id": "4874737",
+      "name": "Jesper Wallstedt",
+      "team": "Minnesota Wild",
+      "pos": "G"
+    },
+    {
+      "id": "4352692",
+      "name": "Jesperi Kotkaniemi",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "4894366",
+      "name": "Jet Greaves",
+      "team": "Columbus Blue Jackets",
+      "pos": "G"
+    },
+    {
+      "id": "5216881",
+      "name": "Jett Luchanko",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "5080171",
+      "name": "Jimmy Snuggerud",
+      "team": "St. Louis Blues",
+      "pos": "RW"
+    },
+    {
+      "id": "5080176",
+      "name": "Jiri Kulich",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4874929",
+      "name": "JJ Moser",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "4697438",
+      "name": "JJ Peterka",
+      "team": "Boston Bruins",
+      "pos": "RW"
+    },
+    {
+      "id": "4352804",
+      "name": "Joe Veleno",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "2562596",
+      "name": "Joel Armia",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "2563034",
+      "name": "Joel Edmundson",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "3904091",
+      "name": "Joel Eriksson Ek",
+      "team": "Minnesota Wild",
+      "pos": "C"
+    },
+    {
+      "id": "4352750",
+      "name": "Joel Farabee",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "3149612",
+      "name": "Joel Hanley",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "4587909",
+      "name": "Joel Hofer",
+      "team": "St. Louis Blues",
+      "pos": "G"
+    },
+    {
+      "id": "4587910",
+      "name": "Joel Kiviranta",
+      "team": "Dallas Stars",
+      "pos": "LW"
+    },
+    {
+      "id": "3942073",
+      "name": "Joey Daccord",
+      "team": "Seattle Kraken",
+      "pos": "G"
+    },
+    {
+      "id": "5118",
+      "name": "John Carlson",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "2590824",
+      "name": "John Gibson",
+      "team": "Detroit Red Wings",
+      "pos": "G"
+    },
+    {
+      "id": "3941974",
+      "name": "John Marino",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "5160",
+      "name": "John Tavares",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4587933",
+      "name": "Johnathan Kovacevic",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4233890",
+      "name": "Jonah Gadjovich",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "2562600",
+      "name": "Jonas Brodin",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "4425678",
+      "name": "Jonas Rondbjerg",
+      "team": "Vegas Golden Knights",
+      "pos": "RW"
+    },
+    {
+      "id": "3904190",
+      "name": "Jonas Siegenthaler",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4378660",
+      "name": "Jonatan Berggren",
+      "team": "St. Louis Blues",
+      "pos": "RW"
+    },
+    {
+      "id": "4392308",
+      "name": "Jonathan Aspirot",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "5188608",
+      "name": "Jonathan Castagna",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "2562606",
+      "name": "Jonathan Huberdeau",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "5080159",
+      "name": "Jonathan Lekkerimaki",
+      "team": "Vancouver Canucks",
+      "pos": "RW"
+    },
+    {
+      "id": "2967072",
+      "name": "Jonathan Marchessault",
+      "team": "Nashville Predators",
+      "pos": "RW"
+    },
+    {
+      "id": "3069266",
+      "name": "Joonas Korpisalo",
+      "team": "New York Rangers",
+      "pos": "G"
+    },
+    {
+      "id": "2590874",
+      "name": "Jordan Binnington",
+      "team": "St. Louis Blues",
+      "pos": "G"
+    },
+    {
+      "id": "5032",
+      "name": "Jordan Eberle",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "3900260",
+      "name": "Jordan Greenway",
+      "team": "Chicago Blackhawks",
+      "pos": "LW"
+    },
+    {
+      "id": "4062251",
+      "name": "Jordan Kyrou",
+      "team": "Washington Capitals",
+      "pos": "RW"
+    },
+    {
+      "id": "2989376",
+      "name": "Jordan Martinook",
+      "team": "Carolina Hurricanes",
+      "pos": "RW"
+    },
+    {
+      "id": "4588190",
+      "name": "Jordan Spence",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "3541",
+      "name": "Jordan Staal",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "4271575",
+      "name": "Joseph Woll",
+      "team": "Philadelphia Flyers",
+      "pos": "G"
+    },
+    {
+      "id": "3069687",
+      "name": "Josh Anderson",
+      "team": "Montreal Canadiens",
+      "pos": "RW"
+    },
+    {
+      "id": "4874870",
+      "name": "Josh Doan",
+      "team": "Buffalo Sabres",
+      "pos": "RW"
+    },
+    {
+      "id": "2590829",
+      "name": "Josh Manson",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "3042016",
+      "name": "Josh Morrissey",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "4233627",
+      "name": "Josh Norris",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4063504",
+      "name": "Joshua Mahura",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "4755684",
+      "name": "Judd Caulfield",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "5361713",
+      "name": "Juho Piiparinen",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4915349",
+      "name": "Juraj Slafkovsky",
+      "team": "Montreal Canadiens",
+      "pos": "LW"
+    },
+    {
+      "id": "4697408",
+      "name": "Justin Barron",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "4063605",
+      "name": "Justin Brazeau",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "4894355",
+      "name": "Justin Danforth",
+      "team": "Buffalo Sabres",
+      "pos": "RW"
+    },
+    {
+      "id": "3067879",
+      "name": "Justin Dowling",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "5746",
+      "name": "Justin Faulk",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "5763",
+      "name": "Justin Holl",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5229176",
+      "name": "Justin Hryckowian",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "4697783",
+      "name": "Justin Sourdif",
+      "team": "Washington Capitals",
+      "pos": "RW"
+    },
+    {
+      "id": "4393408",
+      "name": "Justus Annunen",
+      "team": "Nashville Predators",
+      "pos": "G"
+    },
+    {
+      "id": "3042109",
+      "name": "Juuse Saros",
+      "team": "Nashville Predators",
+      "pos": "G"
+    },
+    {
+      "id": "4867883",
+      "name": "Juuso Parssinen",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "4233611",
+      "name": "Juuso Valimaki",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "4352770",
+      "name": "K'Andre Miller",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "4565223",
+      "name": "Kaapo Kakko",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "4565264",
+      "name": "Kaedan Korczak",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "5239180",
+      "name": "Kai Uchacz",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "4697399",
+      "name": "Kaiden Guhle",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "4233648",
+      "name": "Kailer Yamamoto",
+      "team": "Utah Mammoth",
+      "pos": "RW"
+    },
+    {
+      "id": "3942065",
+      "name": "Karel Vejmelka",
+      "team": "Utah Mammoth",
+      "pos": "G"
+    },
+    {
+      "id": "3114775",
+      "name": "Kasperi Kapanen",
+      "team": "Edmonton Oilers",
+      "pos": "RW"
+    },
+    {
+      "id": "4271557",
+      "name": "Keaton Middleton",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "3941546",
+      "name": "Keegan Kolesar",
+      "team": "Detroit Red Wings",
+      "pos": "RW"
+    },
+    {
+      "id": "4781553",
+      "name": "Kent Johnson",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "4378686",
+      "name": "Kevin Bahl",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "3114743",
+      "name": "Kevin Fiala",
+      "team": "Los Angeles Kings",
+      "pos": "LW"
+    },
+    {
+      "id": "5080148",
+      "name": "Kevin Korchinski",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "4341584",
+      "name": "Kevin Lankinen",
+      "team": "Vancouver Canucks",
+      "pos": "G"
+    },
+    {
+      "id": "3904191",
+      "name": "Kevin Stenlund",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "4391255",
+      "name": "Kiefer Sherwood",
+      "team": "San Jose Sharks",
+      "pos": "LW"
+    },
+    {
+      "id": "4565224",
+      "name": "Kirby Dach",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "3942335",
+      "name": "Kirill Kaprizov",
+      "team": "Minnesota Wild",
+      "pos": "LW"
+    },
+    {
+      "id": "4587996",
+      "name": "Kirill Marchenko",
+      "team": "Toronto Maple Leafs",
+      "pos": "RW"
+    },
+    {
+      "id": "5216882",
+      "name": "Konsta Helenius",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "3539",
+      "name": "Kris Letang",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "3042255",
+      "name": "Kyle Burroughs",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "3939716",
+      "name": "Kyle Capobianco",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "3899952",
+      "name": "Kyle Connor",
+      "team": "Winnipeg Jets",
+      "pos": "LW"
+    },
+    {
+      "id": "4329962",
+      "name": "Kyle Keyser",
+      "team": "San Jose Sharks",
+      "pos": "G"
+    },
+    {
+      "id": "5517",
+      "name": "Kyle Palmieri",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "5080230",
+      "name": "Lane Hutson",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "3946",
+      "name": "Lars Eller",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "3899951",
+      "name": "Lawson Crouse",
+      "team": "Utah Mammoth",
+      "pos": "LW"
+    },
+    {
+      "id": "4894703",
+      "name": "Leevi Merilainen",
+      "team": "Vancouver Canucks",
+      "pos": "G"
+    },
+    {
+      "id": "5149245",
+      "name": "Lenni Hameenaho",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "5149153",
+      "name": "Leo Carlsson",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "3114727",
+      "name": "Leon Draisaitl",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "3150468",
+      "name": "Liam O'Brien",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "5080163",
+      "name": "Liam Ohgren",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "5080162",
+      "name": "Lian Bichsel",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "4063429",
+      "name": "Libor Hajek",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "4587713",
+      "name": "Linus Karlsson",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "3069285",
+      "name": "Linus Ullmark",
+      "team": "Ottawa Senators",
+      "pos": "G"
+    },
+    {
+      "id": "5080143",
+      "name": "Logan Cooley",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "4874748",
+      "name": "Logan Mailloux",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "3988782",
+      "name": "Logan O'Connor",
+      "team": "Colorado Avalanche",
+      "pos": "RW"
+    },
+    {
+      "id": "4874899",
+      "name": "Logan Stankoven",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "4024968",
+      "name": "Logan Stanley",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "4272888",
+      "name": "Logan Thompson",
+      "team": "Washington Capitals",
+      "pos": "G"
+    },
+    {
+      "id": "4697681",
+      "name": "Louis Crevier",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "5080211",
+      "name": "Luca Del Bel Belluz",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "4697385",
+      "name": "Lucas Raymond",
+      "team": "Detroit Red Wings",
+      "pos": "LW"
+    },
+    {
+      "id": "4588165",
+      "name": "Lukas Dostal",
+      "team": "Anaheim Ducks",
+      "pos": "G"
+    },
+    {
+      "id": "4697446",
+      "name": "Luke Evangelista",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "2335062",
+      "name": "Luke Glendening",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "5206955",
+      "name": "Luke Haymes",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4874719",
+      "name": "Luke Hughes",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "5207357",
+      "name": "Luke Krys",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "5092",
+      "name": "Luke Schenn",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "3904177",
+      "name": "Mackenzie Blackwood",
+      "team": "Colorado Avalanche",
+      "pos": "G"
+    },
+    {
+      "id": "3069342",
+      "name": "Mackenzie MacEachern",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "3042269",
+      "name": "MacKenzie Weegar",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "4874741",
+      "name": "Mackie Samoskevich",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "5206628",
+      "name": "Macklin Celebrini",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "4697442",
+      "name": "Marat Khusnutdinov",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "4419649",
+      "name": "Marc Del Gaizo",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "5103547",
+      "name": "Marc Gatcomb",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "5080152",
+      "name": "Marco Kasper",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "4697391",
+      "name": "Marco Rossi",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "5172",
+      "name": "Marcus Foligno",
+      "team": "Minnesota Wild",
+      "pos": "LW"
+    },
+    {
+      "id": "3114995",
+      "name": "Marcus Pettersson",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "4233884",
+      "name": "Mario Ferraro",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "2976849",
+      "name": "Mark Jankowski",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "4587985",
+      "name": "Mark Kastelic",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "2562632",
+      "name": "Mark Scheifele",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "5545",
+      "name": "Mark Stone",
+      "team": "Vegas Golden Knights",
+      "pos": "RW"
+    },
+    {
+      "id": "4419778",
+      "name": "Marshall Rifai",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "4378677",
+      "name": "Martin Fehervary",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "4233586",
+      "name": "Martin Necas",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "4392883",
+      "name": "Martin Pospisil",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "3942043",
+      "name": "Mason Appleton",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "4697461",
+      "name": "Mason Lohrei",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "4272192",
+      "name": "Mason Marchment",
+      "team": "San Jose Sharks",
+      "pos": "LW"
+    },
+    {
+      "id": "4874718",
+      "name": "Mason McTavish",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "3899946",
+      "name": "Mathew Barzal",
+      "team": "New York Islanders",
+      "pos": "C"
+    },
+    {
+      "id": "3941965",
+      "name": "Mathieu Joseph",
+      "team": "Edmonton Oilers",
+      "pos": "RW"
+    },
+    {
+      "id": "4064781",
+      "name": "Mathieu Olivier",
+      "team": "Columbus Blue Jackets",
+      "pos": "RW"
+    },
+    {
+      "id": "4587580",
+      "name": "Matias Maccelli",
+      "team": "New York Islanders",
+      "pos": "LW"
+    },
+    {
+      "id": "5560",
+      "name": "Mats Zuccarello",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "4565233",
+      "name": "Matt Boldy",
+      "team": "Minnesota Wild",
+      "pos": "LW"
+    },
+    {
+      "id": "4874730",
+      "name": "Matt Coronato",
+      "team": "Calgary Flames",
+      "pos": "RW"
+    },
+    {
+      "id": "5161",
+      "name": "Matt Duchene",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "3069448",
+      "name": "Matt Grzelcyk",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "4316995",
+      "name": "Matt Hellickson",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "4799741",
+      "name": "Matt Kiersted",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "4697820",
+      "name": "Matt Rempe",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "3942924",
+      "name": "Matt Roy",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5080153",
+      "name": "Matt Savoie",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4697719",
+      "name": "Matthew Kessel",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "4874919",
+      "name": "Matthew Knies",
+      "team": "Columbus Blue Jackets",
+      "pos": "LW"
+    },
+    {
+      "id": "5080221",
+      "name": "Matthew Poitras",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "4565272",
+      "name": "Matthew Robertson",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "5291933",
+      "name": "Matthew Schaefer",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "5139042",
+      "name": "Matthew Seminoff",
+      "team": "Dallas Stars",
+      "pos": "RW"
+    },
+    {
+      "id": "4024854",
+      "name": "Matthew Tkachuk",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "5149189",
+      "name": "Matthew Wood",
+      "team": "Seattle Kraken",
+      "pos": "RW"
+    },
+    {
+      "id": "2558631",
+      "name": "Mattias Ekholm",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "5080215",
+      "name": "Mattias Havelid",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "3042085",
+      "name": "Mattias Janmark",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4378656",
+      "name": "Mattias Samuelsson",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "4781552",
+      "name": "Matty Beniers",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "5216897",
+      "name": "Matvei Gridin",
+      "team": "Calgary Flames",
+      "pos": "RW"
+    },
+    {
+      "id": "5149170",
+      "name": "Matvei Michkov",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "5080177",
+      "name": "Maveric Lamoureux",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "4697413",
+      "name": "Mavrik Bourque",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "5104716",
+      "name": "Max Crozier",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "4024980",
+      "name": "Max Jones",
+      "team": "Edmonton Oilers",
+      "pos": "LW"
+    },
+    {
+      "id": "4996099",
+      "name": "Max Sasson",
+      "team": "Vancouver Canucks",
+      "pos": "C"
+    },
+    {
+      "id": "5302535",
+      "name": "Maxim Shabanov",
+      "team": "Minnesota Wild",
+      "pos": "RW"
+    },
+    {
+      "id": "5212753",
+      "name": "Maxim Tsyplakov",
+      "team": "Calgary Flames",
+      "pos": "RW"
+    },
+    {
+      "id": "3149829",
+      "name": "Michael Amadio",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "5216883",
+      "name": "Michael Brandsegg-Nygard",
+      "team": "Detroit Red Wings",
+      "pos": "RW"
+    },
+    {
+      "id": "3149603",
+      "name": "Michael Bunting",
+      "team": "Philadelphia Flyers",
+      "pos": "LW"
+    },
+    {
+      "id": "4031645",
+      "name": "Michael Carcone",
+      "team": "Utah Mammoth",
+      "pos": "LW"
+    },
+    {
+      "id": "4392765",
+      "name": "Michael DiPietro",
+      "team": "Boston Bruins",
+      "pos": "G"
+    },
+    {
+      "id": "4270247",
+      "name": "Michael Eyssimont",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "5104210",
+      "name": "Michael Fisher",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "4331604",
+      "name": "Michael Kesselring",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "3042048",
+      "name": "Michael McCarron",
+      "team": "Minnesota Wild",
+      "pos": "C"
+    },
+    {
+      "id": "5291934",
+      "name": "Michael Misa",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "4233576",
+      "name": "Michael Rasmussen",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "2562637",
+      "name": "Mika Zibanejad",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "3797",
+      "name": "Mikael Backlund",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "5831",
+      "name": "Mikael Granlund",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "2976851",
+      "name": "Mike Matheson",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "2563077",
+      "name": "Mike Reilly",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "4588178",
+      "name": "Mikey Anderson",
+      "team": "Los Angeles Kings",
+      "pos": "D"
+    },
+    {
+      "id": "4024868",
+      "name": "Mikhail Sergachev",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "3899938",
+      "name": "Mikko Rantanen",
+      "team": "Dallas Stars",
+      "pos": "RW"
+    },
+    {
+      "id": "3042110",
+      "name": "Miles Wood",
+      "team": "Toronto Maple Leafs",
+      "pos": "LW"
+    },
+    {
+      "id": "4233536",
+      "name": "Miro Heiskanen",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "3899937",
+      "name": "Mitch Marner",
+      "team": "Vegas Golden Knights",
+      "pos": "RW"
+    },
+    {
+      "id": "4419646",
+      "name": "Mitchell Chaffee",
+      "team": "New York Islanders",
+      "pos": "RW"
+    },
+    {
+      "id": "4316970",
+      "name": "Morgan Barron",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "4233685",
+      "name": "Morgan Frost",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "4268466",
+      "name": "Morgan Geekie",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "2976833",
+      "name": "Morgan Rielly",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "4565227",
+      "name": "Moritz Seider",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "3024798",
+      "name": "Nate Schmidt",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "3041969",
+      "name": "Nathan MacKinnon",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "5349",
+      "name": "Nazem Kadri",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "3988847",
+      "name": "Neal Pionk",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "3025616",
+      "name": "Nic Dowd",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "5828",
+      "name": "Nick Bjugstad",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "4781550",
+      "name": "Nick Blankenburg",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "2563027",
+      "name": "Nick Cousins",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "4196959",
+      "name": "Nick DeSimone",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "3535",
+      "name": "Nick Foligno",
+      "team": "Minnesota Wild",
+      "pos": "LW"
+    },
+    {
+      "id": "3025608",
+      "name": "Nick Jensen",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "5173765",
+      "name": "Nick Lardis",
+      "team": "Chicago Blackhawks",
+      "pos": "LW"
+    },
+    {
+      "id": "3042111",
+      "name": "Nick Paul",
+      "team": "Toronto Maple Leafs",
+      "pos": "LW"
+    },
+    {
+      "id": "4419638",
+      "name": "Nick Perbix",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4565275",
+      "name": "Nick Robertson",
+      "team": "Pittsburgh Penguins",
+      "pos": "LW"
+    },
+    {
+      "id": "3114770",
+      "name": "Nick Schmaltz",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "2564164",
+      "name": "Nick Seeler",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4233594",
+      "name": "Nick Suzuki",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "4697683",
+      "name": "Nico Daws",
+      "team": "Winnipeg Jets",
+      "pos": "G"
+    },
+    {
+      "id": "4233555",
+      "name": "Nico Hischier",
+      "team": "New Jersey Devils",
+      "pos": "C"
+    },
+    {
+      "id": "4320625",
+      "name": "Nico Sturm",
+      "team": "Minnesota Wild",
+      "pos": "C"
+    },
+    {
+      "id": "5193",
+      "name": "Nicolas Deslauriers",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "4233870",
+      "name": "Nicolas Hague",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "3943996",
+      "name": "Nicolas Roy",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "5361658",
+      "name": "Nikita Klepov",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "2563060",
+      "name": "Nikita Kucherov",
+      "team": "Tampa Bay Lightning",
+      "pos": "RW"
+    },
+    {
+      "id": "4755696",
+      "name": "Nikita Nesterenko",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "5188534",
+      "name": "Nikita Tolopilo",
+      "team": "Vancouver Canucks",
+      "pos": "G"
+    },
+    {
+      "id": "3042021",
+      "name": "Nikita Zadorov",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "5080225",
+      "name": "Nikke Kokko",
+      "team": "Seattle Kraken",
+      "pos": "G"
+    },
+    {
+      "id": "3942354",
+      "name": "Niko Mikkola",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "3114741",
+      "name": "Nikolaj Ehlers",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "5174232",
+      "name": "Nikolas Matinpalo",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "4565263",
+      "name": "Nils Hoglander",
+      "team": "Nashville Predators",
+      "pos": "LW"
+    },
+    {
+      "id": "4352800",
+      "name": "Nils Lundkvist",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "5511",
+      "name": "Nino Niederreiter",
+      "team": "Winnipeg Jets",
+      "pos": "RW"
+    },
+    {
+      "id": "4419682",
+      "name": "Noah Cates",
+      "team": "Philadelphia Flyers",
+      "pos": "LW"
+    },
+    {
+      "id": "4352732",
+      "name": "Noah Dobson",
+      "team": "Montreal Canadiens",
+      "pos": "D"
+    },
+    {
+      "id": "3652964",
+      "name": "Noah Hanifin",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "3900504",
+      "name": "Noah Juulsen",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "5188370",
+      "name": "Noah Laba",
+      "team": "New York Rangers",
+      "pos": "C"
+    },
+    {
+      "id": "5080160",
+      "name": "Noah Ostlund",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "5080210",
+      "name": "Noah Warren",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "3096237",
+      "name": "Noel Acciari",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "4874749",
+      "name": "Nolan Allan",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "4874863",
+      "name": "Olen Zellweger",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "3042095",
+      "name": "Oliver Bjorkstrand",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "5149199",
+      "name": "Oliver Bonk",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "5488",
+      "name": "Oliver Ekman-Larsson",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "4874943",
+      "name": "Oliver Kapanen",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "5149194",
+      "name": "Oliver Moore",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "2976850",
+      "name": "Olli Maatta",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "2590389",
+      "name": "Ondrej Palat",
+      "team": "New York Islanders",
+      "pos": "LW"
+    },
+    {
+      "id": "4894398",
+      "name": "Oskar Back",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "5149208",
+      "name": "Otto Stenberg",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "5080202",
+      "name": "Owen Beck",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "5206840",
+      "name": "Owen Michaels",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "4781556",
+      "name": "Owen Power",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "4392072",
+      "name": "Owen Tippett",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "4392309",
+      "name": "Parker Kelly",
+      "team": "Colorado Avalanche",
+      "pos": "C"
+    },
+    {
+      "id": "3942638",
+      "name": "Parker Wotherspoon",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4755703",
+      "name": "Patrick Giles",
+      "team": "San Jose Sharks",
+      "pos": "RW"
+    },
+    {
+      "id": "3735",
+      "name": "Patrick Kane",
+      "team": "Chicago Blackhawks",
+      "pos": "RW"
+    },
+    {
+      "id": "4331579",
+      "name": "Paul Cotter",
+      "team": "Vancouver Canucks",
+      "pos": "LW"
+    },
+    {
+      "id": "3042081",
+      "name": "Pavel Buchnevich",
+      "team": "St. Louis Blues",
+      "pos": "LW"
+    },
+    {
+      "id": "4587588",
+      "name": "Pavel Dorofeyev",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "5080154",
+      "name": "Pavel Mintyukov",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "3899949",
+      "name": "Pavel Zacha",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "4565238",
+      "name": "Peyton Krebs",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4565229",
+      "name": "Philip Broberg",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "4565245",
+      "name": "Philip Tomasino",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "5657",
+      "name": "Philipp Grubauer",
+      "team": "Seattle Kraken",
+      "pos": "G"
+    },
+    {
+      "id": "2562602",
+      "name": "Phillip Danault",
+      "team": "Montreal Canadiens",
+      "pos": "C"
+    },
+    {
+      "id": "4024833",
+      "name": "Pierre-Luc Dubois",
+      "team": "Washington Capitals",
+      "pos": "LW"
+    },
+    {
+      "id": "4271732",
+      "name": "Pius Suter",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "4588205",
+      "name": "Pontus Holmberg",
+      "team": "Tampa Bay Lightning",
+      "pos": "RW"
+    },
+    {
+      "id": "5291941",
+      "name": "Porter Martone",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "4565259",
+      "name": "Pyotr Kochetkov",
+      "team": "Carolina Hurricanes",
+      "pos": "G"
+    },
+    {
+      "id": "5149209",
+      "name": "Quentin Musty",
+      "team": "San Jose Sharks",
+      "pos": "LW"
+    },
+    {
+      "id": "4320548",
+      "name": "Quinn Hughes",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "5172484",
+      "name": "Quinton Burns",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "4697383",
+      "name": "Quinton Byfield",
+      "team": "Los Angeles Kings",
+      "pos": "RW"
+    },
+    {
+      "id": "2976842",
+      "name": "Radek Faksa",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "5502",
+      "name": "Radko Gudas",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "4565261",
+      "name": "Raphael Lavoie",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "3904186",
+      "name": "Rasmus Andersson",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4294163",
+      "name": "Rasmus Dahlin",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "3041999",
+      "name": "Rasmus Ristolainen",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4352803",
+      "name": "Rasmus Sandin",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5080180",
+      "name": "Reid Schaefer",
+      "team": "Nashville Predators",
+      "pos": "LW"
+    },
+    {
+      "id": "2562629",
+      "name": "Rickard Rakell",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "4697411",
+      "name": "Ridly Greig",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "4024985",
+      "name": "Riley Tufte",
+      "team": "New Jersey Devils",
+      "pos": "LW"
+    },
+    {
+      "id": "4233637",
+      "name": "Robert Thomas",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "5291946",
+      "name": "Roger McQueen",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "5436",
+      "name": "Roman Josi",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "5149231",
+      "name": "Roman Kantserov",
+      "team": "Chicago Blackhawks",
+      "pos": "RW"
+    },
+    {
+      "id": "3904183",
+      "name": "Roope Hintz",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "4392471",
+      "name": "Ross Colton",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "3067822",
+      "name": "Ross Johnston",
+      "team": "St. Louis Blues",
+      "pos": "LW"
+    },
+    {
+      "id": "5080158",
+      "name": "Rutger McGroarty",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "3115033",
+      "name": "Ryan Donato",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "3042122",
+      "name": "Ryan Graves",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "5080227",
+      "name": "Ryan Greene",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "3042063",
+      "name": "Ryan Hartman",
+      "team": "Minnesota Wild",
+      "pos": "RW"
+    },
+    {
+      "id": "5149172",
+      "name": "Ryan Leonard",
+      "team": "Washington Capitals",
+      "pos": "RW"
+    },
+    {
+      "id": "4271998",
+      "name": "Ryan Lindgren",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "3942548",
+      "name": "Ryan Lomberg",
+      "team": "Columbus Blue Jackets",
+      "pos": "LW"
+    },
+    {
+      "id": "4954",
+      "name": "Ryan McDonagh",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "4378669",
+      "name": "Ryan McLeod",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "2562624",
+      "name": "Ryan Nugent-Hopkins",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "5208",
+      "name": "Ryan O'Reilly",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "4233668",
+      "name": "Ryan Poehling",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "3042019",
+      "name": "Ryan Pulock",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "3942033",
+      "name": "Ryan Shea",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "2562636",
+      "name": "Ryan Strome",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "4697771",
+      "name": "Ryan Tverberg",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4894928",
+      "name": "Ryan Winterton",
+      "team": "Seattle Kraken",
+      "pos": "C"
+    },
+    {
+      "id": "4874864",
+      "name": "Ryker Evans",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "3114732",
+      "name": "Sam Bennett",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "5474",
+      "name": "Sam Carrick",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4697441",
+      "name": "Sam Colangelo",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "5216880",
+      "name": "Sam Dickinson",
+      "team": "San Jose Sharks",
+      "pos": "D"
+    },
+    {
+      "id": "5136735",
+      "name": "Sam Malinski",
+      "team": "Colorado Avalanche",
+      "pos": "D"
+    },
+    {
+      "id": "3942714",
+      "name": "Sam Montembeault",
+      "team": "Montreal Canadiens",
+      "pos": "G"
+    },
+    {
+      "id": "5216901",
+      "name": "Sam O'Reilly",
+      "team": "Tampa Bay Lightning",
+      "pos": "RW"
+    },
+    {
+      "id": "3114722",
+      "name": "Sam Reinhart",
+      "team": "Florida Panthers",
+      "pos": "C"
+    },
+    {
+      "id": "5080173",
+      "name": "Sam Rinzel",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "4024998",
+      "name": "Sam Steel",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "3149697",
+      "name": "Sammy Blais",
+      "team": "Ottawa Senators",
+      "pos": "LW"
+    },
+    {
+      "id": "4587815",
+      "name": "Samuel Ersson",
+      "team": "Ottawa Senators",
+      "pos": "G"
+    },
+    {
+      "id": "4063401",
+      "name": "Samuel Girard",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "4874923",
+      "name": "Samuel Helenius",
+      "team": "Los Angeles Kings",
+      "pos": "C"
+    },
+    {
+      "id": "5149191",
+      "name": "Samuel Honzek",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "5103599",
+      "name": "Sandis Vilmanis",
+      "team": "Florida Panthers",
+      "pos": "LW"
+    },
+    {
+      "id": "2976848",
+      "name": "Scott Laughton",
+      "team": "Los Angeles Kings",
+      "pos": "C"
+    },
+    {
+      "id": "2563069",
+      "name": "Scott Mayfield",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "4874882",
+      "name": "Scott Morrow",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "3067840",
+      "name": "Scott Sabourin",
+      "team": "Tampa Bay Lightning",
+      "pos": "RW"
+    },
+    {
+      "id": "5622",
+      "name": "Scott Wedgewood",
+      "team": "Colorado Avalanche",
+      "pos": "G"
+    },
+    {
+      "id": "5080212",
+      "name": "Seamus Casey",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "2562601",
+      "name": "Sean Couturier",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "4378683",
+      "name": "Sean Durzi",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "2564154",
+      "name": "Sean Kuraly",
+      "team": "Boston Bruins",
+      "pos": "C"
+    },
+    {
+      "id": "3041996",
+      "name": "Sean Monahan",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "4272905",
+      "name": "Sean Walker",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "3904173",
+      "name": "Sebastian Aho",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "4874732",
+      "name": "Sebastian Cossa",
+      "team": "Utah Mammoth",
+      "pos": "G"
+    },
+    {
+      "id": "3759",
+      "name": "Semyon Varlamov",
+      "team": "New York Islanders",
+      "pos": "G"
+    },
+    {
+      "id": "5571",
+      "name": "Sergei Bobrovsky",
+      "team": "Toronto Maple Leafs",
+      "pos": "G"
+    },
+    {
+      "id": "5188366",
+      "name": "Sergei Murashov",
+      "team": "Pittsburgh Penguins",
+      "pos": "G"
+    },
+    {
+      "id": "4697396",
+      "name": "Seth Jarvis",
+      "team": "Carolina Hurricanes",
+      "pos": "C"
+    },
+    {
+      "id": "3041992",
+      "name": "Seth Jones",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "4697403",
+      "name": "Shakir Mukhamadullin",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "4565255",
+      "name": "Shane Pinto",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "5080144",
+      "name": "Shane Wright",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "3025662",
+      "name": "Shayne Gostisbehere",
+      "team": "Carolina Hurricanes",
+      "pos": "D"
+    },
+    {
+      "id": "3042055",
+      "name": "Shea Theodore",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "4196931",
+      "name": "Sheldon Dries",
+      "team": "Detroit Red Wings",
+      "pos": "C"
+    },
+    {
+      "id": "3114",
+      "name": "Sidney Crosby",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "4392642",
+      "name": "Simon Benoit",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4874720",
+      "name": "Simon Edvinsson",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "4565244",
+      "name": "Simon Holmstrom",
+      "team": "New York Islanders",
+      "pos": "RW"
+    },
+    {
+      "id": "4915344",
+      "name": "Simon Nemec",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "4565234",
+      "name": "Spencer Knight",
+      "team": "Chicago Blackhawks",
+      "pos": "G"
+    },
+    {
+      "id": "3042069",
+      "name": "Spencer Martin",
+      "team": "Chicago Blackhawks",
+      "pos": "G"
+    },
+    {
+      "id": "4393406",
+      "name": "Spencer Stastney",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "2562623",
+      "name": "Stefan Noesen",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "5136706",
+      "name": "Stephen Halliday",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "3939658",
+      "name": "Steven Lorentz",
+      "team": "Columbus Blue Jackets",
+      "pos": "C"
+    },
+    {
+      "id": "5037",
+      "name": "Steven Stamkos",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "4268767",
+      "name": "Stuart Skinner",
+      "team": "Winnipeg Jets",
+      "pos": "G"
+    },
+    {
+      "id": "5136616",
+      "name": "T.J. Hughes",
+      "team": "Colorado Avalanche",
+      "pos": "RW"
+    },
+    {
+      "id": "4024988",
+      "name": "Tage Thompson",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4064780",
+      "name": "Tanner Jeannot",
+      "team": "Boston Bruins",
+      "pos": "LW"
+    },
+    {
+      "id": "4392137",
+      "name": "Tanner Laczynski",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "5428",
+      "name": "Taylor Hall",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "4063502",
+      "name": "Taylor Raddysh",
+      "team": "New York Rangers",
+      "pos": "RW"
+    },
+    {
+      "id": "3024916",
+      "name": "Teddy Blueger",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "2592095",
+      "name": "Teuvo Teravainen",
+      "team": "Chicago Blackhawks",
+      "pos": "C"
+    },
+    {
+      "id": "3096217",
+      "name": "Thatcher Demko",
+      "team": "Vancouver Canucks",
+      "pos": "G"
+    },
+    {
+      "id": "3900219",
+      "name": "Thomas Chabot",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "4565239",
+      "name": "Thomas Harley",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "4697384",
+      "name": "Tim Stutzle",
+      "team": "Ottawa Senators",
+      "pos": "C"
+    },
+    {
+      "id": "4996085",
+      "name": "Tim Washe",
+      "team": "Anaheim Ducks",
+      "pos": "C"
+    },
+    {
+      "id": "3899978",
+      "name": "Timo Meier",
+      "team": "New Jersey Devils",
+      "pos": "RW"
+    },
+    {
+      "id": "4233618",
+      "name": "Timothy Liljegren",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "5149180",
+      "name": "Tom Willander",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "2970615",
+      "name": "Tom Wilson",
+      "team": "Washington Capitals",
+      "pos": "RW"
+    },
+    {
+      "id": "2976844",
+      "name": "Tomas Hertl",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "3942061",
+      "name": "Tommy Novak",
+      "team": "Pittsburgh Penguins",
+      "pos": "C"
+    },
+    {
+      "id": "3114769",
+      "name": "Tony DeAngelo",
+      "team": "New York Islanders",
+      "pos": "D"
+    },
+    {
+      "id": "3900169",
+      "name": "Travis Konecny",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "5173614",
+      "name": "Travis Mitchell",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "3114757",
+      "name": "Travis Sanheim",
+      "team": "Philadelphia Flyers",
+      "pos": "D"
+    },
+    {
+      "id": "4024997",
+      "name": "Trent Frederic",
+      "team": "Edmonton Oilers",
+      "pos": "C"
+    },
+    {
+      "id": "5216887",
+      "name": "Trevor Connelly",
+      "team": "Vegas Golden Knights",
+      "pos": "LW"
+    },
+    {
+      "id": "3096186",
+      "name": "Trevor Moore",
+      "team": "Los Angeles Kings",
+      "pos": "LW"
+    },
+    {
+      "id": "3025524",
+      "name": "Trevor van Riemsdyk",
+      "team": "Pittsburgh Penguins",
+      "pos": "D"
+    },
+    {
+      "id": "4565230",
+      "name": "Trevor Zegras",
+      "team": "Philadelphia Flyers",
+      "pos": "C"
+    },
+    {
+      "id": "5302584",
+      "name": "Trey Taylor",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "3042020",
+      "name": "Tristan Jarry",
+      "team": "Edmonton Oilers",
+      "pos": "G"
+    },
+    {
+      "id": "5080220",
+      "name": "Tristan Luneau",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "3096102",
+      "name": "Troy Stecher",
+      "team": "Toronto Maple Leafs",
+      "pos": "D"
+    },
+    {
+      "id": "3942905",
+      "name": "Troy Terry",
+      "team": "Anaheim Ducks",
+      "pos": "RW"
+    },
+    {
+      "id": "4352747",
+      "name": "Ty Dellandrea",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "4587566",
+      "name": "Ty Emberson",
+      "team": "Edmonton Oilers",
+      "pos": "D"
+    },
+    {
+      "id": "4588750",
+      "name": "Tye Kartye",
+      "team": "New York Rangers",
+      "pos": "LW"
+    },
+    {
+      "id": "3042056",
+      "name": "Tyler Bertuzzi",
+      "team": "Chicago Blackhawks",
+      "pos": "LW"
+    },
+    {
+      "id": "4874724",
+      "name": "Tyler Boucher",
+      "team": "Ottawa Senators",
+      "pos": "RW"
+    },
+    {
+      "id": "4697448",
+      "name": "Tyler Kleven",
+      "team": "Ottawa Senators",
+      "pos": "D"
+    },
+    {
+      "id": "5052",
+      "name": "Tyler Myers",
+      "team": "Dallas Stars",
+      "pos": "D"
+    },
+    {
+      "id": "5430",
+      "name": "Tyler Seguin",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "5550",
+      "name": "Tyler Toffoli",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "4587904",
+      "name": "Tyler Tucker",
+      "team": "St. Louis Blues",
+      "pos": "D"
+    },
+    {
+      "id": "4697648",
+      "name": "Tyrel Bauer",
+      "team": "Winnipeg Jets",
+      "pos": "D"
+    },
+    {
+      "id": "4697406",
+      "name": "Tyson Foerster",
+      "team": "Philadelphia Flyers",
+      "pos": "RW"
+    },
+    {
+      "id": "5103702",
+      "name": "Tyson Hinds",
+      "team": "Anaheim Ducks",
+      "pos": "D"
+    },
+    {
+      "id": "4895527",
+      "name": "Tyson Kozak",
+      "team": "Buffalo Sabres",
+      "pos": "C"
+    },
+    {
+      "id": "4233889",
+      "name": "Ukko-Pekka Luukkonen",
+      "team": "Buffalo Sabres",
+      "pos": "G"
+    },
+    {
+      "id": "4233619",
+      "name": "Urho Vaakanainen",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "5142461",
+      "name": "Uvis Balinskis",
+      "team": "Florida Panthers",
+      "pos": "D"
+    },
+    {
+      "id": "3042003",
+      "name": "Valeri Nichushkin",
+      "team": "Columbus Blue Jackets",
+      "pos": "RW"
+    },
+    {
+      "id": "4565231",
+      "name": "Vasily Podkolzin",
+      "team": "Edmonton Oilers",
+      "pos": "RW"
+    },
+    {
+      "id": "5291952",
+      "name": "Victor Eklund",
+      "team": "New York Islanders",
+      "pos": "RW"
+    },
+    {
+      "id": "5157",
+      "name": "Victor Hedman",
+      "team": "Tampa Bay Lightning",
+      "pos": "D"
+    },
+    {
+      "id": "5188334",
+      "name": "Victor Mancini",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "3151096",
+      "name": "Victor Olofsson",
+      "team": "Vegas Golden Knights",
+      "pos": "LW"
+    },
+    {
+      "id": "5361711",
+      "name": "Viggo Bjorck",
+      "team": "Winnipeg Jets",
+      "pos": "C"
+    },
+    {
+      "id": "5275403",
+      "name": "Viking Gustafsson Nyberg",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "3120307",
+      "name": "Viktor Arvidsson",
+      "team": "Detroit Red Wings",
+      "pos": "LW"
+    },
+    {
+      "id": "5302588",
+      "name": "Viliam Kmec",
+      "team": "Vegas Golden Knights",
+      "pos": "D"
+    },
+    {
+      "id": "3151137",
+      "name": "Ville Husso",
+      "team": "Anaheim Ducks",
+      "pos": "G"
+    },
+    {
+      "id": "4874911",
+      "name": "Ville Koivunen",
+      "team": "Pittsburgh Penguins",
+      "pos": "RW"
+    },
+    {
+      "id": "5103811",
+      "name": "Ville Ottavainen",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "3904189",
+      "name": "Vince Dunn",
+      "team": "Seattle Kraken",
+      "pos": "D"
+    },
+    {
+      "id": "4392260",
+      "name": "Vincent Desharnais",
+      "team": "Washington Capitals",
+      "pos": "D"
+    },
+    {
+      "id": "4874915",
+      "name": "Vincent Iorio",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "2563036",
+      "name": "Vincent Trocheck",
+      "team": "Utah Mammoth",
+      "pos": "C"
+    },
+    {
+      "id": "5346852",
+      "name": "Vitali Pinchuk",
+      "team": "Nashville Predators",
+      "pos": "C"
+    },
+    {
+      "id": "3942292",
+      "name": "Vladislav Gavrikov",
+      "team": "New York Rangers",
+      "pos": "D"
+    },
+    {
+      "id": "4565274",
+      "name": "Vladislav Kolyachonok",
+      "team": "New Jersey Devils",
+      "pos": "D"
+    },
+    {
+      "id": "4319940",
+      "name": "Walker Duehr",
+      "team": "Winnipeg Jets",
+      "pos": "RW"
+    },
+    {
+      "id": "3151036",
+      "name": "Warren Foegele",
+      "team": "Ottawa Senators",
+      "pos": "LW"
+    },
+    {
+      "id": "3941946",
+      "name": "Will Borgen",
+      "team": "Boston Bruins",
+      "pos": "D"
+    },
+    {
+      "id": "4697468",
+      "name": "Will Cuylle",
+      "team": "New York Rangers",
+      "pos": "LW"
+    },
+    {
+      "id": "5149155",
+      "name": "Will Smith",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "3042054",
+      "name": "William Carrier",
+      "team": "Carolina Hurricanes",
+      "pos": "LW"
+    },
+    {
+      "id": "4874721",
+      "name": "William Eklund",
+      "team": "Ottawa Senators",
+      "pos": "LW"
+    },
+    {
+      "id": "2563057",
+      "name": "William Karlsson",
+      "team": "Vegas Golden Knights",
+      "pos": "C"
+    },
+    {
+      "id": "3114736",
+      "name": "William Nylander",
+      "team": "Toronto Maple Leafs",
+      "pos": "RW"
+    },
+    {
+      "id": "4874893",
+      "name": "William Stromgren",
+      "team": "Calgary Flames",
+      "pos": "LW"
+    },
+    {
+      "id": "5103808",
+      "name": "William Trudeau",
+      "team": "Nashville Predators",
+      "pos": "D"
+    },
+    {
+      "id": "4697436",
+      "name": "William Wallinder",
+      "team": "Detroit Red Wings",
+      "pos": "D"
+    },
+    {
+      "id": "4874740",
+      "name": "Wyatt Johnston",
+      "team": "Dallas Stars",
+      "pos": "C"
+    },
+    {
+      "id": "4697717",
+      "name": "Wyatt Kaiser",
+      "team": "Chicago Blackhawks",
+      "pos": "D"
+    },
+    {
+      "id": "3904188",
+      "name": "Yakov Trenin",
+      "team": "Minnesota Wild",
+      "pos": "C"
+    },
+    {
+      "id": "4697453",
+      "name": "Yan Kuznetsov",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "3094261",
+      "name": "Yanni Gourde",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    },
+    {
+      "id": "4697394",
+      "name": "Yaroslav Askarov",
+      "team": "San Jose Sharks",
+      "pos": "G"
+    },
+    {
+      "id": "4587843",
+      "name": "Yegor Sharangovich",
+      "team": "Calgary Flames",
+      "pos": "C"
+    },
+    {
+      "id": "4781635",
+      "name": "Zac Jones",
+      "team": "Utah Mammoth",
+      "pos": "D"
+    },
+    {
+      "id": "5149186",
+      "name": "Zach Benson",
+      "team": "Buffalo Sabres",
+      "pos": "LW"
+    },
+    {
+      "id": "4002",
+      "name": "Zach Bogosian",
+      "team": "Minnesota Wild",
+      "pos": "D"
+    },
+    {
+      "id": "4874747",
+      "name": "Zach Dean",
+      "team": "St. Louis Blues",
+      "pos": "C"
+    },
+    {
+      "id": "5509",
+      "name": "Zach Hyman",
+      "team": "Edmonton Oilers",
+      "pos": "LW"
+    },
+    {
+      "id": "4419696",
+      "name": "Zach Metsa",
+      "team": "Buffalo Sabres",
+      "pos": "D"
+    },
+    {
+      "id": "3899972",
+      "name": "Zach Werenski",
+      "team": "Columbus Blue Jackets",
+      "pos": "D"
+    },
+    {
+      "id": "4312877",
+      "name": "Zach Whitecloud",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "4874744",
+      "name": "Zachary L'Heureux",
+      "team": "Colorado Avalanche",
+      "pos": "LW"
+    },
+    {
+      "id": "4874734",
+      "name": "Zack Bolduc",
+      "team": "Montreal Canadiens",
+      "pos": "RW"
+    },
+    {
+      "id": "4063569",
+      "name": "Zack MacEwen",
+      "team": "Toronto Maple Leafs",
+      "pos": "C"
+    },
+    {
+      "id": "4874881",
+      "name": "Zack Ostapchuk",
+      "team": "San Jose Sharks",
+      "pos": "C"
+    },
+    {
+      "id": "5216878",
+      "name": "Zayne Parekh",
+      "team": "Calgary Flames",
+      "pos": "D"
+    },
+    {
+      "id": "5206642",
+      "name": "Zeev Buium",
+      "team": "Vancouver Canucks",
+      "pos": "D"
+    },
+    {
+      "id": "2968829",
+      "name": "Zemgus Girgensons",
+      "team": "Tampa Bay Lightning",
+      "pos": "C"
+    }
+  ]
+}

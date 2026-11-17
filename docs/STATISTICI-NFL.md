@@ -2,7 +2,7 @@
 
 ## Stare
 
-NFL este în PR #32 draft pe `stage-32-statistici-nfl-nhl-mls`, aplicația v46. [Deploy Preview-ul](https://deploy-preview-32--americansportshub.netlify.app) a fost verificat pe date live; nu s-a făcut merge în producție. NFL, NHL și MLS rămân pe același branch/PR cumulativ, cu același preview actualizat după fiecare ligă și un singur merge final. MLB este amânat.
+NFL a fost adăugat în PR #32 pe `stage-32-statistici-nfl-nhl-mls`, la v46. PR-ul rămâne draft; preview-ul NFL a fost verificat pe date live, fără merge în producție. NHL extinde același branch/PR la v47, iar preview-ul comun trebuie actualizat și verificat separat. MLS urmează în același PR; MLB este amânat.
 
 ## Profilul jucătorului
 

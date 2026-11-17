@@ -1,4 +1,4 @@
-// The search box: teams, opponents, cities and stadiums from all of America.
+// The search box: players, teams, opponents, cities and stadiums from all of America.
 import { TEAMS, norm } from './teams.js';
 import { esc, $, emb } from './ui.js';
 import { PLACES, loadPlaces, AMERICA, loadAmerica, allPlaces } from './places.js';
@@ -7,13 +7,30 @@ import { minePick, renderMinePickList, WELCOME, renderWelcomeList } from './home
 import { gameView, go } from './pages.js';
 
 /* ================= search ================= */
-// Everything findable: Florida teams, every opponent in the schedule, cities, stadiums.
-let nbaPlayers = [], nbaLoad;
-function loadNbaPlayers() {
-  return nbaLoad ||= fetch('data/nba-players.json').then(r => { if (!r.ok) throw Error('Catalog indisponibil'); return r.json(); }).then(j => { nbaPlayers = j.players || []; }).catch(() => { nbaLoad = null; });
+// Add MLS and MLB when their player profiles are available.
+const PLAYER_LEAGUES = ['NBA', 'NFL', 'NHL'];
+const playerCatalogs = Object.fromEntries(PLAYER_LEAGUES.map(l => [l, []]));
+const playerLoads = new Map();
+function loadPlayerCatalog(l) {
+  if (playerLoads.has(l)) return playerLoads.get(l);
+  const load = fetch(`data/${l.toLowerCase()}-players.json`)
+    .then(r => { if (!r.ok) throw Error(`Catalog ${l} indisponibil`); return r.json(); })
+    .then(j => {
+      if (!Array.isArray(j.players)) throw Error(`Catalog ${l} invalid`);
+      playerCatalogs[l] = j.players.filter(p => /^\d+$/.test(p.id || '') && p.name && p.team);
+    })
+    .catch(e => { console.warn(`Catalog jucători ${l} indisponibil:`, e.message); playerLoads.delete(l); });
+  playerLoads.set(l, load);
+  return load;
+}
+function loadPlayerCatalogs() {
+  return Promise.all(PLAYER_LEAGUES.map(loadPlayerCatalog));
 }
 export function searchIndex() {
-  const out = nbaPlayers.map(p => ({kind: 'Jucător', text: p.name + ' NBA ' + p.team, label: p.name, sub: 'NBA · ' + p.team, hash: '#jucator/NBA/' + p.id, rank: 0}));
+  const out = PLAYER_LEAGUES.flatMap(l => playerCatalogs[l].map(p => ({
+    kind: 'Jucător', text: `${p.name} ${l} ${p.team} ${p.pos || ''}`, label: p.name,
+    sub: `${l} · ${p.team}${p.pos ? ' · ' + p.pos : ''}`, hash: `#jucator/${l}/${p.id}`, rank: 0
+  })));
   for (const k in TEAMS) out.push({ kind: 'Echipă', text: `${TEAMS[k].espn} ${TEAMS[k].s} ${TEAMS[k].city} ${TEAMS[k].l}`, label: TEAMS[k].espn, sub: `${TEAMS[k].l} · ${TEAMS[k].city}`, hash: '#echipa/' + k, side: flSide(k), rank: 0 });
   const now = Date.now(), opp = new Map();
   for (const g of GAMES) for (const s of [g.H, g.A]) {
@@ -70,7 +87,7 @@ document.addEventListener('input', e => {
 });
 $('q').addEventListener('focus', () => {
   runSearch();
-  for (const p of [loadNbaPlayers(), !PLACES.data && loadPlaces(), !AMERICA.data && loadAmerica()]) p?.then?.(() => { if (document.activeElement === $('q')) runSearch(); });
+  for (const p of [loadPlayerCatalogs(), !PLACES.data && loadPlaces(), !AMERICA.data && loadAmerica()]) p?.then?.(() => { if (document.activeElement === $('q')) runSearch(); });
 });
 $('q').addEventListener('keydown', e => {
   if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
