@@ -1,3 +1,4 @@
+<!-- Actualizare de scop v36: la cererea utilizatorului, Game Night și biblioteca sunt eliminate. Păstrăm numai rezumate în pagina fiecărui meci, alternativă ESPN și corectare manuală. Protecția completă contra spoilerelor rămâne amânată. Secțiunile despre Game Night de mai jos sunt istoric. -->
 # American Sports Hub
 
 ## Direcția curentă — ediție personală premium (17 noiembrie 2026)

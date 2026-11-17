@@ -27,5 +27,5 @@ if (process.argv.includes('--backfill')) {
     } catch (e) { console.log(source.name, e.message); }
   }
 }
-await writeFile(file, JSON.stringify(result, null, 2) + '\n');
+await writeFile(file, JSON.stringify({ ...result, videos: result.videos.filter(v => v.kind === 'recap') }, null, 2) + '\n');
 console.log(result.videos.length, 'clipuri în catalog');

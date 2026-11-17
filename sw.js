@@ -5,7 +5,7 @@
 // - Schedule, live scores, weather, calendar feed: network only. The schedule has its own saved copy
 //   in the page (localStorage), which the page labels as saved data; live scores and weather must
 //   never be shown old as if they were current.
-const VERSION = 'v35';   // the same in js/phone.js (APP_VERSION)
+const VERSION = 'v36';   // the same in js/phone.js (APP_VERSION)
 const SHELL = `shell-${VERSION}`, API = `api-${VERSION}`, IMG = `img-${VERSION}`;
 const FILES = [
   '/js/videos.js', '/js/video-data.js', '/data/video-catalog.json',

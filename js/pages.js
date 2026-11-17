@@ -66,7 +66,7 @@ export function go(hash) {
 export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
-  if (h[0] === 'video') { hideOv(); setView('video'); return; }
+  if (h[0] === 'video') { hideOv(); setView('florida'); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) gameView.side = ''; gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }

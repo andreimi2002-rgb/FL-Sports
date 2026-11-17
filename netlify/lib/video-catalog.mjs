@@ -41,7 +41,7 @@ async function fetchText(url, ms, fetcher) {
   return s;
 }
 export async function collectCatalog(previous = {}, { fetcher = fetch, now = Date.now(), metadataLimit = 6 } = {}) {
-  const incoming = [], statuses = [], pending = [...VIDEO_SOURCES];
+  const incoming = [], statuses = [], pending = VIDEO_SOURCES.filter(s => ['nba', 'nfl', 'nhl', 'mlb', 'mls'].includes(s.id));
   await Promise.all(Array.from({ length: 3 }, async () => {
     while (pending.length) {
       const source = pending.shift();
@@ -51,7 +51,7 @@ export async function collectCatalog(previous = {}, { fetcher = fetch, now = Dat
       } catch { statuses.push({ id: source.id, ok: false, checked: new Date(now).toISOString() }); }
     }
   }));
-  const videos = mergeCatalog(previous.videos || [], incoming, now);
+  const videos = mergeCatalog(previous.videos || [], incoming, now).filter(v => v.kind === 'recap');
   // Prioritize potential recaps; metadata is optional and never guessed from titles.
   const candidates = videos.filter(v => v.seconds == null && !v.metadataChecked).sort((a, b) => Number(b.kind === 'recap') - Number(a.kind === 'recap')).slice(0, Math.min(metadataLimit, 6));
   await Promise.all(candidates.map(async v => {

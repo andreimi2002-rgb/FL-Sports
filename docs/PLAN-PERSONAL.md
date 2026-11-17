@@ -1,3 +1,4 @@
+<!-- Actualizare de scop v36: la cererea utilizatorului, Game Night și biblioteca sunt eliminate. Păstrăm numai rezumate în pagina fiecărui meci, alternativă ESPN și corectare manuală. Protecția completă contra spoilerelor rămâne amânată. Secțiunile despre Game Night de mai jos sunt istoric. -->
 # American Sports Hub — plan personal
 
 Decizia utilizatorului: dezvoltăm ediția personală completă, cu logo-uri oficiale și funcțiile existente. Păstrăm HTML/CSS/module ES, funcțiile Netlify și interfața în română. Fără rescriere inițială, servicii plătite sau chei pentru sursele sportive. Cheile VAPID existente rămân infrastructura notificărilor, nu o nouă sursă de date.
