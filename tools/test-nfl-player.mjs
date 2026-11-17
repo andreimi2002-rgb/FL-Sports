@@ -79,6 +79,9 @@ try {
   assert.match(html, /NFL · Kansas City Chiefs/);
   assert.match(html, /Metrici avansate · 2026/);
   assert.match(html, /EPA \/ dropback/);
+  assert.match(html, /Sezon regulat/);
+  assert.match(html, /Carieră/);
+  assert.doesNotMatch(html, /Projected|Last 5 Games/);
   assert.match(html, /data-league="NFL"/);
   assert.match(rosterHtml({ roster: [{ name: 'QB', players: [{ id: '3139477', n: 'Patrick Mahomes' }] }] }, 'NFL'), /data-league="NFL"/);
   const gameHtml = panelHtml(

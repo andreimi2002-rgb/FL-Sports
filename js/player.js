@@ -65,7 +65,8 @@ function nflGroupHtml(group, { career = false, recent = false } = {}) {
 }
 
 function nflSummaryHtml(t) {
-  const groups = summaryGroups(t);
+  const rows = t?.rows?.filter(r => ['Sezon regulat', 'Carieră'].includes(r.label)) || [];
+  const groups = summaryGroups({ ...t, rows });
   return groups.length ? groups.map(g => nflGroupHtml(g)).join('') : '<p class="fn">Date indisponibile.</p>';
 }
 
