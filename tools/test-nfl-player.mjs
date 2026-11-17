@@ -83,6 +83,17 @@ try {
   assert.match(html, /Carieră/);
   assert.doesNotMatch(html, /Projected|Last 5 Games/);
   assert.match(html, /data-league="NFL"/);
+  const compareSummary = {
+    ...profile.summary,
+    rows: profile.summary.rows.map(r => ({
+      ...r,
+      stats: r.stats.map((value, i) => r.label === 'Sezon regulat' && i === 0 ? '175' : value)
+    }))
+  };
+  const compareHtml = playerHtml(profile, [{ id: '123', name: 'Josh Allen' }], {
+    ...profile, id: '123', name: 'Josh Allen', summary: compareSummary
+  });
+  assert.match(compareHtml, /Josh Allen<\/th><td>175<\/td>/);
   assert.match(rosterHtml({ roster: [{ name: 'QB', players: [{ id: '3139477', n: 'Patrick Mahomes' }] }] }, 'NFL'), /data-league="NFL"/);
   const gameHtml = panelHtml(
     { state: 'post', l: 'NFL', h: 'Kansas City Chiefs', a: 'Miami Dolphins', H: { name: 'Kansas City Chiefs' }, A: { name: 'Miami Dolphins' } },

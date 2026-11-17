@@ -2,7 +2,7 @@
 
 ## Stare
 
-Primul lot NFL este implementat local pe `stage-32-statistici-nfl-nhl-mls`, aplicația v43. Testarea în Deploy Preview este următorul pas; nu s-a făcut merge în producție. NFL, NHL și MLS rămân pe același branch/PR cumulativ, cu același preview actualizat după fiecare ligă și un singur merge final. MLB este amânat.
+Primul lot NFL este în PR #32 draft pe `stage-32-statistici-nfl-nhl-mls`, aplicația v43. [Deploy Preview-ul](https://deploy-preview-32--americansportshub.netlify.app) a fost verificat pe date live; nu s-a făcut merge în producție. NFL, NHL și MLS rămân pe același branch/PR cumulativ, cu același preview actualizat după fiecare ligă și un singur merge final. MLB este amânat.
 
 ## Profilul jucătorului
 
@@ -23,4 +23,4 @@ Datele pot lipsi sau pot fi corectate de surse. Dacă nflverse nu răspunde, pro
 
 ## Verificări
 
-Testele automate acoperă CSV-ul nflverse, maparea ID-urilor, metricile QB, fallback-ul la căderea sursei și linkurile NFL din boxscore/lot. `npm.cmd test` rulează suita completă. În preview trebuie verificată disponibilitatea live pentru un QB, un RB și un WR/TE, un rol fără EPA, comparația, telefon/desktop și temele luminoasă/întunecată. Confirmarea utilizatorului privind actualizarea automată pe telefon după merge-uri este deja consemnată în plan; nu înlocuiește verificarea preview-ului.
+Testele automate acoperă CSV-ul nflverse, maparea ID-urilor, metricile QB/RB/WR, comparația, fallback-ul la căderea sursei și linkurile NFL din boxscore/lot. `npm.cmd test` a trecut. În preview au fost verificate pe date live profilul QB, comparația Mahomes–Josh Allen și mesajul pentru un rol defensiv fără EPA; endpoint-urile RB/WR au returnat metrici disponibile. Profilul a fost verificat pe desktop și telefon, în temele luminoasă/întunecată, fără overflow orizontal. Confirmarea utilizatorului privind actualizarea automată pe telefon după merge-uri este consemnată în plan; preview-ul nu înlocuiește acea verificare pe dispozitivul instalat.
