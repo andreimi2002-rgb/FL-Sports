@@ -44,7 +44,7 @@ const paintSpoil = () => document.querySelectorAll('[data-nospoil]').forEach(b =
 setNoSpoil(SPOIL.on); paintSpoil();
 // Before any other click handler: a tap on a covered score shows that game, instead of opening it.
 window.addEventListener('click', e => {
-  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); const g = gameById(OV.game); if (g) refreshGame(g); return; }
+  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); return; }
   if (!SPOIL.on) return;
   const c = e.target.closest?.('[data-spshow], .sp:not(.open), .spbody:not(.open)');
   if (!c) return;

@@ -1,3 +1,4 @@
+<!-- Decizie curentă v37: experimentul YouTube/Game Night este retras la cererea utilizatorului după regresii. Video ESPN este restaurat exact ca în f7ce1f8: rezumat, altfel cel mai lung clip disponibil; căutare externă NFL existentă. Atlasul v34 rămâne. Nu declara etapa video lung finalizată. -->
 <!-- Actualizare de scop v36: la cererea utilizatorului, Game Night și biblioteca sunt eliminate. Păstrăm numai rezumate în pagina fiecărui meci, alternativă ESPN și corectare manuală. Protecția completă contra spoilerelor rămâne amânată. Secțiunile despre Game Night de mai jos sunt istoric. -->
 # American Sports Hub
 

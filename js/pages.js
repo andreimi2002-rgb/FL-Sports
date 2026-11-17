@@ -15,7 +15,6 @@ import { teamBtn, teamEmbBtn, DATA, GAMES, OUT, OUTL, REC_LABEL, TEAMINFO, TZNAM
 import { card, tableHtml, allTeamsList } from './home.js';
 import { LG, lgCtx, loadScores, setView, usKey } from './views.js';
 import { trackView, trackEvent } from './track.js';
-import { gameVideosHtml, loadGameVideos } from './videos.js';
 
 /* ================= overlays ================= */
 // Each overlay has its own address: #meci/NBA/401909963[/tab] or #echipa/heat. Opening one adds a
@@ -66,7 +65,6 @@ export function go(hash) {
 export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
-  if (h[0] === 'video') { hideOv(); setView('florida'); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) gameView.side = ''; gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }
@@ -402,14 +400,12 @@ export function openGame(id, keep) {
       <div class="mid${on ? ' on' : ''}" id="gscore" aria-live="polite">${midScore(g)}<small>${esc(gameStatus(g))}</small></div>
       <div class="side">${teamEmbBtn(g.l, g.A, 'lg')}<span>${teamBtn(g.l, g.A)}</span>${sideInfo(g, g.A)}</div>
     </div>
-    ${gameVideosHtml(g, s)}
     ${done || on ? `<div class="spbody${spOpen(g.id) ? ' open' : ''}" data-sp="${esc(g.id)}"><button class="spcover" type="button" data-spshow="${esc(g.id)}"><b>Fără spoilere: rezultatul e ascuns</b><span>Apasă ca să vezi scorul, statisticile și rezumatul</span></button>` : ''}
     <div id="gtabs">${tabsHtml(g, s, gameView.tab)}</div>
     <div id="gdetail" role="tabpanel">${gameView.tab === 'rezumat' || !s ? summaryTop(g, ctx, k, other, done, on) : ''}${s ? panelHtml(g, s, viewFor()) : canFetch ? '<div class="skeleton" style="height:70px"></div>' : '<div class="fn">Detaliile meciului (statistici, jucători, faze) apar când sursa live răspunde.</div>'}</div>${done || on ? '</div>' : ''}
     <div class="btns">${[g.H, g.A].map(s => s.key ? `<button class="ghost" type="button" data-team="${s.key}">Profil ${esc(TEAMS[s.key].s)}</button>` : s.id ? `<button class="ghost" type="button" data-club="${g.l}|${esc(s.id)}">${esc(s.name)}</button>` : '').join('')}${g.teams.length ? `<button class="ghost" type="button" data-day="${k}" data-jump="1">Toate meciurile zilei</button>` : ''}${done ? '' : `<button class="ghost" type="button" data-ics-game="${g.id}">Adaugă în calendar</button>`}<button class="ghost" type="button" data-sharecard="${esc(g.id)}">Imagine de distribuit</button><button class="ghost" type="button" data-share>Copiază linkul</button></div>
     </div>`, keep);
   OV.place = null;
-  loadGameVideos(g, s);
   // Asked again while the game is live, and when the details kept from an earlier visit are of another state
   // (opened before the start or during the game, now over).
   if (canFetch && (!s || isLive(g) || (s.state && s.state !== g.state))) loadGame(g);
@@ -431,7 +427,7 @@ export function gameContext(g) {
   if (h2h) ctx.push(`Ultimul meci direct (${tShort(h2h.d)}): ${h2h.h} ${h2h.hs}–${h2h.as} ${h2h.a}.`);
   return ctx;
 }
-export const viewFor = () => ({ ...gameView, hideVideos: true, known: id => !!gameById(id) });
+export const viewFor = () => ({ ...gameView, known: id => !!gameById(id) });
 // The game page's "Clasament" tab: the league's standings from the loaded season.
 setStandingsSource(l => DATA.raw?.standings?.[l] || []);
 export function summaryTop(g, ctx, k, other, done, on) {
@@ -463,7 +459,6 @@ export function refreshGame(g) {
   if (OV.game !== g.id || !$('gdetail')) return;
   const s = SUMMARY.get(g.l + g.id);
   $('gscore').innerHTML = `${midScore(g)}<small>${esc(gameStatus(g))}</small>`;
-  loadGameVideos(g, s);
   $('gscore').classList.toggle('on', isLive(g));
   $('gtabs').innerHTML = tabsHtml(g, s, gameView.tab);
   // A clip being watched (playing, paused part-way, full screen) is not replaced by a live update, which

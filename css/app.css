@@ -34,17 +34,6 @@
   --wx-hot:#d9773a; --wx-rain:#4a8dd6; --wx-sun:#f2b83a; --wx-cloud:#a9b8bc; --wx-cloud-d:#7d8f94; --wx-bolt:#ffd23f;
 }
 *{box-sizing:border-box}
-/* Game Night: the official library and the spoiler-safe match video shelf. */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px;margin:16px 0}
-.video-card{min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:14px;overflow:hidden}
-.video-stage{background:var(--soft);position:relative;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden}
-.video-stage img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.video-play{position:relative;border:0;border-radius:30px;padding:11px 19px;background:var(--brand);color:var(--brand-ink);font:700 14px var(--body);cursor:pointer;box-shadow:0 2px 16px #0003}
-.video-shield{position:absolute;top:12px;left:14px;color:var(--muted);font-size:12px}
-.video-copy{padding:14px}.video-copy small,.video-copy p{color:var(--muted);font-size:12px}.video-copy h3{font:700 17px/1.3 var(--body);margin:7px 0;overflow-wrap:anywhere}.video-copy p{margin:8px 0}.video-copy .btns{gap:7px;margin:12px 0 0}
-.video-stage:has(iframe){aspect-ratio:auto;display:flex;flex-direction:column}.video-stage iframe{width:100%;aspect-ratio:16/9;border:0}.video-stage .fn{padding:10px;margin:0}
-.game-videos{padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0}.game-videos>h3{font:italic 800 27px var(--display);text-transform:uppercase}.game-videos form{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin:12px 0}.game-videos form label{display:flex;flex-direction:column;gap:6px;flex:1;min-width:180px}.game-videos input[type=url]{width:100%;padding:11px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px}.game-videos form [role=status]{flex-basis:100%;color:var(--bad)}.video-espn video{width:100%;max-height:400px}.video-card .ghost{font-size:12px}
-@media(min-width:1400px){.video-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
 .wrap{max-width:980px;margin:0 auto;padding:20px 16px 48px;display:flex;flex-direction:column;gap:20px}
