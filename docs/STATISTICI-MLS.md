@@ -20,4 +20,4 @@ Pagina echipei afișează până la cinci repere ESPN: goluri marcate și primit
 
 ## Verificări
 
-Testul MLS acoperă jucător de câmp și portar, fallback-ul la split-ul MLS din overview, ultimele meciuri, comparații, statisticile echipei și linkurile de profil din roster și boxscore. `npm.cmd test` a trecut local. Endpoint-urile live au fost verificate pe un jucător de câmp, un portar și Inter Miami. În preview, profilurile de jucători și statisticile echipei au fost verificate pe desktop și mobil; pe mobil, temele luminoasă și întunecată au fost verificate fără overflow orizontal.
+Testul MLS acoperă jucător de câmp și portar, fallback-ul la split-ul MLS din overview, ultimele meciuri, comparații, statisticile echipei și linkurile de profil din roster și boxscore. `npm test` a trecut local. Endpoint-urile live au fost verificate pe un jucător de câmp, un portar și Inter Miami. În preview, profilurile de jucători și statisticile echipei au fost verificate pe desktop și mobil; pe mobil, temele luminoasă și întunecată au fost verificate fără overflow orizontal. După merge, producția v50 și toate cele 13 smoke checks au fost confirmate.

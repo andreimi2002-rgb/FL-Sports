@@ -1,5 +1,9 @@
 # American Sports Hub
 
+## Stare curentă — 17 noiembrie 2026
+
+PR #32 a fost merge-uit în `main` la `9da9fcb`; aplicația v50 este în producție. NFL, NHL și MLS sunt finalizate; `npm test` și toate cele 13 smoke checks au trecut după merge. Documentația a fost sincronizată după livrare. MLB rămâne amânat. Următorul subiect cerut este o discuție despre rezumatele video; pentru următoarea etapă de dezvoltare, consultă [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md).
+
 Sportul american pe românește (fost „Meciuri Florida”): echipele tale din NBA, NHL, NFL, MLS și
 MLB, implicit cele din Florida, cu ora României, rezultate, clasamente, profiluri de echipă și pagini de meci.
 Proiect pentru uz personal. Repo-ul a fost înainte jocul Airport Operations Manager (rămas în
@@ -32,9 +36,9 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 - **Interfața e în română.** Comunicarea cu utilizatorul: în română.
 - **Lucrăm pe branch-uri** (`stage-N-...`). Spune pe scurt ce faci pe parcurs și întreabă
   înainte de deciziile importante.
-- **Un PR pe etapă:** deploy preview-urile (PR-urile) sunt gratuite pe Netlify, doar
-  publicarea în producție (merge în `main`) consumă credit. Lucrăm local, verificăm cu
-  serverul local și capturi de ecran, iar la final facem push și deschidem PR-ul.
+- **Un PR pe etapă mare:** verifică local, apoi folosește un Deploy Preview pentru lotul coerent.
+  Nu presupune că orice resursă de preview este gratuită; verifică tarifele în contul Netlify.
+  Merge-ul în `main` și publicarea în producție se fac numai cu acordul utilizatorului.
 - Trebuie să meargă bine pe telefon și pe desktop, în temă luminoasă și întunecată.
 - **Identitate (varianta „Arena”, etapa 7):** bleumarin `#0E1F3D`, roșu `#C8102E` (noaptea `#FF5A6E`),
   steaua albă pe roșu (`favicon.svg`, bara de sus) și în cercul roșu (`icons/icon.svg`; PNG-urile se
@@ -48,6 +52,8 @@ istoricul git, pe `main` până la merge-ul etapei 1).
   la revenirea în aplicație caută una nouă și, când e gata, se reîncarcă singură (`js/phone.js`).
 
 ## Plan pe etape
+
+Planul curent este în `docs/PLAN-PERSONAL.md`; cronologia de mai jos păstrează livrările istorice și nu reprezintă o listă de lucru deschisă.
 
 Etapele 1–3 sunt în producție (PR #5, 11 noiembrie 2026): site cu date live, pagini de meci
 complete, orașele, stadioanele și vremea Floridei; aplicație instalabilă, offline, abonare la

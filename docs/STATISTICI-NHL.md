@@ -20,4 +20,4 @@ Pagina echipei afișează cinci repere ESPN: goluri marcate/meci, goluri primite
 
 ## Verificări
 
-Testele NHL acoperă profil skater și goalie, statistici de sezon/carieră și meciuri recente, eficiență, comparație, statistici de echipă și linkuri către profil din roster și boxscore. `npm.cmd test` a trecut local pentru v47; smoke checks și verificarea live în browser au trecut pe preview. Pe mobil (390 px), profilul nu depășește viewport-ul; temele luminoasă și întunecată au fost verificate fără overflow orizontal.
+Testele NHL acoperă profil skater și goalie, statistici de sezon/carieră și meciuri recente, eficiență, comparație, statistici de echipă și linkuri către profil din roster și boxscore. `npm test` a trecut pentru lotul cumulativ v50; smoke checks și verificarea live în browser au trecut în preview și producție. Pe mobil (390 px), profilul nu depășește viewport-ul; temele luminoasă și întunecată au fost verificate fără overflow orizontal.

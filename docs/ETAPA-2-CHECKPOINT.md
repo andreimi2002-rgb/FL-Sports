@@ -11,7 +11,7 @@ PR #32 a fost merge-uit în `main` la commitul `9da9fcb` (17 noiembrie 2026); v5
 - PR #29 a fost merge-uit: atlasul unificat Florida și restaurarea video ESPN stabilă (v37).
 - PR #30 a fost merge-uit: Dimineața mea și Mod TV, cu playerul ESPN neatins (v40). Detalii: [DIMINEATA-TV.md](DIMINEATA-TV.md).
 - PR #31 a fost merge-uit: primul lot de statistici și profiluri NBA. Titlul PR-ului spune v41; commitul `f3d8ce5` a ridicat codul publicat la v42. Detalii și limite: [STATISTICI-NBA.md](STATISTICI-NBA.md).
-- `main` public verificat după PR #32 este la commitul `9da9fcb` (cod v50). NFL a fost adăugat la v46, NHL la v47, iar MLS la v50; `sw.js` și `js/phone.js` au aceeași versiune.
+- PR #32 a adus codul v50 la `9da9fcb`; documentația a fost sincronizată după merge. NFL a fost adăugat la v46, NHL la v47, iar MLS la v50; `sw.js` și `js/phone.js` au aceeași versiune.
 - Verificarea vizuală desktop/mobil și temele luminoasă/întunecată consemnată anterior a fost pentru versiunea v42. Pentru v47, Deploy Preview-ul NHL a fost verificat pe desktop și mobil; pe mobil, ambele teme au fost verificate fără overflow orizontal. Profilurile skater/goalie și pagina de echipă afișează date live ESPN. Pentru v50 MLS, profilurile field player/goalkeeper și pagina Inter Miami au fost verificate în preview pe desktop și mobil; pe mobil, ambele teme au fost verificate, fără overflow orizontal.
 - Utilizatorul confirmă că aplicația instalată pe telefon se actualizează automat la deschidere după fiecare merge, fără probleme.
 

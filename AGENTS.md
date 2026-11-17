@@ -1,17 +1,17 @@
-<!-- Stare la 17 noiembrie 2026: PR #28 (v32), PR #29 (v37), PR #30 (v40) și PR #31 (titlu v41, aplicație v42) sunt merge-uite; main public este 06b099f. Commitul f3d8ce5 a ridicat versiunea la v42. Sursa locală coincide cu main după normalizarea newline-urilor, dar copia nu are .git și nu păstrează metadatele branch/status. Detalii: docs/PLAN-PERSONAL.md. -->
+<!-- Stare la 17 noiembrie 2026: PR #28–#32 sunt merge-uite; PR #32 a livrat NFL/NHL/MLS la v50 (aplicație commit 9da9fcb). Producția este v50; documentația a fost sincronizată după merge. Detalii: docs/PLAN-PERSONAL.md. -->
 <!-- Video lung/Game Night au fost retrase după regresii; rămâne playerul ESPN stabil. Protecția completă contra spoilerelor este amânată. -->
 # American Sports Hub
 
 ## Direcția curentă — ediție personală premium (17 noiembrie 2026)
 
 - Dezvoltăm varianta personală, cu logo-uri oficiale ESPN, imagini, clipuri și toate funcțiile sportive existente. „Premium” descrie experiența completă, fără abonament sau plată.
-- Baza publică verificată: `main` la `06b099f`, după PR #31 (titlu v41; aplicație v42 din commitul `f3d8ce5`). PR #28 a livrat ediția personală (v32), PR #29 atlasul/video ESPN stabil (v37), PR #30 Dimineața mea/Mod TV (v40), iar PR #31 primul lot NBA. Sursa locală coincide cu `main`; copia nu are metadate Git pentru branch/status.
-- Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos despre beta, monetizare și lansare publică sunt istoric, nu direcție de implementare.
-- Lotul curent este NFL (profiluri și EPA), în PR #32 și Deploy Preview; apoi urmează NHL și MLS. MLB rămâne amânat. Cele trei ligi se adună pe același branch/PR și Deploy Preview, cu un singur merge în producție la final, după acordul utilizatorului.
+- Baza publică verificată: PR #32 a fost merge-uit în `main` la `9da9fcb`, iar aplicația v50 este în producție. PR #28 a livrat ediția personală (v32), PR #29 atlasul/video ESPN stabil (v37), PR #30 Dimineața mea/Mod TV (v40), PR #31 primul lot NBA (v42), iar PR #32 a adăugat statisticile și profilurile NFL/NHL/MLS.
+- Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos descriu etape istorice; nu sunt direcții active dacă nu apar și în planul curent. Beta, monetizarea și lansarea publică au fost retrase.
+- Etapa NFL/NHL/MLS este completă și în producție. MLB rămâne amânat. Următorul subiect cerut este o discuție despre rezumatele video (fără implementare până la o decizie); următoarea etapă de dezvoltare din plan este fotbalul european.
 - Florida este pachetul implicit fără `?eu=1`. Preferințele existente `flgames-*`, calendarul, abonamentele push și adresa aplicației se păstrează. Marcajul Store rămâne doar pentru comportamentul aplicației și notificări, fără să restrângă conținutul personal.
 - Telemetria și colectarea feedback-ului sunt oprite; datele istorice nu se șterg automat. Nu adăuga promovare, donații, paywall sau lansare publică.
-- Pentru lucrări viitoare, grupează schimbările coerente pe etape mari și folosește Deploy Preview. PR #29–#31 sunt deja merge-uite; nu le trata ca PR-uri deschise. Testează local înainte de push. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
-- Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main` (verificat în panou). Nu schimba adresa și nu declanșa deploy în producție.
+- Pentru lucrări viitoare, grupează schimbările coerente pe etape mari și folosește Deploy Preview. PR #29–#32 sunt deja merge-uite; nu le trata ca PR-uri deschise. Testează local înainte de push. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
+- Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main`. Nu schimba adresa și nu declanșa deploy în producție fără instrucțiunea utilizatorului.
 - Ediție personală nu înseamnă acces privat: repository-ul și preview-urile erau publice la verificare. `noindex` și `robots.txt` nu sunt autentificare. Nu schimba vizibilitatea sau controlul accesului fără instrucțiunea utilizatorului.
 
 
@@ -63,7 +63,7 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 
 ## Funcționalități recente livrate
 
-PR #29 a livrat atlasul Floridei cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`; vremea orașului selectat se încarcă la vizualizarea atlasului. PR #30 a livrat Dimineața mea și Mod TV, fără a schimba playerul ESPN. PR #31 a livrat primul lot NBA pentru statisticile aruncărilor și profiluri de jucători. Lotul NFL este în lucru pe branch-ul stage-32; starea și sursele sunt în `docs/STATISTICI-NFL.md`.
+PR #29 a livrat atlasul Floridei cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`; vremea orașului selectat se încarcă la vizualizarea atlasului. PR #30 a livrat Dimineața mea și Mod TV, fără a schimba playerul ESPN. PR #31 a livrat primul lot NBA pentru statisticile aruncărilor și profiluri de jucători. PR #32 a livrat statisticile și profilurile NFL/NHL/MLS la v50; starea și sursele sunt în `docs/STATISTICI-NFL.md`, `docs/STATISTICI-NHL.md` și `docs/STATISTICI-MLS.md`.
 
 ## Plan pe etape
 
@@ -143,7 +143,8 @@ calendar; notificări (Web Push, `push-cron` la 15 minute, doar în producție).
     de start, echipele și meciurile deschise, clicurile, alegerile din căutare, serviciile de streaming din
     ghid, erorile. Pagina trimite pachete (`{ b: [...] }`) la 4 secunde și la ieșire. Pagina
     „Confidențialitate” (`#confidentialitate`) spune ce se numără. Statisticile au un tabel pe categorie.
-15. **Varianta publică** (în lucru, branch `stage-15-public`). Două pachete de echipe implicite în
+15. **Varianta publică** (plan vechi, retras și înlocuit de ediția personală livrată în PR #28).
+    Două pachete de echipe implicite în
     `js/teams.js` (`PACKS`): Florida (11 echipe) pe dispozitivele proprietarului, marcate cu `?eu=1`, și
     New York (Knicks, Rangers, Giants, NYCFC, Yankees) pentru toți ceilalți. `TEAMS` e pachetul activ,
     `ALL_TEAMS` toate cheile (serverul le recunoaște pe toate). Pagina de start urmează pachetul: program

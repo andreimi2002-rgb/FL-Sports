@@ -6,7 +6,7 @@ NFL a fost adăugat la v46 în PR #32, împreună cu NHL și MLS, apoi tot lotul
 
 ## Profilul jucătorului
 
-Profilurile se deschid din numele jucătorilor din boxscore NFL și loturile NFL încărcate. Comparația este disponibilă între jucători din meciurile și loturile deja încărcate, fără catalog global NFL. Tabelele ESPN afișează numai statisticile de bază relevante poziției: pase și, când există, alergare pentru QB; alergare/recepții pentru RB; recepții pentru WR/TE; placaje/sack-uri/interceptări pentru apărare; field goal-uri, extra-point-uri și puncte pentru kickeri; media și plasările în 20 de yarzi pentru punteri. Sunt păstrate sezonul regulat, cariera, ultimele cinci meciuri și un istoric expandabil cu ultimii cinci ani. Linkurile și comparația NBA existente sunt păstrate.
+Profilurile se deschid din căutarea globală, boxscore NFL și loturile încărcate. Catalogul NFL este inclus în căutare; comparația rămâne limitată la jucătorii din meciurile și loturile deja încărcate. Tabelele ESPN afișează numai statisticile de bază relevante poziției: pase și, când există, alergare pentru QB; alergare/recepții pentru RB; recepții pentru WR/TE; placaje/sack-uri/interceptări pentru apărare; field goal-uri, extra-point-uri și puncte pentru kickeri; media și plasările în 20 de yarzi pentru punteri. Sunt păstrate sezonul regulat, cariera, ultimele cinci meciuri și un istoric expandabil cu ultimii cinci ani. Linkurile și comparația NBA existente sunt păstrate.
 
 ## Metrici avansate și proveniență
 
