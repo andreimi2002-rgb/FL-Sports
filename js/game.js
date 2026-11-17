@@ -1,3 +1,4 @@
+import {shotsHtml} from './nba-shots.js';
 // Game page: the tabs under the score (summary, players, team stats, plays, absentees)
 // and the win-probability chart. Pure rendering from the /api/game data; app.js owns the overlay.
 import { TEAMS } from './teams.js';
@@ -84,7 +85,7 @@ export function panelHtml(g, s, view) {
   const ok = gameTabs(g, s).some(([k]) => k === view.tab);
   const tab = ok ? view.tab : 'rezumat';
   if (tab === 'jucatori') return boxHtml(g, s, view.side);
-  if (tab === 'statistici') return cmpHtml(g, s);
+  if (tab === 'statistici') return cmpHtml(g, s) + (g.l === 'NBA' ? shotsHtml(g, s, view) : '');
   if (tab === 'faze') return playsHtml(g, s);
   if (tab === 'absenti') return injHtml(g, s);
   if (tab === 'clasament') return standHtml(g);
@@ -222,7 +223,7 @@ function boxHtml(g, s, want) {
     if (!rows.length || !cols) return '';
     cols.forEach(c => legend.set(c[1], c[2]));
     const val = (r, k) => { const i = grp.keys.indexOf(k); return i >= 0 ? r.v[i] ?? '' : ''; };
-    const tr = r => `<tr><th scope="row"><span class="pn">${esc(r.n)}</span><small>${[r.pos, r.j ? '#' + r.j : ''].filter(Boolean).join(' · ')}${r.sub ? ' · <span class="in" title="a intrat pe parcurs">intrat</span>' : ''}${r.out ? ' · <span class="out" title="a fost înlocuit">ieșit</span>' : ''}</small></th>${cols.map(c => `<td>${esc(val(r, c[0]))}</td>`).join('')}</tr>`;
+    const tr = r => `<tr><th scope="row">${g.l === 'NBA' && /^\d+$/.test(r.id || '') ? `<button class="linkish pn" type="button" data-player="${r.id}">${esc(r.n)}</button>` : `<span class="pn">${esc(r.n)}</span>`}<small>${[r.pos, r.j ? '#' + r.j : ''].filter(Boolean).join(' · ')}${r.sub ? ' · <span class="in" title="a intrat pe parcurs">intrat</span>' : ''}${r.out ? ' · <span class="out" title="a fost înlocuit">ieșit</span>' : ''}</small></th>${cols.map(c => `<td>${esc(val(r, c[0]))}</td>`).join('')}</tr>`;
     const starters = opts.split ? rows.filter(r => r.st) : rows, bench = opts.split ? rows.filter(r => !r.st) : [];
     const tot = grp.tot?.length && opts.tot ? `<tr class="tot"><th scope="row">Total</th>${cols.map(c => { const i = grp.keys.indexOf(c[0]); return `<td>${esc(i >= 0 ? grp.tot[i] ?? '' : '')}</td>`; }).join('')}</tr>` : '';
     return `${title ? `<h4 class="bxh">${esc(title)}</h4>` : ''}<div class="scroll"><table class="box"><thead><tr><th scope="col">Jucător</th>${cols.map(c => `<th scope="col" title="${esc(c[2])}">${esc(c[1])}</th>`).join('')}</tr></thead><tbody>${starters.map(tr).join('')}${bench.length ? `<tr class="sep"><td colspan="${cols.length + 1}">Rezerve</td></tr>${bench.map(tr).join('')}` : ''}${tot}</tbody></table></div>`;

@@ -1,3 +1,4 @@
+import {nbaShots} from './nba-shots.mjs';
 // Reads ESPN's public JSON endpoints (free, no key) and turns them into the small format the page uses.
 // ESPN's site API is unofficial: every reader below is defensive and returns partial data instead of throwing.
 import { LEAGUES, ALL_TEAMS, PACKS, norm } from '../../js/teams.js';
@@ -171,7 +172,7 @@ function boxPlayers(j, sideOf) {
       name: s.name || s.type || '',
       keys: s.keys || [],
       rows: (s.athletes || []).map(a => ({
-        n: athleteName(a.athlete), pos: a.athlete?.position?.abbreviation || '', j: a.athlete?.jersey || '',
+        id: String(a.athlete?.id || ''), n: athleteName(a.athlete), pos: a.athlete?.position?.abbreviation || '', j: a.athlete?.jersey || '',
         st: !!a.starter, dnp: !!a.didNotPlay, why: a.didNotPlay ? (a.reason || '') : '',
         v: (a.stats || []).map(String)
       })).filter(r => r.n),
@@ -383,6 +384,7 @@ export function normalizeSummary(j, l) {
     plays,
     box: safe(() => boxPlayers(j, sideOf), []),
     teamStats: safe(() => teamStats(j, sideOf), []),
+    shots: l === 'NBA' ? safe(() => nbaShots(j), null) : null,
     wp: safe(() => winProbability(j), []),
     injuries: safe(() => injuries(j, sideOf), []),
     series: safe(() => series(j), null),

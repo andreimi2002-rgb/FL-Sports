@@ -5,9 +5,10 @@
 // - Schedule, live scores, weather, calendar feed: network only. The schedule has its own saved copy
 //   in the page (localStorage), which the page labels as saved data; live scores and weather must
 //   never be shown old as if they were current.
-const VERSION = 'v40';   // the same in js/phone.js (APP_VERSION)
+const VERSION = 'v41';   // the same in js/phone.js (APP_VERSION)
 const SHELL = `shell-${VERSION}`, API = `api-${VERSION}`, IMG = `img-${VERSION}`;
 const FILES = [
+  '/js/player.js', '/js/nba-shots.js',
   '/js/morning.js', '/js/morning-model.js',
   '/', '/index.html', '/css/app.css', '/favicon.svg', '/manifest.webmanifest', '/icons/icon-192.png',
   '/js/atlas-weather.js', '/js/florida-map.js', '/js/app.js', '/js/teams.js', '/js/ui.js', '/js/ro.js', '/js/game.js', '/js/places.js', '/js/ics.js', '/js/phone.js', '/js/notify.js', '/js/teamx.js', '/js/bracket.js', '/js/leagues.js', '/js/mine.js', '/js/clubinfo.js', '/js/guide.js', '/js/core.js', '/js/home.js', '/js/pages.js', '/js/views.js', '/js/search.js', '/js/health.js', '/js/track.js', '/js/colors.js', '/js/motd.js', '/js/sharecard.js',
@@ -77,7 +78,7 @@ self.addEventListener('fetch', e => {
   const u = new URL(req.url);
   if (u.origin === location.origin) {
     if (u.pathname === '/sw.js') return;                              // the page reads the published version
-    if (u.pathname === '/api/game' || u.pathname === '/api/team') { e.respondWith(networkFirst(req, API, 8000)); return; }
+    if (u.pathname === '/api/game' || u.pathname === '/api/team' || u.pathname === '/api/player') { e.respondWith(networkFirst(req, API, 8000)); return; }
     if (u.pathname.startsWith('/api/')) return;                       // network only
     if (req.mode === 'navigate') { e.respondWith(networkFirst(req, SHELL, 5000, '/index.html')); return; }
     e.respondWith(networkFirst(req, SHELL, 5000));
