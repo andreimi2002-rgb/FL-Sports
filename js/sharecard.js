@@ -34,7 +34,7 @@ function fitLines(x, text, font, size, maxW, minSize) {
   return best || { lines: [text], size: minSize };
 }
 
-export async function cardBlob(g, hideResult = false) {
+export async function cardBlob(g) {
   const c = document.createElement('canvas'); c.width = W; c.height = H;
   const x = c.getContext('2d');
   try { await Promise.all(['italic 800 120px "Saira Condensed"', '700 36px Figtree', '600 36px Figtree'].map(f => document.fonts.load(f))); } catch (e) { /* system font */ }
@@ -67,10 +67,7 @@ export async function cardBlob(g, hideResult = false) {
   x.fillStyle = '#8f9bb3'; x.font = SAIRA(70); x.textBaseline = 'middle'; x.fillText(done || live ? '–' : 'VS', W / 2, cy); x.textBaseline = 'alphabetic';
   // The score, or the Romanian start time.
   x.fillStyle = '#fff';
-  if (hideResult && (done || live)) {
-    x.font = SAIRA(95); x.fillText('REZULTAT ASCUNS', W / 2, 1100);
-    x.font = FIG(700, 40); x.fillText('FĂRĂ SPOILERE', W / 2, 1170);
-  } else if (done || live) {
+  if (done || live) {
     x.font = SAIRA(220); x.fillText(`${g.hs ?? 0}–${g.as ?? 0}`, W / 2, 1100);
     x.fillStyle = PINK; x.font = FIG(700, 40);
     x.fillText(live ? `LIVE · ${detailRo(g.detail, g.l)}` : (detailRo(g.detail, g.l) || 'Final').toUpperCase(), W / 2, 1170);
@@ -85,8 +82,8 @@ export async function cardBlob(g, hideResult = false) {
 }
 
 // Share the picture (phone share sheet) or download it. Returns 'shared', 'saved' or 'cancel'.
-export async function shareGame(g, hideResult = false) {
-  const blob = await cardBlob(g, hideResult);
+export async function shareGame(g) {
+  const blob = await cardBlob(g);
   const file = new File([blob], `${g.l.toLowerCase()}-${g.id}.png`, { type: 'image/png' });
   const url = `${location.origin}/?sursa=card#meci/${g.l}/${g.id}`;
   if (navigator.canShare?.({ files: [file] })) {

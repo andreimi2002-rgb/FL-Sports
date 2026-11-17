@@ -21,14 +21,12 @@ export function inTime(min) {
 
 export function preMessage(g, min, site) {
   return {
-    spoilerFree: true,
     title: `${SPORT[g.l] || ''} ${short(g.home)} – ${short(g.away)} ${inTime(min)}`.trim(),
     body: [`Start la ${fmtRO.format(new Date(g.date))}, ora României`, g.venue, g.tv ? 'TV SUA: ' + g.tv : ''].filter(Boolean).join(' · '),
     url: `${site}/#meci/${g.l}/${g.id}`, tag: `pre-${g.id}`
   };
 }
-export function finalMessage(g, teams, site, nospoil = false) {
-  if (nospoil) return { title: `${short(g.home)} – ${short(g.away)} · meci încheiat`, body: `${g.l} · Rezultatul rămâne ascuns. Deschide meciul pentru video.`, url: `${site}/#meci/${g.l}/${g.id}`, tag: `final-${g.id}`, spoilerFree: true };
+export function finalMessage(g, teams, site) {
   const hs = g.home.score ?? 0, as = g.away.score ?? 0;
   const want = new Set(teams), mine = [g.home, g.away].find(s => sideIn(want, g.l, s));
   let verdict = '';
@@ -75,8 +73,7 @@ const nightLine = g => `${nick(g.home)} ${g.home.score ?? 0}–${g.away.score ??
 // The US date of the night's games (New York), for the link to that day's scores.
 const usDate = g => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(g.date));
 
-export function morningMessage(results, next, teams, site, night = null, nospoil = false) {
-  if (nospoil) return { title: '☀️ Dimineața ta · fără spoilere', body: [`${results.length} meciuri ale echipelor tale încheiate.`, night?.length ? `${night.length} meciuri în ligile urmărite azi-noapte.` : '', 'Rezumatele te așteaptă în Game Night.', next ? `Urmează: ${short(next.home)} – ${short(next.away)}, ${fmtRO.format(new Date(next.date))}` : ''].filter(Boolean).join('\n'), url: `${site}/#video`, tag: 'morning', spoilerFree: true };
+export function morningMessage(results, next, teams, site, night = null) {
   const want = new Set(teams), lines = results.map(g => resultLine(g, want));
   const nextLine = next ? `Urmează: ${short(next.home)} – ${short(next.away)}, ${fmtRO.format(new Date(next.date))}` : '';
   if (night?.length) {
@@ -114,7 +111,7 @@ export function morningDue(sub, games, now, site, night = null) {
   const all = sub.night ? (night || []).filter(recent) : [];
   if (!results.length && !all.length) return null;
   const next = mine.filter(g => g.state === 'pre' && !g.tbd && t(g) > now && t(g) - now < 24 * 36e5).sort((a, b) => t(a) - t(b))[0];
-  return { kind: 'm', day, game: null, message: morningMessage(results, next, [...want], site, all, !!sub.nospoil) };
+  return { kind: 'm', day, game: null, message: morningMessage(results, next, [...want], site, all) };
 }
 
 // The week's summary: on Sunday evening (19:00–23:00 Romanian time, once), each of the subscriber's teams with
@@ -149,7 +146,6 @@ export function weeklyDue(sub, games, now, site) {
   const want = new Set(sub.teams || []);
   const ahead = games.filter(g => (sideIn(want, g.l, g.home) || sideIn(want, g.l, g.away)) && g.state === 'pre' && !g.tbd && t(g) > now && t(g) - now < 7 * 864e5).sort((a, b) => t(a) - t(b));
   const nextLine = ahead.length ? `Săptămâna viitoare: ${ahead.length} ${ahead.length === 1 ? 'meci' : 'meciuri'} · primul: ${short(ahead[0].home)} – ${short(ahead[0].away)}, ${fmtDayRO.format(new Date(ahead[0].date))}` : '';
-  if (sub.nospoil) return { kind: 'w', day, game: null, message: { title: '📅 Săptămâna echipelor tale · fără spoilere', body: ['Rezumatele sunt în Game Night. Rezultatele rămân ascunse.', nextLine].filter(Boolean).join('\n'), url: `${site}/#video`, tag: 'weekly', spoilerFree: true } };
   return {
     kind: 'w', day, game: null,
     message: {
@@ -174,7 +170,7 @@ export function due(sub, games, now, site, night = null) {
     if (sub.final && g.state === 'post' && !s.f) {
       const end = start + (LEAGUES[g.l]?.dur || 150) * 6e4;
       // Only games that ended recently, and after the subscription began.
-      if (now - start < 10 * 36e5 && end > (sub.created || 0)) out.push({ kind: 'f', game: g, message: finalMessage(g, [...want], site, !!sub.nospoil) });
+      if (now - start < 10 * 36e5 && end > (sub.created || 0)) out.push({ kind: 'f', game: g, message: finalMessage(g, [...want], site) });
     }
   }
   const m = morningDue(sub, games, now, site, night);

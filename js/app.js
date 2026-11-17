@@ -8,7 +8,7 @@ import { registerSW, onInstallChange, install, downloadGame, APP_VERSION, checkU
 import { seasonHover } from './teamx.js';
 import { N, setNotifyRender, enableNotify, saveNotify, testNotify, disableNotify } from './notify.js';
 import { PLACES, loadPlaces, climateHover, AMERICA, loadAmerica } from './places.js';
-import { CACHE_KEY, DATA, GAMES, addDays, awake, build, gameById, getJSON, isLive, parts, played, state, store, weekStart, CLUB_RAW, addClubGames, refreshMineGames, noteLive, SPOIL, spOpen, setNoSpoil, revealGame } from './core.js';
+import { CACHE_KEY, DATA, GAMES, addDays, awake, build, gameById, getJSON, isLive, parts, played, state, store, weekStart, CLUB_RAW, addClubGames, refreshMineGames, noteLive, SPOIL, setNoSpoil, revealGame } from './core.js';
 import { PLAYOFFS, PO, minePick, WELCOME, renderWelcomeList, render, renderHero, renderMap, renderMine, renderPhone, renderPlayoffs, renderSources, renderStatic, renderStatus, setupAtlasWeather } from './home.js';
 import { OV, cal, closeOv, clubSide, clubView, gameView, go, loadGame, notifyOpen, openCalendar, openClub, openTeam, pickerClubs, refreshGame, route, saveCal, setTeamTab, share, openNotify } from './pages.js';
 import { LG, navView, renderLeagues, renderTodayStrip, setLgHash, setupJump, usKey } from './views.js';
@@ -46,17 +46,14 @@ const paintSpoil = () => document.querySelectorAll('[data-nospoil]').forEach(b =
 setNoSpoil(SPOIL.on); paintSpoil();
 // Before any other click handler: a tap on a covered score shows that game, instead of opening it.
 window.addEventListener('click', e => {
-  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); rerenderAll(); return; }
+  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); renderVideoLibrary(); const g = gameById(OV.game); if (g) refreshGame(g); return; }
   if (!SPOIL.on) return;
   const c = e.target.closest?.('[data-spshow], .sp:not(.open), .spbody:not(.open)');
   if (!c) return;
   e.preventDefault(); e.stopPropagation();
   revealGame(c.dataset.spshow || c.dataset.sp);
-  rerenderAll();
 }, true);
 
-window.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.sp[role=button]')) { e.preventDefault(); e.target.click(); } });
-window.addEventListener('storage', e => { if (e.key === 'flgames-nospoil') { setNoSpoil(e.newValue === '1'); paintSpoil(); rerenderAll(); } });
 /* ================= events ================= */
 function setTz(z) { state.tz = z; state.day = null; state.week = null; state.month = null; store.set('flgames-tz', z); render(); }
 function resetFilters() { state.team = ''; state.home = false; state.awake = false; $('homeonly').checked = false; $('awake').checked = false; Object.keys(LEAGUES).forEach(l => state.leagues.add(l)); renderStatic(); }
@@ -93,7 +90,7 @@ function handle(e) {
   if ((el = q('[data-sharecard]'))) {
     const g = gameById(el.dataset.sharecard); if (!g || el.disabled) return;
     el.disabled = true;
-    import('./sharecard.js').then(m => m.shareGame(g, !spOpen(g.id))).then(r => { if (r !== 'cancel') trackEvent('share'); }, () => {}).finally(() => { el.disabled = false; });
+    import('./sharecard.js').then(m => m.shareGame(g)).then(r => { if (r !== 'cancel') trackEvent('share'); }, () => {}).finally(() => { el.disabled = false; });
     return;
   }
   if ((el = q('[data-install]'))) { install(); return; }

@@ -28,16 +28,16 @@ export function fold(line) {
 const short = side => (side.key && TEAMS[side.key] ? TEAMS[side.key].s : side.name || '');
 
 // One game (the /api/schedule format) -> VEVENT lines.
-export function gameEvent(g, { site = '', alarm = 0, stamp = new Date(), hideResults = false } = {}) {
+export function gameEvent(g, { site = '', alarm = 0, stamp = new Date() } = {}) {
   const L = LEAGUES[g.l] || { dur: 150 };
   const done = g.state === 'post', on = g.state === 'in';
-  const score = !hideResults && (done || on) ? ` ${g.home.score ?? 0}–${g.away.score ?? 0}` : '';
+  const score = done || on ? ` ${g.home.score ?? 0}–${g.away.score ?? 0}` : '';
   const title = `${SPORT[g.l] || ''} ${short(g.home)} – ${short(g.away)}${score}${g.tbd && !done ? ' (oră neanunțată)' : ''}`.trim();
   const place = [g.venue, g.city, g.region].filter(Boolean).join(', ');
   const desc = [
     `${g.home.name} – ${g.away.name}`,
-    `${g.l}${!hideResults && g.note ? ' · ' + g.note : ''}`,
-    !hideResults && done ? `Final: ${g.home.score ?? 0}–${g.away.score ?? 0}` : '',
+    `${g.l}${g.note ? ' · ' + g.note : ''}`,
+    done ? `Final: ${g.home.score ?? 0}–${g.away.score ?? 0}` : '',
     g.tv ? `Transmisie SUA: ${g.tv}` : '',
     site ? `Detalii: ${site}/#meci/${g.l}/${g.id}` : ''
   ].filter(Boolean).join('\n');
@@ -61,14 +61,14 @@ export function gameEvent(g, { site = '', alarm = 0, stamp = new Date(), hideRes
 }
 
 // A whole calendar. `name` is what calendar apps show for the subscription.
-export function calendar(games, { name = 'American Sports Hub', site = '', alarm = 0, stamp = new Date(), hideResults = false } = {}) {
+export function calendar(games, { name = 'American Sports Hub', site = '', alarm = 0, stamp = new Date() } = {}) {
   const lines = [
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//American Sports Hub//RO', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
     `X-WR-CALNAME:${text(name)}`, 'X-WR-CALDESC:Meciurile echipelor tale, de la American Sports Hub (date ESPN)',
     // Ask subscribing apps to check again every few hours (Apple honours it; Google refreshes on its own schedule).
     'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'
   ];
-  for (const g of games) lines.push(...gameEvent(g, { site, alarm, stamp, hideResults }));
+  for (const g of games) lines.push(...gameEvent(g, { site, alarm, stamp }));
   lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n') + '\r\n';
 }

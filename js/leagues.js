@@ -78,7 +78,6 @@ export function groupTableHtml(g, l, ctx, me = null) {
   }).join('')}</tbody></table></div>${cuts ? `<div class="fn cutfn">${esc(cutNote[l])} Dif. = cât lipsește până la locul ${cuts.at(-1)} (${l === 'NHL' || l === 'MLS' ? 'puncte' : 'meciuri'}).</div>` : ''}</div>`;
 }
 export function standingsHtml(standings, chosen, ctx) {
-  if (ctx.hideResults) return '<p class="empty">Clasamente ascunse · modul fără spoilere este activ.</p>';
   const out = L_ORDER.filter(l => chosen.has(l) && standings?.[l]?.length).map(l => `<section class="lgblock"><h3><span class="ldot" style="--c:${ctx.col(l)}"></span>${L_NAME[l]}</h3><div class="stgrid">${standings[l].map(g => groupTableHtml(g, l, ctx)).join('')}</div></section>`);
   return (out.join('') || '<div class="empty">Clasamentele nu sunt disponibile acum.</div>')
     + '<div class="fn">NHL: Îp = înfrângeri în prelungiri, Pct = puncte. MLS: E = egaluri. Serie: V = victorii la rând, Î = înfrângeri, E = egaluri. Apasă pe o echipă pentru pagina ei.</div>';
@@ -90,7 +89,7 @@ export function teamsHtml(standings, chosen, ctx) {
     const teams = standings[l].flatMap(g => g.entries).slice().sort((a, b) => a.name.localeCompare(b.name));
     return `<section class="lgblock"><h3><span class="ldot" style="--c:${ctx.col(l)}"></span>${L_NAME[l]} <small>${teams.length} echipe</small></h3><div class="tgrid">${teams.map(e => {
       const k = ctx.flKey(l, e.name);
-      return `<button class="tcard${k ? ' fl' : ''}" type="button" ${k ? `data-team="${k}"` : `data-club="${l}|${esc(e.id)}"`}>${ctx.emb({ ...e, key: k }, 'lg')}<span><b>${esc(e.name)}</b><small>${ctx.hideResults ? 'Bilanț ascuns' : `${e.w ?? 0}–${e.l ?? 0}${l === 'NHL' ? '–' + (e.otl ?? 0) : l === 'MLS' ? '–' + (e.t ?? 0) : ''}`}${k ? ' · ★ ' + esc(HOME.name) : ''}</small></span></button>`;
+      return `<button class="tcard${k ? ' fl' : ''}" type="button" ${k ? `data-team="${k}"` : `data-club="${l}|${esc(e.id)}"`}>${ctx.emb({ ...e, key: k }, 'lg')}<span><b>${esc(e.name)}</b><small>${e.w ?? 0}–${e.l ?? 0}${l === 'NHL' ? '–' + (e.otl ?? 0) : l === 'MLS' ? '–' + (e.t ?? 0) : ''}${k ? ' · ★ ' + esc(HOME.name) : ''}</small></span></button>`;
     }).join('')}</div></section>`;
   });
   return out.join('') || '<div class="empty">Lista echipelor nu e disponibilă acum.</div>';

@@ -4,18 +4,6 @@ import { TEAMS, parseClub, STORE } from './teams.js';
 import { esc } from './ui.js';
 import { isStandalone } from './phone.js';
 import { trackEvent, count } from './track.js';
-const noSpoil = () => { try { return localStorage.getItem('flgames-nospoil') === '1'; } catch { return false; } };
-let spoilerSync = Promise.resolve();
-// Update only this preference; never reset teams while the settings page is still loading.
-export function syncSpoilerPreference() {
-  spoilerSync = spoilerSync.catch(() => {}).then(async () => {
-    if (!supported() || Notification.permission !== 'granted') return;
-    const registration = await navigator.serviceWorker.getRegistration();
-    const subscription = await registration?.pushManager?.getSubscription();
-    if (subscription) await post({ action: 'spoilers', subscription: subscription.toJSON(), nospoil: noSpoil() });
-  }).catch(() => { N.msg = 'Nu am putut sincroniza protecția notificărilor. Reîncerc la reconectare; protecția locală rămâne activă.'; onChange(); });
-  return spoilerSync;
-}
 
 export const N = { status: 'unknown', teams: [], lead: 60, final: true, morning: true, night: false, weekly: true, msg: '', busy: false, key: null };
 let onChange = () => {};
@@ -42,7 +30,6 @@ export async function refreshNotify(defaults) {
     // Teams of the other pack (saved while this device showed it) are not on the page: they drop out at the
     // next save, so no notification comes for a team that cannot be seen or unticked here.
     if (prefs) { Object.assign(N, prefs); N.teams = N.teams.filter(k => TEAMS[k] || parseClub(k)); N.status = 'on'; } else N.status = 'off';
-    await syncSpoilerPreference();
   } catch (e) { N.status = navigator.onLine ? 'error' : 'offline'; N.msg = navigator.onLine ? String(e.message || e) : ''; }
   onChange();
 }
@@ -74,7 +61,7 @@ async function subscribe(r) {
     }
   }
 }
-const prefs = () => ({ teams: N.teams, lead: N.lead, final: N.final, morning: N.morning, night: N.night, weekly: N.weekly, nospoil: noSpoil() });
+const prefs = () => ({ teams: N.teams, lead: N.lead, final: N.final, morning: N.morning, night: N.night, weekly: N.weekly });
 // Turning on must start from a tap: browsers only show the permission question after one.
 export const enableNotify = () => run(async () => {
   const p = await Notification.requestPermission();
@@ -121,7 +108,7 @@ export function notifyHtml(emb, clubs = [], addHtml = '') {
   return `<div class="band plain"><div><div class="lgn" style="color:var(--accent)">Pe telefon</div><h2 id="prof-name" style="font-size:24px">Notificări</h2></div>
       <button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div>
     <div class="pbody">
-    <p class="lead">Anunțuri înainte de meci și rezumate, chiar și cu aplicația închisă.</p><p class="fn">${noSpoil() ? 'Fără spoilere activ: notificările ascund scorul, verdictul și prelungirile.' : 'Modul fără spoilere este oprit. Notificările pot include rezultate.'} Preferința urmează butonul „Fără spoilere” pe acest dispozitiv.</p>
+    <p class="lead">Un anunț înainte de meciurile echipelor tale, rezultatul final și, dimineața, ce s-a întâmplat azi-noapte, chiar și cu aplicația închisă.</p>
     <p class="nstat ${kind}" role="status">${esc(text)}</p>
     ${can ? `<section><h3>Echipele</h3>
       <div class="calteams">${Object.entries(byL).map(([l, ks]) => `<div class="calgrp"><b>${l}</b>${ks.map(k => `<label class="calteam"><input type="checkbox" data-ntfteam="${k}" ${N.teams.includes(k) ? 'checked' : ''}>${emb(k)}<span>${esc(TEAMS[k].espn)}</span></label>`).join('')}</div>`).join('')}${clubs.length ? `<div class="calgrp"><b>Din alte orașe</b>${clubs.map(c => `<label class="calteam"><input type="checkbox" data-ntfteam="${esc(c.id)}" ${N.teams.includes(c.id) ? 'checked' : ''}>${emb(c.id)}<span>${esc(c.name)} <small>${esc(c.l)}</small></span></label>`).join('')}</div>` : ''}</div>

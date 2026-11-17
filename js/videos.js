@@ -65,9 +65,9 @@ export async function loadGameVideos(g, summary) {
   if (el?.dataset.videoGame !== g.l + '/' + g.id || el.querySelector('iframe,video')) return;
   games.set(g.l + '/' + g.id, { g, summary }); el.innerHTML = gameInner(g, summary);
 }
-function redrawGame(el) {
+function redrawGame(el, force = false) {
   const root = el.closest('[data-video-game]'), record = games.get(root?.dataset.videoGame);
-  if (record && !root.querySelector('iframe,video')) root.innerHTML = gameInner(record.g, record.summary);
+  if (record && (force || !root.querySelector('iframe,video'))) root.innerHTML = gameInner(record.g, record.summary);
 }
 document.addEventListener('change', e => {
   const el = e.target.closest('[data-video-filter]'); if (!el) return;
@@ -81,17 +81,17 @@ document.addEventListener('submit', e => {
   if (!id) { form.querySelector('[data-video-error]').textContent = 'Introdu un link HTTPS YouTube valid.'; return; }
   const key = form.dataset.videoManual, record = games.get(key); if (!record) return;
   const v = { id, l: record.g.l, kind: 'recap', title: `${record.g.A.name} – ${record.g.H.name}`, source: 'manual', manual: true, seconds: null };
-  const all = overrides(); all[key] = v; store.set('flgames-video-overrides', JSON.stringify(Object.fromEntries(Object.entries(all).slice(-200)))); redrawGame(form);
+  const all = overrides(); all[key] = v; store.set('flgames-video-overrides', JSON.stringify(Object.fromEntries(Object.entries(all).slice(-200)))); redrawGame(form, true);
 });
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-video-play],[data-video-save],[data-video-source],[data-video-follow],[data-video-reset],[data-espn-play]'); if (!el) return;
-  if (el.hasAttribute('data-video-reset')) { const key = el.closest('[data-video-game]')?.dataset.videoGame; const all = overrides(); delete all[key]; store.set('flgames-video-overrides', JSON.stringify(all)); redrawGame(el); return; }
+  if (el.hasAttribute('data-video-reset')) { const key = el.closest('[data-video-game]')?.dataset.videoGame; const all = overrides(); delete all[key]; store.set('flgames-video-overrides', JSON.stringify(all)); redrawGame(el, true); return; }
   if (el.dataset.videoFollow) { const list = sourcePrefs(), id = el.dataset.videoFollow; store.set('flgames-video-sources', JSON.stringify(list.includes(id) ? list.filter(x => x !== id) : [...list, id])); renderVideoLibrary(); return; }
   if (el.dataset.videoSource) { prefs.source = el.dataset.videoSource; prefs.l = ''; renderVideoLibrary(); return; }
   if (el.hasAttribute('data-espn-play')) {
     const root = el.closest('[data-video-game]'), record = games.get(root?.dataset.videoGame), v = record?.summary?.videos?.[Number(el.dataset.espnPlay)];
     const url = v?.mp4;
-    try { const u = new URL(url); if (u.protocol !== 'https:' || !/(^|\.)espncdn\.com$/.test(u.hostname)) return; } catch { return; }
+    try { const u = new URL(url); if (u.protocol !== 'https:' || !/(^|\.)(espncdn\.com|espn\.com)$/.test(u.hostname) && u.hostname !== 'espnmedia-cdn.akamaized.net') return; } catch { return; }
     const slot = root.querySelector(`[data-espn-player="${el.dataset.espnPlay}"]`); slot.innerHTML = `<p class="fn">Le poți vedea în clip: scorul, comentariul și rezultatul.</p><video controls playsinline preload="none" src="${esc(url)}"></video>`; return;
   }
   const id = el.dataset.videoPlay || el.dataset.videoSave, v = allVideos().find(v => v.id === id) || Object.values(overrides()).find(v => v.id === id);

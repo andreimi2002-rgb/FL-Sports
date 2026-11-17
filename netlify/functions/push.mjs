@@ -24,11 +24,6 @@ export default async (req, context) => {
   const store = await subsStore(context?.deploy?.context || 'local');
   const id = subId(sub.endpoint);
   const old = await store.get(id);
-  if (body.action === 'spoilers') {
-    if (typeof body.nospoil !== 'boolean') return json({ error: 'Preferință invalidă.' }, 400);
-    if (old) await store.set(id, { ...old, nospoil: body.nospoil, updated: Date.now() });
-    return json({ ok: true });
-  }
 
   if (body.action === 'get') return json({ prefs: old ? { teams: old.teams, lead: old.lead, final: old.final, morning: old.morning !== false, night: !!old.night, weekly: old.weekly !== false } : null });
   if (body.action === 'delete') { await store.del(id); return json({ ok: true }); }
@@ -39,7 +34,7 @@ export default async (req, context) => {
     if (!teams.length) return json({ error: 'Alege cel puțin o echipă.' }, 400);
     const rec = {
       id, endpoint: sub.endpoint, keys: { p256dh: sub.keys.p256dh, auth: sub.keys.auth },
-      teams, lead, final: !!p.final, morning: p.morning !== false, night: !!p.night, weekly: p.weekly !== false, nospoil: typeof p.nospoil === 'boolean' ? p.nospoil : !!old?.nospoil, morningDay: old?.morningDay, weekDay: old?.weekDay, site: new URL(req.url).origin,
+      teams, lead, final: !!p.final, morning: p.morning !== false, night: !!p.night, weekly: p.weekly !== false, morningDay: old?.morningDay, weekDay: old?.weekDay, site: new URL(req.url).origin,
       created: old?.created || Date.now(), updated: Date.now(), sent: old?.sent || {}, lastTest: old?.lastTest || 0
     };
     await store.set(id, rec);
@@ -49,7 +44,6 @@ export default async (req, context) => {
     if (!old) return json({ error: 'Salvează întâi setările.' }, 400);
     if (Date.now() - (old.lastTest || 0) < 20e3) return json({ error: 'Așteaptă câteva secunde între teste.' }, 429);
     const r = await sendPush(old, {
-      spoilerFree: true,
       title: 'Notificările merg ✓',
       body: [old.lead ? `Vei primi o notificare ${inTime(old.lead).replace(/^în /, 'cu ').replace(/^într-o oră$/, 'cu o oră')} înainte de meciurile echipelor alese.` : 'Vei primi rezultatul final al meciurilor echipelor alese.',
         old.morning !== false ? 'Și, la 8:00, rezultatele de azi-noapte.' : ''].filter(Boolean).join(' '),

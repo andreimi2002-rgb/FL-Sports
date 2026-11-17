@@ -7,7 +7,7 @@
 - Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos despre beta, monetizare și lansare publică sunt istoric, nu direcție de implementare.
 - Florida este pachetul implicit fără `?eu=1`. Preferințele existente `flgames-*`, calendarul, abonamentele push și adresa aplicației se păstrează. Marcajul Store rămâne doar pentru comportamentul aplicației și notificări, fără să restrângă conținutul personal.
 - Telemetria și colectarea feedback-ului sunt oprite; datele istorice nu se șterg automat. Nu adăuga promovare, donații, paywall sau lansare publică.
-- Lucrăm în loturi pe **etape mari**, cu un singur branch / PR deschis către `main` și același Deploy Preview actualizat. PR #29 (`stage-29-harta-florida`) include redesign-ul și va continua cu întreaga etapă 2 (video lung, fără spoilere și Game Night). Nu face merge pentru îmbunătățiri mici; păstrează PR-ul draft până la finalul etapei 2. Testează local înainte de push și grupează schimbările coerente. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
+- Lucrăm în loturi pe **etape mari**, cu un singur branch / PR deschis către `main` și același Deploy Preview actualizat. PR #29 (`stage-29-harta-florida`) include redesign-ul și va continua cu întreaga etapă 2 (video lung și Game Night; protecția completă contra spoilerelor este amânată separat, la cererea utilizatorului). Nu face merge pentru îmbunătățiri mici; păstrează PR-ul draft până la finalul etapei 2. Testează local înainte de push și grupează schimbările coerente. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
 - Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main` (verificat în panou). Nu schimba adresa și nu declanșa deploy în producție.
 - Ediție personală nu înseamnă acces privat: repository-ul și preview-urile erau publice la verificare. `noindex` și `robots.txt` nu sunt autentificare. Nu schimba vizibilitatea sau controlul accesului fără instrucțiunea utilizatorului.
 
@@ -59,9 +59,9 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 
 ## Atlas unificat în preview (v34)
 
-Etapa 2 a început **local**, fără push: vezi [docs/ETAPA-2-CHECKPOINT.md](docs/ETAPA-2-CHECKPOINT.md) pentru fișierele scrise, verificările și pașii rămași. v35 este rezervată local; UI video încă neconectat. Nu declara etapa terminată și nu publica această bucată incompletă. `npm test`, inclusiv testele noi video, trece la checkpoint.
+Etapa 2 v35: biblioteca Game Night, catalog oficial persistent, sugestii de rezumate, alternativă ESPN și corectare manuală. Detaliile și limitele sunt în docs/ETAPA-2-CHECKPOINT.md. Protecția completă contra spoilerelor rămâne separat; modul existent este păstrat.
 
-`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Secțiunea separată Orașe/stadioane/vreme este eliminată; vremea orașului selectat este încărcată la vizualizarea atlasului și reutilizată din cache. Planul include și ideea Game Night, încă neimplementată.
+`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Secțiunea separată Orașe/stadioane/vreme este eliminată; vremea orașului selectat este încărcată la vizualizarea atlasului și reutilizată din cache. Game Night este inclus în v35.
 
 ## Plan pe etape
 
