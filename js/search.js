@@ -7,8 +7,8 @@ import { minePick, renderMinePickList, WELCOME, renderWelcomeList } from './home
 import { gameView, go } from './pages.js';
 
 /* ================= search ================= */
-// Add MLS and MLB when their player profiles are available.
-const PLAYER_LEAGUES = ['NBA', 'NFL', 'NHL'];
+// Add MLB when its player profiles are available.
+const PLAYER_LEAGUES = ['NBA', 'NFL', 'NHL', 'MLS'];
 const playerCatalogs = Object.fromEntries(PLAYER_LEAGUES.map(l => [l, []]));
 const playerLoads = new Map();
 function loadPlayerCatalog(l) {

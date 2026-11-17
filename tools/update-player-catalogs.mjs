@@ -2,7 +2,8 @@ import { writeFile } from 'node:fs/promises';
 
 const leagues = {
   NFL: 'football/nfl',
-  NHL: 'hockey/nhl'
+  NHL: 'hockey/nhl',
+  MLS: 'soccer/usa.1'
 };
 const api = 'https://site.api.espn.com/apis/site/v2/sports/';
 

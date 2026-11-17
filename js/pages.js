@@ -76,7 +76,7 @@ export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
   if (h[0] === 'dimineata') { hideOv(); setView('morning'); return; }
-  if (h[0] === 'jucator' && ['NBA', 'NFL', 'NHL'].includes(h[1]) && /^\d{1,12}$/.test(h[2] || '')) { openPlayer(h[1], h[2], /^\d{1,12}$/.test(h[3] || '') ? h[3] : null, keep); return; }
+  if (h[0] === 'jucator' && ['NBA', 'NFL', 'NHL', 'MLS'].includes(h[1]) && /^\d{1,12}$/.test(h[2] || '')) { openPlayer(h[1], h[2], /^\d{1,12}$/.test(h[3] || '') ? h[3] : null, keep); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) { gameView.side = ''; gameView.shotTeam = ''; gameView.shotPlayer = ''; gameView.shotPeriod = ''; } gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }

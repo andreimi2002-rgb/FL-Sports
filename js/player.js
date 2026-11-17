@@ -3,6 +3,8 @@ import { esc } from './ui.js';
 const NBA_COLS = [['gamesPlayed', 'MJ'], ['avgMinutes', 'MIN'], ['avgPoints', 'PTS'], ['avgRebounds', 'REC'], ['avgAssists', 'AST'], ['fieldGoalPct', 'FG%'], ['threePointPct', '3P%'], ['freeThrowPct', 'FT%']];
 const NHL_SKATER_COLS = [['games', 'MJ'], ['goals', 'G'], ['assists', 'A'], ['points', 'PTS'], ['plusMinus', '+/-'], ['shotsTotal', 'ȘUT']];
 const NHL_GOALIE_COLS = [['games', 'MJ'], ['wins', 'V'], ['losses', 'Î'], ['avgGoalsAgainst', 'GAA'], ['savePct', 'SV%'], ['shutouts', 'SO']];
+const MLS_FIELD_COLS = [['appearances', 'MJ'], ['totalGoals', 'G'], ['goalAssists', 'A'], ['totalShots', 'ȘUT'], ['yellowCards', 'AG'], ['redCards', 'AR']];
+const MLS_GOALIE_COLS = [['appearances', 'MJ'], ['cleanSheet', 'CS'], ['saves', 'SV'], ['goalsConceded', 'GP'], ['savePct', 'SV%']];
 const NFL_COLS = [
   [['gamesPlayed', 'MJ'], ['completions', 'COMP'], ['passingAttempts', 'ATT'], ['passingYards', 'YDS'], ['passingTouchdowns', 'TD'], ['interceptions', 'INT']],
   [['gamesPlayed', 'MJ'], ['rushingAttempts', 'CAR'], ['rushingYards', 'YDS'], ['rushingTouchdowns', 'TD']],
@@ -193,6 +195,44 @@ function nhlCompareHtml(p, compare) {
   }, columns);
 }
 
+function mlsColumns(names, position) {
+  const allowed = position === 'G' ? MLS_GOALIE_COLS : MLS_FIELD_COLS;
+  return allowed.filter(([key]) => names.includes(key));
+}
+
+function mlsSummaryHtml(summary, position) {
+  const columns = mlsColumns(summary?.names || [], position);
+  return summary?.rows?.length && columns.length
+    ? table(summary, columns)
+    : '<p class="fn">Statisticile sezonului nu sunt disponibile.</p>';
+}
+
+function mlsRecentHtml(recent, position) {
+  const columns = mlsColumns(recent?.names || [], position)
+    .filter(([key]) => key !== 'appearances' && key !== 'savePct');
+  if (!recent?.rows?.length || !columns.length) return '<p class="fn">Date indisponibile.</p>';
+  const rows = recent.rows.slice(0, 5).map(r => ({
+    ...r,
+    label: [r.date && !isNaN(Date.parse(r.date)) ? new Date(r.date).toLocaleDateString('ro-RO') : '', r.opponent]
+      .filter(Boolean).join(' · ') || 'Meci'
+  }));
+  return table({ names: recent.names, rows }, columns);
+}
+
+function mlsCompareHtml(p, compare) {
+  if ((p.position === 'G') !== (compare.position === 'G')) return '<p class="fn">Compară doi jucători de aceeași categorie.</p>';
+  const columns = mlsColumns(p.summary?.names || [], p.position).filter(([key]) => compare.summary?.names?.includes(key));
+  const first = p.summary?.rows?.[0], second = compare.summary?.rows?.[0];
+  if (!columns.length || !first || !second) return '<p class="fn">Nu sunt statistici de sezon comparabile.</p>';
+  return table({
+    names: columns.map(([key]) => key),
+    rows: [
+      { label: p.name, stats: columns.map(([key]) => first.stats[p.summary.names.indexOf(key)] ?? '—') },
+      { label: compare.name, stats: columns.map(([key]) => second.stats[compare.summary.names.indexOf(key)] ?? '—') }
+    ]
+  }, columns);
+}
+
 function advancedHtml(p) {
   if (p.league === 'NHL') {
     const metrics = p.advanced?.metrics || [];
@@ -246,6 +286,7 @@ export function playerHtml(p, options = [], compare = null, hideStats = false) {
   const league = p.league || 'NBA';
   const isNfl = league === 'NFL';
   const isNhl = league === 'NHL';
+  const isMls = league === 'MLS';
   const head = /^https:\/\/a\.espncdn\.com\//.test(p.head) ? `<img class="player-face" src="${esc(p.head)}" alt="" width="160" height="120">` : '';
   const recentNba = league === 'NBA' && p.recent && {
     ...p.recent,
@@ -258,6 +299,8 @@ export function playerHtml(p, options = [], compare = null, hideStats = false) {
     ? nflCompareHtml(p, compare)
     : isNhl
       ? nhlCompareHtml(p, compare)
+      : isMls
+        ? mlsCompareHtml(p, compare)
     : table(p.summary && {
       names: p.summary.names,
       rows: [
@@ -274,11 +317,17 @@ export function playerHtml(p, options = [], compare = null, hideStats = false) {
       ? `<section><h3>Sezon curent și carieră</h3>${nflSummaryHtml(p.summary, p.position)}</section>${advancedHtml(p)}<section><h3>Ultimele 5 meciuri</h3>${nflRecentHtml(p.recent, p.position)}</section><section><h3>Comparație · statistici în sezon</h3><label>Jucători din meciurile și loturile încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section><section><h3>Carieră</h3>${nflSeasonsHtml(p.seasons, p.position)}</section>`
       : isNhl
         ? `<section><h3>Sezon curent și carieră</h3>${nhlSummaryHtml(p.summary, p.position)}</section>${advancedHtml(p)}<section><h3>Ultimele 5 meciuri</h3>${nhlRecentHtml(p.recent, p.position)}</section><section><h3>Comparație · statistici în sezon</h3><label>Jucători din loturile NHL încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section><section><h3>Carieră</h3><details><summary>Istoric pe sezoane (ultimii 5)</summary>${nhlSeasonsHtml(p.seasons, p.position)}</details></section>`
+      : isMls
+        ? `<section><h3>Sezon MLS</h3>${mlsSummaryHtml(p.summary, p.position)}</section><section><h3>Ultimele 5 meciuri</h3>${mlsRecentHtml(p.recent, p.position)}</section><section><h3>Comparație · statistici în sezon</h3><label>Jucători MLS din loturile încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section>`
         : `<section><h3>Sezon și carieră · medii pe meci</h3>${table(p.summary)}</section><section><h3>Cariera, sezon cu sezon</h3>${table(p.seasons)}</section><section><h3>Ultimele meciuri</h3>${table(recentNba, [['minutes', 'MIN'], ['points', 'PTS'], ['totalRebounds', 'REC'], ['assists', 'AST'], ['fieldGoalPct', 'FG%']])}</section><section><h3>Comparație · medii în sezon</h3><label>Jucători din meciurile încărcate<select id="player-compare" data-league="${league}" data-player="${esc(p.id)}"><option value="">Alege un jucător</option>${options.filter(x => x.id !== p.id).map(x => `<option value="${esc(x.id)}"${compare?.id === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>${compare ? `<h4>${esc(p.name)} / ${esc(compare.name)}</h4>${comparison}` : ''}</section>`;
   const note = isNfl
     ? 'Date biografice, statistici și meciuri recente ESPN; EPA și ratele avansate sunt de la nflverse. Valorile sezonului și carierei ESPN sunt totaluri. Comparația folosește doar statisticile comune din sezonul regulat.'
     : isNhl
       ? 'Date ESPN, pot fi parțiale. GAA = goluri primite pe meci; SV% = procentul de șuturi apărate. xG nu este disponibil în statisticile ESPN folosite aici.'
+      : isMls
+        ? p.position === 'G'
+          ? 'Statistici de sezon și meciuri recente de la ESPN. MJ = apariții; CS = meciuri fără gol primit; SV = șuturi apărate; GP = goluri primite; SV% = procentajul șuturilor apărate. ESPN nu oferă totaluri de carieră MLS în profilul folosit.'
+          : 'Statistici de sezon și meciuri recente de la ESPN. MJ = apariții; G = goluri; A = pase decisive; ȘUT = șuturi; AG/AR = cartonașe galbene/roșii. ESPN nu oferă totaluri de carieră MLS în profilul folosit.'
       : 'Date ESPN, pot fi parțiale. MJ = meciuri, REC = recuperări; valorile de sezon și carieră sunt medii pe meci. Comparația folosește primul segment de sezon regulat disponibil pentru fiecare jucător.';
   return `<div class="band plain"><div class="id">${head}<div><div class="lgn">${league} · ${esc(p.team)}</div><h2 id="prof-name">${esc(p.name)}</h2></div></div><button class="x" type="button" id="prof-x" aria-label="Închide">×</button></div><div class="pbody"><p>${[p.position, p.age ? p.age + ' ani' : '', p.height ? p.height + ' cm' : '', p.weight ? p.weight + ' kg' : ''].filter(Boolean).map(esc).join(' · ')}</p>${p.partial ? '<p class="fn">O parte din date nu a putut fi încărcată.</p>' : ''}${stats}<p class="fn">${note}</p></div>`;
 }

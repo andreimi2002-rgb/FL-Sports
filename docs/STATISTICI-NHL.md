@@ -12,7 +12,7 @@ Pentru jucătorii de câmp, procentajul la șuturi este afișat ca metrică de e
 
 ## Căutare globală
 
-Căutarea încarcă cataloagele ESPN NBA, NFL și NHL; rezultatele afișează liga, echipa și poziția. `node tools/update-player-catalogs.mjs` regenerează cataloagele NFL/NHL din loturile ESPN. MLS și MLB se adaugă când profilurile lor sunt implementate, ca rezultatele să nu trimită spre pagini inexistente.
+Căutarea încarcă cataloagele ESPN NBA, NFL, NHL și MLS; rezultatele afișează liga, echipa și poziția. `node tools/update-player-catalogs.mjs` regenerează cataloagele NFL/NHL/MLS din loturile ESPN. MLB se adaugă când profilurile sale sunt implementate, ca rezultatele să nu trimită spre pagini inexistente.
 
 ## Statistici de echipă
 

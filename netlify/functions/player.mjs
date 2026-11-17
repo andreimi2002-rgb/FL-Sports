@@ -4,7 +4,8 @@ import { nflversePlayerMetrics } from '../lib/nflverse.mjs';
 const SPORTS = {
   NBA: 'basketball/nba',
   NHL: 'hockey/nhl',
-  NFL: 'football/nfl'
+  NFL: 'football/nfl',
+  MLS: 'soccer/usa.1'
 };
 
 async function get(url) {
@@ -98,6 +99,43 @@ function nhlEfficiency(stats, position) {
   } : null;
 }
 
+function mlsSummary(stats, position, year) {
+  const categories = stats?.splits?.categories || [];
+  const find = (category, name) => categories.find(item => item.name === category)?.stats?.find(item => item.name === name);
+  const keys = position === 'G'
+    ? [['appearances', 'general'], ['cleanSheet', 'goalKeeping'], ['saves', 'goalKeeping'], ['goalsConceded', 'goalKeeping'], ['savePct', 'goalKeeping']]
+    : [['appearances', 'general'], ['totalGoals', 'offensive'], ['goalAssists', 'offensive'], ['totalShots', 'offensive'], ['yellowCards', 'general'], ['redCards', 'general']];
+  const available = keys.map(([name, category]) => [name, find(category, name)]).filter(([, stat]) => stat);
+  if (!available.length) return null;
+  return {
+    names: available.map(([name]) => name),
+    rows: [{
+      label: `${year} MLS`,
+      stats: available.map(([name, stat]) => {
+        if (name === 'savePct') {
+          const value = Number(stat.value);
+          return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : stat.displayValue || '';
+        }
+        return stat.displayValue ?? String(stat.value ?? '');
+      })
+    }]
+  };
+}
+
+function mlsOverviewSummary(statistics, position, year) {
+  const split = statistics?.splits?.find(row => row.leagueSlug === 'usa.1' || row.leagueId === '770');
+  if (!split) return null;
+  const keys = position === 'G'
+    ? ['starts', 'cleanSheet', 'saves', 'goalsConceded']
+    : ['starts', 'totalGoals', 'goalAssists', 'totalShots', 'yellowCards', 'redCards'];
+  const available = keys.filter(name => statistics.names?.includes(name));
+  if (!available.length) return null;
+  return {
+    names: available,
+    rows: [{ label: split.displayName || `${year} MLS`, stats: available.map(name => split.stats[statistics.names.indexOf(name)] ?? '') }]
+  };
+}
+
 export default async function player(req) {
   if (req.method !== 'GET') return new Response(null, { status: 405 });
   const params = new URL(req.url).searchParams;
@@ -108,10 +146,13 @@ export default async function player(req) {
   if (!/^\d{1,12}$/.test(id || '')) return json({ error: 'ID invalid' }, { status: 400, browser: 0, cdn: 0 });
 
   const base = `https://site.web.api.espn.com/apis/common/v3/sports/${sport}/athletes/${id}`;
+  const statsUrl = league === 'MLS'
+    ? `https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/seasons/${new Date().getFullYear()}/types/0/athletes/${id}/statistics`
+    : `${base}/stats`;
   const [bio, overview, stats] = await Promise.allSettled([
     get(base),
     get(`${base}/overview`),
-    get(`${base}/stats`)
+    get(statsUrl)
   ]);
   if (bio.status !== 'fulfilled' || !bio.value.athlete?.displayName) {
     return json({ error: 'Profil indisponibil' }, { status: 502, browser: 0, cdn: 30 });
@@ -132,13 +173,16 @@ export default async function player(req) {
     .flatMap(category => (category.statistics || []).map(row => Number(row.season?.year)))
     .filter(Number.isInteger);
   const seasonFromTitle = Number(/\b(20\d{2})\b/.exec(profile.statistics?.displayName || '')?.[1]);
-  const season = league === 'NHL'
-    ? Math.max(0, ...seasonNames, seasonFromTitle)
-    : seasonFromTitle || Math.max(0, ...seasonNames) || new Date().getFullYear();
+  const season = league === 'MLS'
+    ? bio.value.season?.year || new Date().getFullYear()
+    : league === 'NHL'
+      ? Math.max(0, ...seasonNames, seasonFromTitle)
+      : seasonFromTitle || Math.max(0, ...seasonNames) || new Date().getFullYear();
 
   let seasons = null;
   let recent = null;
   let advanced = null;
+  let summary = playerTable(profile.statistics);
   let advancedStatus = 'not-applicable';
   if (league === 'NFL') {
     seasons = nflSeasons(seasonStats);
@@ -170,6 +214,10 @@ export default async function player(req) {
     seasons = nhlSeasons(seasonStats);
     recent = recentGames(profile);
     advanced = nhlEfficiency(seasonStats, athlete.position?.abbreviation || '');
+  } else if (league === 'MLS') {
+    summary = mlsSummary(seasonStats, athlete.position?.abbreviation || '', season)
+      || mlsOverviewSummary(profile.statistics, athlete.position?.abbreviation || '', season);
+    recent = recentGames(profile);
   } else {
     const career = seasonStats.categories?.find(category => category.name === 'averages');
     seasons = career ? {
@@ -205,7 +253,7 @@ export default async function player(req) {
     weight,
     team: athlete.team?.displayName || '',
     head: athlete.headshot?.href || '',
-    summary: playerTable(profile.statistics),
+    summary,
     seasons,
     recent,
     advanced,

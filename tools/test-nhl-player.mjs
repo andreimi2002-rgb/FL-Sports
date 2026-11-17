@@ -88,7 +88,7 @@ globalThis.fetch = async input => {
 
 try {
   assert.equal((await player(new Request('https://site.test/api/player?league=NHL&id=2562637', { method: 'POST' }))).status, 405);
-  assert.equal((await player(new Request('https://site.test/api/player?league=MLS&id=2562637'))).status, 400);
+  assert.equal((await player(new Request('https://site.test/api/player?league=ZZZ&id=2562637'))).status, 400);
 
   const skaterResponse = await player(new Request('https://site.test/api/player?league=NHL&id=2562637'));
   assert.equal(skaterResponse.status, 200);

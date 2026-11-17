@@ -57,7 +57,7 @@ globalThis.fetch = async input => {
 
 try {
   assert.equal((await player(new Request('https://site.test/api/player?id=3139477', { method: 'POST' }))).status, 405);
-  assert.equal((await player(new Request('https://site.test/api/player?league=MLS&id=3139477'))).status, 400);
+  assert.equal((await player(new Request('https://site.test/api/player?league=ZZZ&id=3139477'))).status, 400);
   const response = await player(new Request('https://site.test/api/player?league=NFL&id=3139477'));
   assert.equal(response.status, 200);
   const profile = await response.json();
