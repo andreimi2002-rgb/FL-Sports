@@ -9,7 +9,7 @@ import { seasonHover } from './teamx.js';
 import { N, setNotifyRender, enableNotify, saveNotify, testNotify, disableNotify } from './notify.js';
 import { PLACES, loadPlaces, climateHover, AMERICA, loadAmerica } from './places.js';
 import { CACHE_KEY, DATA, GAMES, addDays, awake, build, gameById, getJSON, isLive, parts, played, state, store, weekStart, CLUB_RAW, addClubGames, refreshMineGames, noteLive, SPOIL, setNoSpoil, revealGame } from './core.js';
-import { PLAYOFFS, PO, minePick, WELCOME, renderWelcomeList, render, renderHero, renderMap, renderMine, renderPhone, renderPlayoffs, renderSources, renderStatic, renderStatus, renderStrip } from './home.js';
+import { PLAYOFFS, PO, minePick, WELCOME, renderWelcomeList, render, renderHero, renderMap, renderMine, renderPhone, renderPlayoffs, renderSources, renderStatic, renderStatus, setupAtlasWeather } from './home.js';
 import { OV, cal, closeOv, clubSide, clubView, gameView, go, loadGame, notifyOpen, openCalendar, openClub, openTeam, pickerClubs, refreshGame, route, saveCal, setTeamTab, share, openNotify } from './pages.js';
 import { LG, navView, renderLeagues, renderTodayStrip, setLgHash, setupJump, usKey } from './views.js';
 import { pickSearch } from './search.js';
@@ -184,7 +184,12 @@ function handle(e) {
   if ((el = q('[data-view]'))) { state.view = el.dataset.view; store.set('flgames-view', state.view); render(); return; }
   if ((el = q('[data-wk]'))) { state.week = addDays(state.week, +el.dataset.wk); render(); return; }
   if ((el = q('[data-mo]'))) { const [y, m] = parts(state.month + '-01'); const d = new Date(Date.UTC(y, m - 1 + (+el.dataset.mo), 1)); state.month = d.toISOString().slice(0, 7); render(); return; }
-  if ((el = q('[data-metro]'))) { state.metro = el.dataset.metro; renderMap(); return; }
+  if ((el = q('[data-metro]'))) {
+    const metro = el.dataset.metro, fromMap = el.tagName.toLowerCase() === 'g', focused = document.activeElement === el;
+    state.metro = metro; renderMap();
+    if (focused) document.querySelector(`${fromMap ? 'g' : 'button'}[data-metro="${CSS.escape(metro)}"]`)?.focus({ preventScroll: true });
+    return;
+  }
   if ((el = q('[data-day]'))) {
     const k = el.dataset.day, jump = !!el.dataset.jump;
     state.day = (state.day === k && !jump) ? null : k;
@@ -365,10 +370,9 @@ setInterval(() => { if (!document.hidden) load(); }, 15 * 60e3);
 // The pack's name and numbers in the page's fixed texts ("Jucate în New York", "cel puțin 3 echipe").
 document.querySelectorAll('[data-home]').forEach(el => { el.textContent = HOME.name; });
 document.querySelectorAll('[data-busy]').forEach(el => { el.textContent = HOME.busy; });
-if (HOME.strip.src === 'america') renderStrip();
 $('appver').textContent = 'Versiunea ' + APP_VERSION.replace(/^v/, '');
-loadPlaces()?.then(d => { if (!d) return; renderStrip(); if (GAMES.length) { render(); if (!$('ov').hidden) route(true); } });
-setInterval(() => { if (!document.hidden && PLACES.data) renderStrip(); }, 30 * 60e3);
+loadPlaces()?.then(d => { if (!d) return; if (GAMES.length) { render(); if (!$('ov').hidden) route(true); } });
+setupAtlasWeather();
 setNotifyRender(() => { if (notifyOpen && location.hash.startsWith('#notificari') && !$('ov').hidden) openNotify(true); });
 onInstallChange(renderPhone);
 renderPhone();

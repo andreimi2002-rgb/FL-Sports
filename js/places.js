@@ -223,17 +223,6 @@ export function gameWeatherHtml(g, v, w, durMin) {
 
 /* ================= weather strip (home page) ================= */
 export const STRIP = ['miami', 'tampa', 'orlando', 'jacksonville'];   // one city per metro area
-// `cities`: the city records to show (default: the Florida strip).
-export function stripHtml(list, cities) {
-  const C = PLACES.data?.cities;
-  const L = cities || (C ? STRIP.map(id => C[id]) : []);
-  if (!L.length) return '';
-  return L.map((c, i) => {
-    const id = c.id, w = list?.[i], n = w?.now, d = w?.days?.[0];
-    return `<button class="wxtile" type="button" data-city="${id}"><span class="nm">${esc(c.name)}</span>${n ? `${wxIcon(n.code, n.day, 34)}<span class="tt">${Math.round(n.temp)}°</span><span class="cc">${esc(wxText(n.code))}</span>${d ? `<span class="dd">${Math.round(d.lo)}° – ${Math.round(d.hi)}°${d.pp >= 20 ? ` · ploaie ${d.pp}%` : ''}</span>` : ''}` : '<span class="cc">…</span>'}</button>`;
-  }).join('');
-}
-
 /* ================= climate chart ================= */
 // Two small charts, one measure each (never two scales on one chart): monthly temperature range,
 // then monthly rain. The current month is outlined. Hover or tap a month for its numbers.

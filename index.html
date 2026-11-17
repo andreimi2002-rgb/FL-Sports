@@ -90,10 +90,9 @@
     <button type="button" data-jump="echipe">Echipele mele</button>
     <button type="button" data-jump="motd">Meciul zilei</button>
     <button type="button" data-jump="todaylg">Azi în ligi</button>
-    <button type="button" data-jump="orase">Orașe</button>
     <button type="button" data-jump="deurmarit">De urmărit</button>
     <button type="button" data-jump="program">Program</button>
-    <button type="button" data-jump="harta">Hartă</button>
+    <button type="button" data-jump="harta">Orașe și arene</button>
     <button type="button" data-jump="clasamente">Clasamente</button>
     <button type="button" data-jump="playoffs">Playoff</button>
     <button type="button" data-jump="telefon">Pe telefon</button>
@@ -108,12 +107,6 @@
   <section class="motd" id="motd" aria-label="Meciul zilei" hidden></section>
 
   <section class="todaylg" id="todaylg" aria-label="Azi în ligi" hidden></section>
-
-  <section id="orase" aria-label="Orașe, stadioane și vremea">
-    <div class="tnhead"><h2 class="sec">Orașe, stadioane și vremea</h2><a class="link" href="#ligi/orase" data-goview="ligi" data-lgto="orase">Toată America ›</a></div>
-    <div class="wxstrip" id="wxstrip" aria-label="Vremea acum în orașele echipelor"></div>
-    <div class="vstrip" id="vstrip" aria-label="Stadioanele echipelor"></div>
-  </section>
 
   <section id="deurmarit" aria-label="De urmărit">
     <h2 class="sec">De urmărit</h2>
@@ -152,7 +145,7 @@
   <details class="res" id="reswrap"><summary>Rezultate recente <span id="rescount"></span></summary><div id="results"></div></details>
 
   <section id="harta" aria-label="Harta">
-    <h2 class="sec">Unde se joacă</h2>
+    <div class="atlas-heading"><div><span class="atlas-kicker">Orașe · stadioane · vreme</span><h2>Florida, arenă cu arenă</h2></div><div class="atlas-intro"><p>Alege o zonă. Vremea, echipele, arenele și meciurile, în același loc.</p><a class="link" href="#ligi/orase" data-goview="ligi" data-lgto="orase">Toată America ↗</a></div></div>
     <div class="mapwrap"><div id="map"></div><div class="mpanel" id="mpanel"></div></div>
   </section>
 
