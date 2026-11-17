@@ -166,7 +166,7 @@ export function openTeam(k, keep) {
       ${st.away ? `<div class="stat"><div class="v">${st.away}</div><div class="l">În deplasare</div></div>` : ''}
       ${st.streak ? `<div class="stat"><div class="v" style="font-size:17px">${last[0] ? sp(last[0].id, esc(st.streak)) : esc(st.streak)}</div><div class="l">Serie curentă</div></div>` : ''}
     </div>
-    ${T.l === 'NFL' ? teamBasicStatsHtml(TEAMX.get(k), !!TEAMINFO[k]?.id && DATA.mode !== 'snapshot') : ''}
+    ${T.l === 'NFL' ? teamBasicStatsHtml(TEAMX.get(k), !!TEAMINFO[k]?.id) : ''}
     <div><h3>Forma, ultimele ${last.length} meciuri</h3><div class="form">${formChips(k)}<span>cel mai recent în dreapta</span></div></div>
     ${aboutHtml(fi)}
     <dl class="facts">
@@ -207,7 +207,7 @@ export function teamPanel(k) {
 }
 export async function loadTeamX(k) {
   const info = TEAMINFO[k];
-  if (!info?.id || TEAMX.has(k) || DATA.mode === 'snapshot') return;
+  if (!info?.id || TEAMX.has(k)) return;
   try {
     const x = await getJSON(`/api/team?l=${TEAMS[k].l}&id=${info.id}`, 12000);
     TEAMX.set(k, x);
