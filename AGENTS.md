@@ -1,18 +1,16 @@
-<!-- Etapa curentă: stage-31-statistici-jucatori, v41, bază main c17c95b. Primul lot: harta aruncărilor și profiluri/comparații NBA. Limitele și auditul celor8 meciuri sunt în docs/STATISTICI-NBA.md. NHL/NFL/MLB nu sunt încă extinse. Fără merge/producție fără acord explicit. -->
-<!-- v40: indicele de spectacol este eliminat la cererea utilizatorului. PR30 rămâne numai Dimineața mea (toate ligile, filtre, favorite primele) și Mod TV. PR29 este merged în main, producție v37. Fără merge PR30 fără acord explicit. -->
-<!-- Etapa curentă: stage-30-dimineata-tv, v38, bază main 69c0856. Dimineața mea = toate ligile selectate pentru o zi SUA, favorite prioritizate, Mod TV tastatură; playerul ESPN rămâne neatins. Fără merge/producție fără acord. Plan: docs/DIMINEATA-TV.md. Referințele Game Night din istoricul de mai jos nu mai sunt active. -->
-<!-- Decizie curentă v37: experimentul YouTube/Game Night este retras la cererea utilizatorului după regresii. Video ESPN este restaurat exact ca în f7ce1f8: rezumat, altfel cel mai lung clip disponibil; căutare externă NFL existentă. Atlasul v34 rămâne. Nu declara etapa video lung finalizată. -->
-<!-- Actualizare de scop v36: la cererea utilizatorului, Game Night și biblioteca sunt eliminate. Păstrăm numai rezumate în pagina fiecărui meci, alternativă ESPN și corectare manuală. Protecția completă contra spoilerelor rămâne amânată. Secțiunile despre Game Night de mai jos sunt istoric. -->
+<!-- Stare la 17 noiembrie 2026: PR #28 (v32), PR #29 (v37), PR #30 (v40) și PR #31 (titlu v41, aplicație v42) sunt merge-uite; main public este 06b099f. Commitul f3d8ce5 a ridicat versiunea la v42. Sursa locală coincide cu main după normalizarea newline-urilor, dar copia nu are .git și nu păstrează metadatele branch/status. Detalii: docs/PLAN-PERSONAL.md. -->
+<!-- Video lung/Game Night au fost retrase după regresii; rămâne playerul ESPN stabil. Protecția completă contra spoilerelor este amânată. -->
 # American Sports Hub
 
 ## Direcția curentă — ediție personală premium (17 noiembrie 2026)
 
 - Dezvoltăm varianta personală, cu logo-uri oficiale ESPN, imagini, clipuri și toate funcțiile sportive existente. „Premium” descrie experiența completă, fără abonament sau plată.
-- Baza verificată: `stage-27-jucator`, commit `0c4a0c2`, descendent al `main` (`c936956`). Ediția personală începe pe `stage-28-personal-premium` (v32).
+- Baza publică verificată: `main` la `06b099f`, după PR #31 (titlu v41; aplicație v42 din commitul `f3d8ce5`). PR #28 a livrat ediția personală (v32), PR #29 atlasul/video ESPN stabil (v37), PR #30 Dimineața mea/Mod TV (v40), iar PR #31 primul lot NBA. Sursa locală coincide cu `main`; copia nu are metadate Git pentru branch/status.
 - Planul actual și criteriile de verificare sunt în [docs/PLAN-PERSONAL.md](docs/PLAN-PERSONAL.md). Secțiunile de mai jos despre beta, monetizare și lansare publică sunt istoric, nu direcție de implementare.
+- Următorul lot de statistici este NFL (profiluri și EPA), apoi NHL și MLS; MLB rămâne amânat. Aceste trei ligi se adună pe branch/PR-ul cumulativ, cu același Deploy Preview actualizat și verificat după fiecare ligă; un singur merge în producție la final, după acordul utilizatorului.
 - Florida este pachetul implicit fără `?eu=1`. Preferințele existente `flgames-*`, calendarul, abonamentele push și adresa aplicației se păstrează. Marcajul Store rămâne doar pentru comportamentul aplicației și notificări, fără să restrângă conținutul personal.
 - Telemetria și colectarea feedback-ului sunt oprite; datele istorice nu se șterg automat. Nu adăuga promovare, donații, paywall sau lansare publică.
-- Lucrăm în loturi pe **etape mari**, cu un singur branch / PR deschis către `main` și același Deploy Preview actualizat. PR #29 (`stage-29-harta-florida`) include redesign-ul și va continua cu întreaga etapă 2 (video lung și Game Night; protecția completă contra spoilerelor este amânată separat, la cererea utilizatorului). Nu face merge pentru îmbunătățiri mici; păstrează PR-ul draft până la finalul etapei 2. Testează local înainte de push și grupează schimbările coerente. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
+- Pentru lucrări viitoare, grupează schimbările coerente pe etape mari și folosește Deploy Preview. PR #29–#31 sunt deja merge-uite; nu le trata ca PR-uri deschise. Testează local înainte de push. **Fără merge, push direct în `main` sau publicare în producție fără acord explicit.**
 - Netlify: proiectul `americansportshub` este legat de acest repository, production branch `main`, Deploy Previews activate pentru PR-uri spre `main` (verificat în panou). Nu schimba adresa și nu declanșa deploy în producție.
 - Ediție personală nu înseamnă acces privat: repository-ul și preview-urile erau publice la verificare. `noindex` și `robots.txt` nu sunt autentificare. Nu schimba vizibilitatea sau controlul accesului fără instrucțiunea utilizatorului.
 
@@ -27,7 +25,8 @@ istoricul git, pe `main` până la merge-ul etapei 1).
 - **Fără API-uri plătite și fără chei API.** Datele vin din API-ul public al ESPN
   (`site.api.espn.com`), gratuit și fără cheie, dar neoficial: poate schimba formatul fără
   anunț. Tot codul care îl citește e în `netlify/lib/espn.mjs`, defensiv, și întoarce date
-  parțiale în loc să crape. Vremea vine de la Open-Meteo (`netlify/lib/weather.mjs`), tot
+  parțiale în loc să crape. Metricile avansate NFL vin din nflverse; maparea ESPN↔GSIS este
+  generată din `players.csv` cu `node tools/update-nfl-player-ids.mjs`. Vremea vine de la Open-Meteo (`netlify/lib/weather.mjs`), tot
   gratuit și fără cheie. La generarea `data/places.json` se folosesc, o singură dată, Wikipedia
   (coordonate), Wikimedia Commons (poze cu licență), arhiva Open-Meteo (clima) și OSRM (rute).
 - **Notificări (Web Push):** standardul gratuit al browserelor, fără serviciu plătit. Site-ul se
@@ -42,7 +41,7 @@ istoricul git, pe `main` până la merge-ul etapei 1).
   site-ul devine public sau comercial. Dacă un logo nu se încarcă, apare emblema cu culorile
   echipei și abrevierea.
 - **Site static + funcții Netlify subțiri.** HTML/CSS/JavaScript cu module ES, fără framework
-  și fără pas de build. Funcțiile doar citesc ESPN sau Open-Meteo, normalizează și pun în
+  și fără pas de build. Funcțiile citesc ESPN, nflverse sau Open-Meteo, normalizează și pun în
   cache pe CDN.
 - **Rezervă:** dacă `/api/schedule` nu răspunde, pagina folosește ultimele date salvate în
   browser, apoi `data/snapshot.json`.
@@ -62,11 +61,9 @@ istoricul git, pe `main` până la merge-ul etapei 1).
   (`tools/test.mjs` verifică față de `main`). Doar așa aplicația instalată vede versiunea nouă:
   la revenirea în aplicație caută una nouă și, când e gata, se reîncarcă singură (`js/phone.js`).
 
-## Atlas unificat în preview (v34)
+## Funcționalități recente livrate
 
-Etapa 2 v35: biblioteca Game Night, catalog oficial persistent, sugestii de rezumate, alternativă ESPN și corectare manuală. Detaliile și limitele sunt în docs/ETAPA-2-CHECKPOINT.md. Protecția completă contra spoilerelor rămâne separat; modul existent este păstrat.
-
-`stage-29-harta-florida`: atlasul Floridei, cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`. Selecția rămâne în `state.metro`; numai cele patru zone ale echipelor Florida apar pe hartă. Panoul păstrează linkurile de echipă, meci, oraș și stadion. Stilurile sunt în blocul „Florida sports atlas” din `css/app.css`. Secțiunea separată Orașe/stadioane/vreme este eliminată; vremea orașului selectat este încărcată la vizualizarea atlasului și reutilizată din cache. Game Night este inclus în v35.
+PR #29 a livrat atlasul Floridei cu geometrie statică în `js/florida-map.js`, generată de `tools/build-florida-map.mjs`; vremea orașului selectat se încarcă la vizualizarea atlasului. PR #30 a livrat Dimineața mea și Mod TV, fără a schimba playerul ESPN. PR #31 a livrat primul lot NBA pentru statisticile aruncărilor și profiluri de jucători. Lotul NFL este în lucru pe branch-ul stage-32; starea și sursele sunt în `docs/STATISTICI-NFL.md`.
 
 ## Plan pe etape
 

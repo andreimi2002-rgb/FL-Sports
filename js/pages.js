@@ -23,12 +23,12 @@ import { trackView, trackEvent } from './track.js';
 // history entry, so the phone's Back button closes it; the × closes the whole chain at once.
 export const OV = { focus: null, game: null, place: null };   // what the overlay shows
 const PLAYER_CACHE = new Map();
-async function openPlayer(id, other, keep) {
+async function openPlayer(league, id, other, keep) {
  OV.game=null; OV.place=null;
  const wanted=location.hash;
- const get=async k=>{const hit=PLAYER_CACHE.get(k);if(hit&&Date.now()-hit.at<600000)return hit.data;const data=await getJSON('/api/player?id='+k,15000);PLAYER_CACHE.set(k,{data,at:Date.now()});return data;};
- show('<div class="band plain"><h2 id="prof-name">Profil jucător NBA</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody"><p role="status">Se încarcă profilul…</p></div>',keep);
- try {const [p,c]=await Promise.all([get(id),other?get(other).catch(()=>null):null]);if(location.hash!==wanted)return;const options=[...new Map([...SUMMARY.values()].filter(s=>s.l==='NBA').flatMap(s=>(s.box||[]).flatMap(b=>b.groups.flatMap(g=>g.rows.map(r=>({id:r.id,name:r.n}))))).filter(r=>/^\d+$/.test(r.id||'')).map(r=>[r.id,r])).values()];for(const [k,x] of TEAMX)if(TEAMS[k]?.l==='NBA')for(const group of x.roster||[])for(const a of group.players||[])if(/^\d+$/.test(a.id||'')&&!options.some(o=>o.id===a.id))options.push({id:a.id,name:a.n});show(playerHtml(p,options,c,SPOIL.on),true);}catch{if(location.hash===wanted)show('<div class="band plain"><h2 id="prof-name">Profil indisponibil</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody">Datele nu au putut fi încărcate. Revino la meci și reîncearcă.</div>',true);}
+ const get=async k=>{const key=league+':'+k,hit=PLAYER_CACHE.get(key);if(hit&&Date.now()-hit.at<600000)return hit.data;const data=await getJSON('/api/player?league='+league+'&id='+k,15000);PLAYER_CACHE.set(key,{data,at:Date.now()});return data;};
+ show(`<div class="band plain"><h2 id="prof-name">Profil jucător ${league}</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody"><p role="status">Se încarcă profilul…</p></div>`,keep);
+ try {const [p,c]=await Promise.all([get(id),other?get(other).catch(()=>null):null]);if(location.hash!==wanted)return;const options=[...new Map([...SUMMARY.values()].filter(s=>s.l===league).flatMap(s=>(s.box||[]).flatMap(b=>b.groups.flatMap(g=>g.rows.map(r=>({id:r.id,name:r.n}))))).filter(r=>/^\d+$/.test(r.id||'')).map(r=>[r.id,r])).values()];for(const [k,x] of TEAMX)if(TEAMS[k]?.l===league)for(const group of x.roster||[])for(const a of group.players||[])if(/^\d+$/.test(a.id||'')&&!options.some(o=>o.id===a.id))options.push({id:a.id,name:a.n});show(playerHtml(p,options,c,SPOIL.on),true);}catch{if(location.hash===wanted)show('<div class="band plain"><h2 id="prof-name">Profil indisponibil</h2><button class="x" id="prof-x" type="button" aria-label="Închide">×</button></div><div class="pbody">Datele nu au putut fi încărcate. Revino la meci și reîncearcă.</div>',true);}
 }
 export const gameView = { tab: 'rezumat', side: '' };
 export function show(html, keep) {
@@ -63,7 +63,7 @@ export function openPrivacy(keep) {
     <div class="pbody">
       <p class="lead">Echipele, tema, preferințele și datele pentru folosirea offline rămân în acest browser. Aplicația nu trimite statistici de utilizare sau mesaje de feedback.</p>
       <section><h3>Notificări și calendar</h3><p>Dacă activezi notificările, Netlify păstrează abonamentul browserului și echipele alese; serviciul push al browserului livrează mesajele. Le poți opri din pagina Notificări. Calendarul primește echipele din adresa la care te abonezi.</p></section>
-      <section><h3>Surse</h3><p>Datele sportive vin de la ESPN, vremea de la Open-Meteo, iar imaginile de la ESPN și Wikimedia. Cererile către aceste servicii și Netlify urmează regulile lor. Logo-urile aparțin echipelor; această ediție este pentru uz personal.</p></section>
+      <section><h3>Surse</h3><p>Datele sportive vin de la ESPN și, pentru metricile NFL, nflverse; vremea vine de la Open-Meteo, iar imaginile de la ESPN și Wikimedia. Cererile către aceste servicii și Netlify urmează regulile lor. Logo-urile aparțin echipelor; această ediție este pentru uz personal.</p></section>
     </div>`, keep);
 }
 export function go(hash) {
@@ -76,7 +76,7 @@ export function route(keep) {
   if (!keep) trackView();
   const h = decodeURIComponent(location.hash.slice(1)).split('/');
   if (h[0] === 'dimineata') { hideOv(); setView('morning'); return; }
-  if (h[0] === 'jucator' && h[1] === 'NBA' && /^\d{1,12}$/.test(h[2] || '')) { openPlayer(h[2], /^\d{1,12}$/.test(h[3] || '') ? h[3] : null, keep); return; }
+  if (h[0] === 'jucator' && ['NBA', 'NFL'].includes(h[1]) && /^\d{1,12}$/.test(h[2] || '')) { openPlayer(h[1], h[2], /^\d{1,12}$/.test(h[3] || '') ? h[3] : null, keep); return; }
   if (h[0] === 'confidentialitate') { openPrivacy(keep); return; }
   if (h[0] === 'meci' && gameById(h[2])) { const t = h[3] || 'rezumat'; if (OV.game !== h[2]) { gameView.side = ''; gameView.shotTeam = ''; gameView.shotPlayer = ''; gameView.shotPeriod = ''; } gameView.tab = t; openGame(h[2], keep); return; }
   if (h[0] === 'echipa' && TEAMS[h[1]]) { teamView.tab = ['sezon', 'lot', 'stiri'].includes(h[2]) ? h[2] : 'rezumat'; openTeam(h[1], keep); return; }
