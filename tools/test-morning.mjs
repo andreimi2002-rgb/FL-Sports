@@ -1,5 +1,36 @@
 import assert from 'node:assert/strict';
 import {previousDay,easternDay,validDay,morningGames} from '../js/morning-model.js';
+import {morningRecap,rankMorningGames,prepareMorningQueue} from '../js/morning-video.js';
+import {safeClip} from '../js/espn-video.js';
 assert.equal(previousDay('2026-01-01'),'2025-12-31');assert.equal(previousDay('2024-03-01'),'2024-02-29');assert.equal(easternDay('2026-11-17T02:00:00Z'),'2026-11-16');assert.equal(validDay('2026-02-30'),false);
 const games=[{id:'1',l:'NBA',state:'post',d:new Date(1)},{id:'2',l:'NFL',state:'post',d:new Date(2)},{id:'3',l:'NBA',state:'pre',d:new Date(3)},{id:'4',l:'NHL',state:'in',d:new Date(4)}];
 const chosen=new Set(['NBA','NFL','NHL']),fav=g=>g.id==='2';assert.deepEqual(morningGames(games,chosen,fav).map(g=>g.id),['2','1','4']);assert.deepEqual(morningGames(games,chosen,fav,false).map(g=>g.id),['1','2','4']);assert.equal(morningGames(games,new Set(),fav).length,0);assert.equal(games[0].id,'1');console.log('Morning: US date boundary, leap days, favorite priority preserves other teams, leagues and live/finished selection OK');
+const clip = {headline:'Game Highlights',duration:74,links:{source:{href:'https://espnmedia-cdn.akamaized.net/highlights.mp4'}}};
+const requests=[];
+const direct=await morningRecap({l:'NBA',id:'1'},async url=>{requests.push(url);return {videos:[clip]};});
+assert.equal(direct.dur,74);assert.equal(requests.length,1);assert.match(requests[0],/^https:\/\/site\.api\.espn\.com\//);
+const paths=[];
+const fromNews=await morningRecap({l:'NHL',id:'2'},async url=>{
+  paths.push(url);
+  if(url.includes('/summary?'))return {videos:[]};
+  if(url.includes('/news?'))return {articles:[{type:'Media',id:'42',headline:'Full Highlights'}]};
+  return {videos:[clip]};
+});
+assert.equal(fromNews.mp4,clip.links.source.href);assert.equal(paths.length,3);assert.match(paths[2],/^https:\/\/content\.core\.api\.espn\.com\//);
+assert.equal(safeClip({mp4:'https://attackerespn.com/a.mp4'}),false);
+assert.equal(await morningRecap({l:'NFL',id:'3'},async url=>url.includes('/summary?')?{videos:[]}:{articles:[]}),null);
+await assert.rejects(morningRecap({l:'NBA',id:'1'},async()=>{throw new Error('offline');}),/offline/);
+const ranked=rankMorningGames([{...games[0]},{...games[1]},{...games[3]},{id:'5',l:'NBA',state:'post',d:new Date(5)}],fav,g=>Number(g.id));
+assert.deepEqual(ranked.map(g=>g.id),['2','5','1'],'one favorite and one other game precede the rest; live excluded');
+const candidates=[{id:'a'},{id:'b'},{id:'c'},{id:'d'}], seen=[];
+const result=await prepareMorningQueue(candidates,900,async g=>{
+  seen.push(g.id);
+  if(g.id==='c')throw new Error('unavailable');
+  return g.id==='a'?{dur:600}:g.id==='b'?{dur:400}:{dur:300};
+});
+assert.deepEqual(result.queue.map(x=>x.game.id),['a','d']);
+assert.deepEqual(result.unavailable.map(g=>g.id),['b']);
+assert.deepEqual(result.errors.map(g=>g.id),['c']);
+assert.equal(result.seconds,900);assert.equal(result.checked,4);assert.deepEqual(seen,['a','b','c','d']);
+assert.equal(await prepareMorningQueue(candidates,900,async()=>({dur:1}),()=>{},()=>false),null);
+console.log('Morning video: direct ESPN, recap fallback, trusted hosts, ranking, budget and errors OK');

@@ -8,7 +8,7 @@ import { registerSW, onInstallChange, install, downloadGame, APP_VERSION, checkU
 import { seasonHover } from './teamx.js';
 import { N, setNotifyRender, enableNotify, saveNotify, testNotify, disableNotify } from './notify.js';
 import { PLACES, loadPlaces, climateHover, AMERICA, loadAmerica } from './places.js';
-import { CACHE_KEY, DATA, GAMES, addDays, awake, build, gameById, getJSON, isLive, parts, played, state, store, weekStart, CLUB_RAW, addClubGames, refreshMineGames, noteLive, SPOIL, setNoSpoil, revealGame } from './core.js';
+import { CACHE_KEY, DATA, GAMES, addDays, awake, build, gameById, getJSON, isLive, parts, played, state, store, weekStart, CLUB_RAW, addClubGames, refreshMineGames, noteLive } from './core.js';
 import { PLAYOFFS, PO, minePick, WELCOME, renderWelcomeList, render, renderHero, renderMap, renderMine, renderPhone, renderPlayoffs, renderSources, renderStatic, renderStatus, setupAtlasWeather } from './home.js';
 import { OV, cal, closeOv, clubSide, clubView, gameView, go, loadGame, notifyOpen, openCalendar, openClub, openTeam, pickerClubs, refreshGame, route, saveCal, setTeamTab, share, openNotify } from './pages.js';
 import { LG, navView, renderLeagues, renderTodayStrip, setLgHash, setupJump, usKey } from './views.js';
@@ -40,19 +40,6 @@ function rerenderAll() {
 }
 applyTheme();
 onSystemTheme(() => { applyTheme(); rerenderAll(); });
-
-/* ----- "Fără spoilere": scores covered until tapped ----- */
-const paintSpoil = () => document.querySelectorAll('[data-nospoil]').forEach(b => { b.setAttribute('aria-pressed', SPOIL.on); b.title = SPOIL.on ? 'Fără spoilere: pornit. Scorurile sunt ascunse până apeși pe ele' : 'Fără spoilere: ascunde scorurile până apeși pe ele'; });
-setNoSpoil(SPOIL.on); paintSpoil();
-// Before any other click handler: a tap on a covered score shows that game, instead of opening it.
-window.addEventListener('click', e => {
-  if (e.target.closest?.('[data-nospoil]')) { setNoSpoil(!SPOIL.on); paintSpoil(); renderMorning(); return; }
-  if (!SPOIL.on) return;
-  const c = e.target.closest?.('[data-spshow], .sp:not(.open), .spbody:not(.open)');
-  if (!c) return;
-  e.preventDefault(); e.stopPropagation();
-  revealGame(c.dataset.spshow || c.dataset.sp);
-}, true);
 
 /* ================= events ================= */
 function setTz(z) { state.tz = z; state.day = null; state.week = null; state.month = null; store.set('flgames-tz', z); render(); }
@@ -130,7 +117,6 @@ function handle(e) {
     if (el.dataset.lgto) LG.tab = el.dataset.lgto;
     if (el.dataset.lgguide && LEAGUES[el.dataset.lgguide]) LG.chosen = new Set([el.dataset.lgguide]);
     if (el.dataset.goview === 'ligi') navView('#ligi' + (LG.tab !== 'scoruri' ? '/' + LG.tab : ''));
-    else if (el.dataset.goview === 'morning') navView('#dimineata');
     else navView('');
     return;
   }

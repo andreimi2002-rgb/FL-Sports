@@ -1,4 +1,6 @@
 import {nbaShots} from './nba-shots.mjs';
+import { clip, safeClip, RECAP, recapInNews } from '../../js/espn-video.js';
+export { RECAP, recapInNews } from '../../js/espn-video.js';
 // Reads ESPN's public JSON endpoints (free, no key) and turns them into the small format the page uses.
 // ESPN's site API is unofficial: every reader below is defensive and returns partial data instead of throwing.
 import { LEAGUES, ALL_TEAMS, PACKS, norm } from '../../js/teams.js';
@@ -297,23 +299,12 @@ function lastFive(j, sideOf) {
 }
 
 // Highlight clips: only ESPN's own media hosts, so the page never embeds anything else.
-const MEDIA = /^https:\/\/[a-z0-9.-]*(espncdn\.com|espn\.com|akamaized\.net)\//i;
-const clip = v => ({
-  title: v.headline || '', dur: num(v.duration),
-  mp4: v.links?.source?.HD?.href || v.links?.source?.href || '', thumb: v.thumbnail || ''
-});
-const safeClip = v => MEDIA.test(v.mp4) && (!v.thumb || MEDIA.test(v.thumb));
 function videos(j) {
   return (j.videos || []).map(clip).filter(safeClip);
 }
 
 // The official recap of a finished game ("Game Highlights", one to three minutes). ESPN puts it among the
 // game's clips (NBA) or only in the news filed under the game (NHL, MLS), where the clip page has the file.
-export const RECAP = /game highlights|full highlights?|condensed game|extended highlights/i;
-export function recapInNews(j) {
-  return (j?.articles || []).find(a => a.type === 'Media' && a.id &&
-    (RECAP.test(a.headline || '') || (a.categories || []).some(c => /full highlight/i.test(c.description || '')))) || null;
-}
 export async function recapVideo(l, id, clips = []) {
   const own = clips.find(v => RECAP.test(v.title));
   if (own) return own;

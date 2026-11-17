@@ -93,17 +93,10 @@ export function panelHtml(g, s, view) {
 }
 
 /* ================= summary ================= */
-// YouTube search for the NFL's own recap ("Bengals vs. Falcons Game Highlights | NFL 2026 Season Week 10").
-export function nflRecapUrl(g) {
-  const nick = n => String(n || '').split(' ').pop();
-  const y = g.d.getUTCFullYear(), season = g.d.getUTCMonth() < 2 ? y - 1 : y;
-  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`${nick(g.a)} vs. ${nick(g.h)} game highlights NFL ${season}`);
-}
-// Any league: the official highlights on YouTube ("Cavaliers at Knicks | Full Game Highlights | November 12, 2026").
 const usDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'long', day: 'numeric', year: 'numeric' });
 export function recapUrl(g) {
-  if (g.l === 'NFL') return nflRecapUrl(g);
-  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(`${nick(g.a)} vs ${nick(g.h)} highlights ${g.l} ${usDate.format(g.d)}`);
+  const query = `${g.a} vs ${g.h} ${g.l} ${usDate.format(g.d)} extended highlights full game recap 5-10 minutes`;
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
 }
 function summaryHtml(g, s, known) {
   if (!s) return '';
@@ -127,8 +120,7 @@ function summaryHtml(g, s, known) {
   const single = played(g) && !s.recap && s.videos?.length > 1;
   const vids = single ? [s.videos.slice().sort((a, b) => (b.dur || 0) - (a.dur || 0))[0]] : s.videos || [];
   if (vids.length) html += `<section><h3>${s.recap ? 'Rezumatul meciului' : played(g) ? 'Faza meciului' : 'Faze video'}</h3><div class="vids${s.recap || single ? ' one' : ''}">${vids.map(v => `<figure><video controls preload="none" playsinline src="${esc(v.mp4)}"${v.thumb ? ` poster="${esc(v.thumb)}"` : ''}></video><figcaption>${esc(v.title)}${v.dur ? ` <span>· ${Math.floor(v.dur / 60)}:${String(v.dur % 60).padStart(2, '0')}</span>` : ''}</figcaption></figure>`).join('')}</div><div class="fn">Clipuri ESPN, în engleză.${played(g) && !s.recap && g.l !== 'NFL' ? ' Rezumatul oficial (1–3 minute) apare când îl publică ESPN, uneori la câteva ore după final, și ia locul acestei faze.' : ''}</div></section>`;
-  // NFL: ESPN has no video rights; the league's own recap is on YouTube.
-  if (played(g) && (g.l === 'NFL' && !s.videos?.length)) html += `<section><h3>Rezumatul meciului</h3><a class="ytbtn" href="${esc(recapUrl(g))}" target="_blank" rel="noopener"><span aria-hidden="true">▶</span> Rezumatul pe YouTube</a><div class="fn">Video oficial ${g.l}, se deschide pe YouTube.${g.l === 'NFL' ? ' ESPN nu are drepturi video pentru NFL.' : ''}</div></section>`;
+  if (played(g)) html += `<section><h3>Rezumat extins (aprox. 5–10 min)</h3><a class="ytbtn" href="${esc(recapUrl(g))}" target="_blank" rel="noopener"><span aria-hidden="true">▶</span> Caută pe YouTube</a><div class="fn">Căutare orientată spre un rezumat extins pentru acest meci. Durata și canalul clipului depind de rezultatele YouTube și nu sunt garantate.</div></section>`;
   // The written recap: its first paragraphs and original ESPN link.
   if (s.article && played(g)) html += `<section><h3>Cronica meciului</h3><div class="recap" lang="en"><b>${esc(s.article.title)}</b>${s.article.text.map(p => `<p>${esc(p)}</p>`).join('')}</div><div class="fn">Text ESPN, în engleză.${s.article.url ? ` <a href="${esc(s.article.url)}" target="_blank" rel="noopener">Citește tot pe ESPN ›</a>` : ''}</div></section>`;
   if (s.series?.games?.length) html += seriesHtml(g, s, known);

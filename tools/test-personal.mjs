@@ -12,14 +12,26 @@ globalThis.caches = { keys: async()=>['shell-v31','shell-v9999','api-v31','img-v
 globalThis.fetch = async(url,opts)=>{requests++;assert.equal(url,'/sw.js');assert.equal(opts.cache,'no-store');return new Response(`const VERSION = '${version}';`);};
 const {PACK,STORE,okImg} = await import('../js/teams.js');
 const {emb} = await import('../js/ui.js');
-const {panelHtml} = await import('../js/game.js');
+const {panelHtml,recapUrl} = await import('../js/game.js');
 const phone = await import('../js/phone.js');
 assert.equal(PACK,'fl');assert.equal(STORE,true);
 assert.equal(okImg('https://a.espncdn.com/photo.jpg'),true);
 assert.match(emb({name:'Miami Heat',logo:'https://a.espncdn.com/heat.png'}),/<img /);
-const g = {state:'post',l:'NBA',h:'Miami Heat',a:'Boston Celtics',H:{name:'Miami Heat'},A:{name:'Boston Celtics'}};
+const g = {state:'post',l:'NBA',h:'Miami Heat',a:'Boston Celtics',d:new Date('2026-11-16T01:00:00Z'),H:{name:'Miami Heat'},A:{name:'Boston Celtics'}};
 const html = panelHtml(g,{home:{lines:[]},away:{lines:[]},videos:[{mp4:'https://espn.com/short.mp4',dur:10},{mp4:'https://espn.com/long.mp4',dur:50}],article:{title:'Cronica',text:['Textul complet'],url:'https://espn.com/a'}},{tab:'rezumat'});
 assert.match(html,/long.mp4/);assert.doesNotMatch(html,/short.mp4/);assert.match(html,/Textul complet/);
+assert.match(html,/Rezumat extins \(aprox\. 5–10 min\)/);
+assert.match(html,/Durata și canalul clipului depind de rezultatele YouTube și nu sunt garantate/);
+for (const league of ['NBA','NHL','NFL','MLS','MLB']) {
+  const query = new URL(recapUrl({...g,l:league})).searchParams.get('search_query');
+  assert.match(query,/extended highlights/);
+  assert.match(query,/5-10 minutes/);
+  assert.match(query,new RegExp(league));
+}
+const nflHtml = panelHtml({...g,l:'NFL'},{home:{lines:[]},away:{lines:[]},videos:[]},{tab:'rezumat'});
+assert.equal((nflHtml.match(/youtube\.com\/results/g)||[]).length,1,'NFL has one extended-search link');
+const upcomingHtml = panelHtml({...g,state:'pre'},{home:{lines:[]},away:{lines:[]},videos:[]},{tab:'rezumat'});
+assert.doesNotMatch(upcomingHtml,/youtube\.com\/results/,'upcoming games have no recap-search link');
 version=phone.APP_VERSION;
 assert.equal(await phone.checkUpdate(true),version);assert.equal(reloads,0);
 assert.equal(await phone.checkUpdate(false),'');assert.equal(requests,1,'checks are throttled');
