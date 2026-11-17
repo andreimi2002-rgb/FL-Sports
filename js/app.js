@@ -179,7 +179,7 @@ function handle(e) {
     return;
   }
   if ((el = q('[data-only]'))) { resetFilters(); state.team = el.dataset.only; state.day = null; closeOv(); render(); $('cal').scrollIntoView({ block: 'start' }); return; }
-  if ((el = q('button[data-player]'))) { go('#jucator/NBA/' + el.dataset.player); return; }
+  if ((el = q('button[data-player]'))) { go('#jucator/' + (el.dataset.league || 'NBA') + '/' + el.dataset.player); return; }
   if ((el = q('[data-game]'))) { const g = gameById(el.dataset.game); if (g) { gameView.tab = 'rezumat'; gameView.side = ''; go(gameHash(g)); } return; }
   if ((el = q('[data-team]'))) { go('#echipa/' + el.dataset.team); return; }
   if ((el = q('[data-city]'))) { go('#oras/' + el.dataset.city); return; }
@@ -207,7 +207,7 @@ document.addEventListener('click', handle);
 // Calendar page: ticking a team or choosing a reminder rebuilds the links at once.
 document.addEventListener('change', e => {
   const t = e.target;
-  if(t.id==='player-compare'&&t.value){go('#jucator/NBA/'+t.dataset.player+'/'+t.value);return;}
+  if(t.id==='player-compare'&&t.value){go('#jucator/'+(t.dataset.league||'NBA')+'/'+t.dataset.player+'/'+t.value);return;}
   if(t.matches('[data-shot-filter]')){const key=t.dataset.shotFilter;if(['shotTeam','shotPlayer','shotPeriod'].includes(key))gameView[key]=t.value;const g=gameById(OV.game);if(g)refreshGame(g);document.querySelector(`[data-shot-filter="${key}"]`)?.focus({preventScroll:true});return;}
   // Notifications page: choices change in place; "Salvează" sends them.
   if (t.dataset?.ntfteam || t.id === 'ntflead' || t.id === 'ntffinal' || t.id === 'ntfmorning' || t.id === 'ntfnight' || t.id === 'ntfweekly') {

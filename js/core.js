@@ -10,8 +10,8 @@ export const store = {
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage full or blocked */ } },
   del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } }
 };
-export async function getJSON(url, ms = 12000) {
-  const r = await fetch(url, { signal: AbortSignal.timeout(ms) });
+export async function getJSON(url, ms = 12000, options = {}) {
+  const r = await fetch(url, { ...options, signal: AbortSignal.timeout(ms) });
   if (!r.ok) throw new Error(r.status + ' ' + url);
   return r.json();
 }

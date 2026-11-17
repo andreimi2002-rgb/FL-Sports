@@ -186,7 +186,7 @@ function boxPlayers(j, sideOf) {
     const rows = (r.roster || []).filter(p => p.starter || p.subbedIn).map(p => {
       const s = Object.fromEntries((p.stats || []).map(x => [x.name, String(x.displayValue ?? x.value ?? '')]));
       return {
-        n: athleteName(p.athlete), pos: p.position?.abbreviation || '', j: p.jersey || '',
+        id: String(p.athlete?.id || ''), n: athleteName(p.athlete), pos: p.position?.abbreviation || '', j: p.jersey || '',
         st: !!p.starter, sub: !!p.subbedIn, out: !!p.subbedOut, v: SOCCER_KEYS.map(k => s[k] ?? '')
       };
     }).filter(x => x.n);
@@ -492,8 +492,8 @@ const CORE_PATH = { NBA: 'basketball/leagues/nba', NHL: 'hockey/leagues/nhl', NF
 // The categories worth showing, in order, per league (ESPN has many more).
 export const LEADER_CATS = {
   NBA: ['pointsPerGame', 'reboundsPerGame', 'assistsPerGame', 'stealsPerGame', 'blocksPerGame'],
-  NHL: ['points', 'goals', 'assists', 'plusMinus', 'savePct', 'wins'],
-  NFL: ['passingYards', 'rushingYards', 'receivingYards', 'totalTackles', 'sacks', 'interceptions'],
+  NHL: ['points', 'goals', 'assists', 'savePct', 'wins'],
+  NFL: ['passingYards', 'rushingYards', 'receivingYards'],
   MLS: ['goals', 'assists', 'totalShots', 'saves'],
   MLB: ['avg', 'homeRuns', 'RBIs', 'ERA', 'strikeouts']
 };
@@ -534,6 +534,52 @@ export function normalizeLeaders(j, l, roster) {
     return p ? { cat: name, label: c.displayName || name, val: top.displayValue || '', who: p.n, id, head: p.head, pos: p.pos } : null;
   }).filter(Boolean);
 }
+export function normalizeNflTeamStats(j) {
+  const categories = j?.results?.stats?.categories || [];
+  const find = (category, name) => categories.find(c => c.name === category)?.stats?.find(s => s.name === name);
+  const rawSacksPerGame = find('defensive', 'sacks')?.perGameDisplayValue;
+  const sacksNumber = Number(rawSacksPerGame);
+  const sacksPerGame = rawSacksPerGame == null ? null : Number.isFinite(sacksNumber) ? sacksNumber.toFixed(1) : rawSacksPerGame;
+  const metrics = [
+    ['Puncte pe meci', find('scoring', 'totalPointsPerGame')?.displayValue],
+    ['Yarzi din pase pe meci', find('passing', 'netPassingYardsPerGame')?.displayValue],
+    ['Yarzi din alergare pe meci', find('rushing', 'rushingYardsPerGame')?.displayValue],
+    ['Sack-uri pe meci', sacksPerGame == null ? null : Number(sacksPerGame).toFixed(1)],
+    ['Interceptări în sezon', find('defensiveInterceptions', 'interceptions')?.displayValue]
+  ];
+  return metrics.filter(([, value]) => value != null && value !== '').map(([label, value]) => ({ label, value }));
+}
+export function normalizeNhlTeamStats(j) {
+  const categories = j?.results?.stats?.categories || [];
+  const find = (category, name) => categories.find(c => c.name === category)?.stats?.find(s => s.name === name);
+  const metrics = [
+    ['Goluri marcate / meci', find('offensive', 'goals')?.perGameDisplayValue],
+    ['Goluri primite / meci', find('defensive', 'avgGoalsAgainst')?.displayValue],
+    ['Șuturi / meci', find('offensive', 'shotsTotal')?.perGameDisplayValue],
+    ['Șuturi primite / meci', find('defensive', 'shotsAgainst')?.perGameDisplayValue],
+    ['Angajamente câștigate (%)', find('offensive', 'faceoffPercent')?.displayValue]
+  ];
+  return metrics.filter(([, value]) => value != null && value !== '').map(([label, value]) => ({ label, value }));
+}
+export function normalizeMlsTeamStats(j) {
+  const categories = j?.splits?.categories || [];
+  const find = (category, name) => categories.find(c => c.name === category)?.stats?.find(s => s.name === name);
+  const games = Number(find('general', 'appearances')?.value);
+  const perGame = (category, average, total) => {
+    const avg = find(category, average);
+    if (avg?.displayValue != null) return avg.displayValue;
+    const count = Number(find(category, total)?.value);
+    return games > 0 && Number.isFinite(count) ? String(Number((count / games).toFixed(2))) : null;
+  };
+  const metrics = [
+    ['Goluri marcate / meci', perGame('offensive', 'avgGoals', 'totalGoals')],
+    ['Goluri primite / meci', perGame('goalKeeping', 'avgGoalsConceded', 'goalsConceded')],
+    ['Șuturi / meci', perGame('offensive', '', 'totalShots')],
+    ['Șuturi pe poartă / meci', perGame('offensive', '', 'shotsOnTarget')],
+    ['Posesie medie (%)', find('offensive', 'possessionPct')?.displayValue]
+  ];
+  return metrics.filter(([, value]) => value != null && value !== '').map(([label, value]) => ({ label, value }));
+}
 export async function teamExtras(l, id) {
   const base = `${SITE}${LEAGUES[l].path}`;
   const [rosterJ, newsJ, teamJ] = await Promise.all([
@@ -547,17 +593,24 @@ export async function teamExtras(l, id) {
   const year = ev?.season?.year || new Date().getFullYear();
   let leaders = [];
   let coach = null;
-  const [leadersJ, coachesJ] = await Promise.all([
+  const teamStatsUrl = l === 'MLS'
+    ? `${CORE_API}${CORE_PATH[l]}/seasons/${year}/types/0/teams/${id}/statistics`
+    : ['NFL', 'NHL'].includes(l) ? `${base}/teams/${id}/statistics?season=${year}&seasontype=2` : '';
+  const [leadersJ, coachesJ, teamStatsJ] = await Promise.all([
     getJSON(`${CORE_API}${CORE_PATH[l]}/seasons/${year}/types/2/teams/${id}/leaders`, 8000).catch(() => null),
-    getJSON(`${CORE_API}${CORE_PATH[l]}/seasons/${year}/teams/${id}/coaches`, 8000).catch(() => null)
+    getJSON(`${CORE_API}${CORE_PATH[l]}/seasons/${year}/teams/${id}/coaches`, 8000).catch(() => null),
+    teamStatsUrl ? getJSON(teamStatsUrl, 8000).catch(() => null) : Promise.resolve(null)
   ]);
   try { if (leadersJ) leaders = normalizeLeaders(leadersJ, l, roster); } catch (e) { /* leaders are optional */ }
+  const stats = l === 'NFL' ? normalizeNflTeamStats(teamStatsJ)
+    : l === 'NHL' ? normalizeNhlTeamStats(teamStatsJ)
+      : l === 'MLS' ? normalizeMlsTeamStats(teamStatsJ) : [];
   // The head coach: the first coach of the season (ESPN lists only the head coach there; none for MLS).
   try {
     const ref = coachesJ?.items?.[0]?.$ref;
     if (ref) { const p = await getJSON(ref.replace(/^http:/, 'https:'), 6000); const n = [p.firstName, p.lastName].filter(Boolean).join(' '); if (n) coach = n; }
   } catch (e) { /* the coach is optional */ }
-  return { l, id: String(id), season: year, roster, leaders, coach, news: normalizeNews(newsJ) };
+  return { l, id: String(id), season: year, roster, leaders, stats, coach, news: normalizeNews(newsJ) };
 }
 
 export function json(body, { browser = 60, cdn = 300, swr = 86400, status = 200 } = {}) {

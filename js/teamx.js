@@ -77,6 +77,11 @@ export function leadersHtml(x) {
   if (!x?.leaders?.length) return '';
   return `<section><h3>Liderii echipei în sezon</h3><div class="tleaders">${x.leaders.map(p => `<div class="tlead">${p.head && okImg(p.head) ? `<img src="${esc(p.head)}" alt="" loading="lazy">` : '<span class="ph"></span>'}<span><small>${esc(LEAD_RO[p.cat] || p.label)}</small><b>${esc(p.who)}</b></span><span class="v">${esc(roNum(p.val))}</span></div>`).join('')}</div></section>`;
 }
+export function teamBasicStatsHtml(x, loading = false) {
+  if (!x) return `<section><h3>Statistici de bază</h3><p class="fn">${loading ? 'Se încarcă statisticile echipei…' : 'Statisticile echipei nu sunt disponibile acum.'}</p></section>`;
+  if (!x.stats?.length) return '<section><h3>Statistici de bază</h3><p class="fn">Statisticile echipei nu sunt disponibile acum.</p></section>';
+  return `<section><h3>Statistici de bază · ${esc(x.season)}</h3><div class="stats">${x.stats.map(s => `<div class="stat"><div class="v">${esc(roNum(s.value))}</div><div class="l">${esc(s.label)}</div></div>`).join('')}</div></section>`;
+}
 
 /* ---------- roster ---------- */
 const GROUP_RO = {
@@ -97,7 +102,7 @@ export function rosterHtml(x, l) {
     const rest = all.filter(q => !groups.some(g => g.players.includes(q)));
     if (rest.length) groups.push({ name: 'Alții', players: rest });
   }
-  return groups.map((g, gi) => `<details class="rgrp" ${gi < 2 ? 'open' : ''}><summary>${esc(GROUP_RO[g.name] || g.name || 'Jucători')} <span>${g.players.length}</span></summary><div class="rlist">${g.players.slice().sort((a, b) => (+a.j || 99) - (+b.j || 99)).map(p => `<div class="rp">${p.head && okImg(p.head) ? `<img src="${esc(p.head)}" alt="" loading="lazy">` : '<span class="ph"></span>'}<span>${l === 'NBA' && /^\d+$/.test(p.id || '') ? `<button class="linkish" type="button" data-player="${p.id}">${esc(p.n)}</button>` : `<b>${esc(p.n)}</b>`}<small>${[p.j ? '#' + esc(p.j) : '', esc(p.pos), p.age ? p.age + ' ani' : '', p.cm ? p.cm + ' cm' : '', p.born ? esc(p.born) : ''].filter(Boolean).join(' · ')}</small></span>${p.out ? '<span class="tag out">indisponibil</span>' : ''}</div>`).join('')}</div></details>`).join('')
+  return groups.map((g, gi) => `<details class="rgrp" ${gi < 2 ? 'open' : ''}><summary>${esc(GROUP_RO[g.name] || g.name || 'Jucători')} <span>${g.players.length}</span></summary><div class="rlist">${g.players.slice().sort((a, b) => (+a.j || 99) - (+b.j || 99)).map(p => `<div class="rp">${p.head && okImg(p.head) ? `<img src="${esc(p.head)}" alt="" loading="lazy">` : '<span class="ph"></span>'}<span>${['NBA', 'NFL', 'NHL', 'MLS'].includes(l) && /^\d+$/.test(p.id || '') ? `<button class="linkish" type="button" data-player="${p.id}" data-league="${l}">${esc(p.n)}</button>` : `<b>${esc(p.n)}</b>`}<small>${[p.j ? '#' + esc(p.j) : '', esc(p.pos), p.age ? p.age + ' ani' : '', p.cm ? p.cm + ' cm' : '', p.born ? esc(p.born) : ''].filter(Boolean).join(' · ')}</small></span>${p.out ? '<span class="tag out">indisponibil</span>' : ''}</div>`).join('')}</div></details>`).join('')
     + '<div class="fn">Lotul vine de la ESPN; înălțimea e convertită în centimetri.</div>';
 }
 

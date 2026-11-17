@@ -1,9 +1,265 @@
-import {json}from '../lib/espn.mjs';
-const get=async url=>{const r=await fetch(url,{signal:AbortSignal.timeout(10000)});if(!r.ok)throw Error('HTTP '+r.status);return r.json();};
-export default async req=>{if(req.method!=='GET')return new Response(null,{status:405});const id=new URL(req.url).searchParams.get('id');if(!/^\d{1,12}$/.test(id||''))return json({error:'ID invalid'},{status:400,browser:0,cdn:0});const base='https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/'+id;const [bio,overview,stats]=await Promise.allSettled([get(base),get(base+'/overview'),get(base+'/stats')]);if(bio.status!=='fulfilled'||!bio.value.athlete?.displayName)return json({error:'Profil indisponibil'},{status:502,browser:0,cdn:30});const a=bio.value.athlete,o=overview.status==='fulfilled'?overview.value:{},st=stats.status==='fulfilled'?stats.value:{};
- const feet=/^(\d+)'\s*(\d+)/.exec(a.displayHeight||'');const height=typeof a.height==='number'?Math.round(a.height*2.54):feet?Math.round((+feet[1]*12 + +feet[2])*2.54):null;
- const pounds=/([\d.]+)\s*lbs/i.exec(a.displayWeight||'');const weight=typeof a.weight==='number'?Math.round(a.weight*.453592):pounds?Math.round(+pounds[1]*.453592):null;
- const table=t=>t?{names:t.names||[],rows:(t.splits||[]).map(r=>({label:r.displayName==='Career'?'Carieră':r.displayName==='Regular Season'?'Sezon regulat':r.displayName,stats:r.stats||[]}))}:null;
- const career=st.categories?.find(c=>c.name==='averages');const recent=o.gameLog?.statistics?.[0];
- return json({id,name:a.displayName,position:a.position?.abbreviation||'',age:a.age,height,weight,team:a.team?.displayName||'',head:a.headshot?.href||'',summary:table(o.statistics),seasons:career?{names:career.names||[],rows:(career.statistics||[]).map(r=>({label:r.season?.displayName||'',team:r.teamSlug||'',stats:r.stats||[]}))}:null,recent:recent?{names:recent.names||[],rows:(recent.events||[]).slice(0,10).map(r=>{const e=o.gameLog.events?.[r.eventId];return {id:r.eventId,date:e?.gameDate,opponent:e?.opponent?.displayName||'',stats:r.stats||[]};})}:null,partial:overview.status!=='fulfilled'||stats.status!=='fulfilled'},{browser:300,cdn:3600});};
-export const config={path:'/api/player'};
+import { json } from '../lib/espn.mjs';
+import { nflversePlayerMetrics } from '../lib/nflverse.mjs';
+
+const SPORTS = {
+  NBA: 'basketball/nba',
+  NHL: 'hockey/nhl',
+  NFL: 'football/nfl',
+  MLS: 'soccer/usa.1'
+};
+
+async function get(url) {
+  const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json();
+}
+
+function playerTable(table) {
+  return table ? {
+    names: table.names || [],
+    labels: table.labels || [],
+    displayNames: table.displayNames || [],
+    categories: table.categories || [],
+    rows: (table.splits || []).map(row => ({
+      label: row.displayName === 'Career' ? 'Carieră' : row.displayName === 'Regular Season' ? 'Sezon regulat' : row.displayName,
+      stats: row.stats || []
+    }))
+  } : null;
+}
+
+function nflSeasons(stats) {
+  return (stats.categories || []).map(category => ({
+    key: category.name || '',
+    name: category.displayName || category.name || '',
+    names: category.names || [],
+    labels: category.labels || [],
+    displayNames: category.displayNames || [],
+    totals: category.totals || [],
+    rows: (category.statistics || []).map(row => ({
+      label: row.season?.displayName || '',
+      team: stats.teams?.[row.teamSlug]?.abbreviation || '',
+      stats: row.stats || []
+    }))
+  })).filter(category => category.rows.length);
+}
+
+function nhlSeasons(stats) {
+  return (stats.categories || []).map(category => ({
+    key: category.name || '',
+    name: category.displayName || category.name || '',
+    names: category.names || [],
+    rows: (category.statistics || []).map(row => ({
+      label: row.season?.displayName || '',
+      team: stats.teams?.[row.teamSlug]?.abbreviation || '',
+      stats: row.stats || []
+    }))
+  })).filter(category => category.rows.length);
+}
+
+function recentGames(overview) {
+  const groups = Array.isArray(overview.gameLog)
+    ? overview.gameLog
+    : overview.gameLog?.statistics || [];
+  const events = Array.isArray(overview.gameLog) ? {} : overview.gameLog?.events || {};
+  const group = groups[0];
+  if (!group) return null;
+  return {
+    names: group.names || [],
+    rows: (group.events || []).slice(0, 5).map(row => {
+      const event = events[row.eventId];
+      return {
+        id: row.eventId,
+        date: event?.gameDate || '',
+        opponent: event?.opponent?.displayName || '',
+        stats: row.stats || []
+      };
+    })
+  };
+}
+
+function nhlEfficiency(stats, position) {
+  if (position === 'G') return null;
+  const category = (stats.categories || []).find(item => item.names?.includes('shootingPct'));
+  if (!category) return null;
+  const rows = (category.statistics || []).slice().sort((a, b) => (b.season?.year || 0) - (a.season?.year || 0));
+  const current = rows[0];
+  if (!current) return null;
+  const metric = (name, label) => {
+    const index = category.names.indexOf(name);
+    const raw = Number(current.stats?.[index]);
+    if (index < 0 || !Number.isFinite(raw)) return null;
+    return { label, value: raw > 1 ? raw / 100 : raw, unit: '%' };
+  };
+  const metrics = [metric('shootingPct', 'Procentaj la șuturi')];
+  if (position === 'C') metrics.push(metric('faceoffPercent', 'Angajamente câștigate'));
+  const available = metrics.filter(Boolean);
+  return available.length ? {
+    season: current.season?.displayName || String(current.season?.year || ''),
+    metrics: available
+  } : null;
+}
+
+function mlsSummary(stats, position, year) {
+  const categories = stats?.splits?.categories || [];
+  const find = (category, name) => categories.find(item => item.name === category)?.stats?.find(item => item.name === name);
+  const keys = position === 'G'
+    ? [['appearances', 'general'], ['cleanSheet', 'goalKeeping'], ['saves', 'goalKeeping'], ['goalsConceded', 'goalKeeping'], ['savePct', 'goalKeeping']]
+    : [['appearances', 'general'], ['totalGoals', 'offensive'], ['goalAssists', 'offensive'], ['totalShots', 'offensive'], ['yellowCards', 'general'], ['redCards', 'general']];
+  const available = keys.map(([name, category]) => [name, find(category, name)]).filter(([, stat]) => stat);
+  if (!available.length) return null;
+  return {
+    names: available.map(([name]) => name),
+    rows: [{
+      label: `${year} MLS`,
+      stats: available.map(([name, stat]) => {
+        if (name === 'savePct') {
+          const value = Number(stat.value);
+          return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : stat.displayValue || '';
+        }
+        return stat.displayValue ?? String(stat.value ?? '');
+      })
+    }]
+  };
+}
+
+function mlsOverviewSummary(statistics, position, year) {
+  const split = statistics?.splits?.find(row => row.leagueSlug === 'usa.1' || row.leagueId === '770');
+  if (!split) return null;
+  const keys = position === 'G'
+    ? ['starts', 'cleanSheet', 'saves', 'goalsConceded']
+    : ['starts', 'totalGoals', 'goalAssists', 'totalShots', 'yellowCards', 'redCards'];
+  const available = keys.filter(name => statistics.names?.includes(name));
+  if (!available.length) return null;
+  return {
+    names: available,
+    rows: [{ label: split.displayName || `${year} MLS`, stats: available.map(name => split.stats[statistics.names.indexOf(name)] ?? '') }]
+  };
+}
+
+export default async function player(req) {
+  if (req.method !== 'GET') return new Response(null, { status: 405 });
+  const params = new URL(req.url).searchParams;
+  const id = params.get('id');
+  const league = (params.get('league') || 'NBA').toUpperCase();
+  const sport = SPORTS[league];
+  if (!sport) return json({ error: 'Ligă invalidă' }, { status: 400, browser: 0, cdn: 0 });
+  if (!/^\d{1,12}$/.test(id || '')) return json({ error: 'ID invalid' }, { status: 400, browser: 0, cdn: 0 });
+
+  const base = `https://site.web.api.espn.com/apis/common/v3/sports/${sport}/athletes/${id}`;
+  const statsUrl = league === 'MLS'
+    ? `https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/seasons/${new Date().getFullYear()}/types/0/athletes/${id}/statistics`
+    : `${base}/stats`;
+  const [bio, overview, stats] = await Promise.allSettled([
+    get(base),
+    get(`${base}/overview`),
+    get(statsUrl)
+  ]);
+  if (bio.status !== 'fulfilled' || !bio.value.athlete?.displayName) {
+    return json({ error: 'Profil indisponibil' }, { status: 502, browser: 0, cdn: 30 });
+  }
+
+  const athlete = bio.value.athlete;
+  const profile = overview.status === 'fulfilled' ? overview.value : {};
+  const seasonStats = stats.status === 'fulfilled' ? stats.value : {};
+  const feet = /^(\d+)'\s*(\d+)/.exec(athlete.displayHeight || '');
+  const height = typeof athlete.height === 'number'
+    ? Math.round(athlete.height * 2.54)
+    : feet ? Math.round((+feet[1] * 12 + +feet[2]) * 2.54) : null;
+  const pounds = /([\d.]+)\s*lbs/i.exec(athlete.displayWeight || '');
+  const weight = typeof athlete.weight === 'number'
+    ? Math.round(athlete.weight * 0.453592)
+    : pounds ? Math.round(+pounds[1] * 0.453592) : null;
+  const seasonNames = (seasonStats.categories || [])
+    .flatMap(category => (category.statistics || []).map(row => Number(row.season?.year)))
+    .filter(Number.isInteger);
+  const seasonFromTitle = Number(/\b(20\d{2})\b/.exec(profile.statistics?.displayName || '')?.[1]);
+  const season = league === 'MLS'
+    ? bio.value.season?.year || new Date().getFullYear()
+    : league === 'NHL'
+      ? Math.max(0, ...seasonNames, seasonFromTitle)
+      : seasonFromTitle || Math.max(0, ...seasonNames) || new Date().getFullYear();
+
+  let seasons = null;
+  let recent = null;
+  let advanced = null;
+  let summary = playerTable(profile.statistics);
+  let advancedStatus = 'not-applicable';
+  if (league === 'NFL') {
+    seasons = nflSeasons(seasonStats);
+    recent = (profile.gameLog?.statistics || []).map(group => ({
+      key: group.name || '',
+      name: group.displayName || '',
+      names: group.names || [],
+      labels: group.labels || [],
+      displayNames: group.displayNames || [],
+      rows: (group.events || []).slice(0, 5).map(row => {
+        const event = profile.gameLog.events?.[row.eventId];
+        return {
+          id: row.eventId,
+          date: event?.gameDate,
+          opponent: event?.opponent?.displayName || '',
+          stats: row.stats || []
+        };
+      })
+    })).filter(group => group.rows.length);
+    try {
+      const result = await nflversePlayerMetrics(id, season, athlete.position?.abbreviation || '');
+      advanced = result.advanced || null;
+      advancedStatus = result.status;
+    } catch (error) {
+      console.warn('nflverse player stats unavailable:', error.message);
+      advancedStatus = 'unavailable';
+    }
+  } else if (league === 'NHL') {
+    seasons = nhlSeasons(seasonStats);
+    recent = recentGames(profile);
+    advanced = nhlEfficiency(seasonStats, athlete.position?.abbreviation || '');
+  } else if (league === 'MLS') {
+    summary = mlsSummary(seasonStats, athlete.position?.abbreviation || '', season)
+      || mlsOverviewSummary(profile.statistics, athlete.position?.abbreviation || '', season);
+    recent = recentGames(profile);
+  } else {
+    const career = seasonStats.categories?.find(category => category.name === 'averages');
+    seasons = career ? {
+      names: career.names || [],
+      rows: (career.statistics || []).map(row => ({
+        label: row.season?.displayName || '',
+        team: row.teamSlug || '',
+        stats: row.stats || []
+      }))
+    } : null;
+    const group = profile.gameLog?.statistics?.[0];
+    recent = group ? {
+      names: group.names || [],
+      rows: (group.events || []).slice(0, 10).map(row => {
+        const event = profile.gameLog.events?.[row.eventId];
+        return {
+          id: row.eventId,
+          date: event?.gameDate,
+          opponent: event?.opponent?.displayName || '',
+          stats: row.stats || []
+        };
+      })
+    } : null;
+  }
+
+  return json({
+    id,
+    league,
+    name: athlete.displayName,
+    position: athlete.position?.abbreviation || '',
+    age: athlete.age,
+    height,
+    weight,
+    team: athlete.team?.displayName || '',
+    head: athlete.headshot?.href || '',
+    summary,
+    seasons,
+    recent,
+    advanced,
+    advancedStatus,
+    partial: overview.status !== 'fulfilled' || stats.status !== 'fulfilled' || advancedStatus === 'unavailable'
+  }, { browser: 300, cdn: 3600 });
+}
+
+export const config = { path: '/api/player' };
