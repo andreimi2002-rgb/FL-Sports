@@ -2,7 +2,7 @@
 
 ## Stare
 
-NHL este implementat local la v47 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. Testele automate au trecut; Deploy Preview-ul trebuie actualizat și verificat înainte de a începe MLS. Nu s-a făcut merge în producție. NFL este descris în [STATISTICI-NFL.md](STATISTICI-NFL.md); planul etapelor este în [PLAN-PERSONAL.md](PLAN-PERSONAL.md).
+NHL este implementat la v47 pe branch-ul cumulativ `stage-32-statistici-nfl-nhl-mls`, în PR #32 draft. [Deploy Preview-ul](https://deploy-preview-32--americansportshub.netlify.app) a trecut toate cele 13 smoke checks; au fost verificate profilurile live skater/goalie, căutarea NBA/NFL/NHL, statisticile Florida Panthers și afișarea desktop/mobil. Nu s-a făcut merge în producție. NFL este descris în [STATISTICI-NFL.md](STATISTICI-NFL.md); planul etapelor este în [PLAN-PERSONAL.md](PLAN-PERSONAL.md).
 
 ## Profiluri de jucători
 
@@ -20,4 +20,4 @@ Pagina echipei afișează cinci repere ESPN: goluri marcate/meci, goluri primite
 
 ## Verificări
 
-Testele NHL acoperă profil skater și goalie, statistici de sezon/carieră și meciuri recente, eficiență, comparație, statistici de echipă și linkuri către profil din roster și boxscore. `npm.cmd test` a trecut local pentru v47. Verificarea finală a datelor live, căutării și afișării desktop/mobil trebuie făcută în Deploy Preview înaintea următoarei ligi.
+Testele NHL acoperă profil skater și goalie, statistici de sezon/carieră și meciuri recente, eficiență, comparație, statistici de echipă și linkuri către profil din roster și boxscore. `npm.cmd test` a trecut local pentru v47; smoke checks și verificarea live în browser au trecut pe preview. Pe mobil (390 px), profilul nu depășește viewport-ul; temele luminoasă și întunecată au fost verificate fără overflow orizontal.
